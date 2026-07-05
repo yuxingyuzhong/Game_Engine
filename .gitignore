@@ -1,0 +1,37 @@
+# Visual Studio 临时文件和个人设置
+.vs/
+*.user
+*.suo
+*.dbmdl
+*.jfm
+*.opendb
+*.VC.opendb
+
+# 编译输出目录
+Debug/
+Release/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+
+# C++ 编译产物
+*.obj
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.sbr
+*.bsc
+*.idb
+*.ipdb
+*.iobj
+*.ipch
+
+# 其他临时文件
+*.log
+*.tmp
+*.cache
+*.tlog

@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="引擎">
+      <UniqueIdentifier>{56985a7c-76e9-48ed-a4fb-f62577345a95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块">
+      <UniqueIdentifier>{f5b22cea-be4f-4512-a2d1-d457ba388a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\插件模块">
+      <UniqueIdentifier>{489f22f7-e996-449e-9d8c-d96fa4271d64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\基础工具集">
+      <UniqueIdentifier>{e25e8305-d52d-45ba-bf42-cbb3902d284b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\角色管理">
+      <UniqueIdentifier>{a0deafc5-70df-4db1-808b-3f781232c3ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\空间划分">
+      <UniqueIdentifier>{9073c403-0c90-43c7-93c2-f0c15d5bae5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\信息传递">
+      <UniqueIdentifier>{57df692c-57a1-43ac-98c7-45c73d411b74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\音频播放">
+      <UniqueIdentifier>{325c3805-191d-404b-99eb-d7f24fae1b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\插件模块\脚本存储器">
+      <UniqueIdentifier>{05138203-c188-4156-b5aa-fbea8740d4f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\插件模块\碰撞代理器">
+      <UniqueIdentifier>{80f3ee0f-c81e-4db5-a88e-7c4e589b4195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\公共头文件">
+      <UniqueIdentifier>{ea037e16-8c5d-48d5-b2fb-d2f301f63323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\基础工具集\随机数生成器">
+      <UniqueIdentifier>{cbef8fbc-29bc-4386-84aa-587151a4f217}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\基础工具集\随机数生成器\实现">
+      <UniqueIdentifier>{c50aa84a-f007-4494-aa83-988c124d15d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\基础工具集\随机数生成器\头文件">
+      <UniqueIdentifier>{eaa43c2d-06bd-43d8-a5dd-2f0bd11a7253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\空间划分\四叉树">
+      <UniqueIdentifier>{adaacfdd-9802-4e93-a873-7b985d44cde8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\空间划分\四叉树管理器">
+      <UniqueIdentifier>{2b7074f8-caf0-4ed3-82c7-7c3184de5432}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\空间划分\BVH树">
+      <UniqueIdentifier>{70b13026-e8dd-47d1-9374-5a50ada1548f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\空间划分\四叉树管理器\中心头文件">
+      <UniqueIdentifier>{1d958c8a-3d50-4664-9a7d-ce690c02764b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="引擎\基础模块\空间划分\四叉树管理器\实现头文件">
+      <UniqueIdentifier>{a77ed4a9-3c1f-4e0c-8752-ad16fc325d37}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="公共命名空间使用.h">
+      <Filter>引擎\公共头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="前置头文件包含.h">
+      <Filter>引擎\公共头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="四叉树.h">
+      <Filter>引擎\基础模块\空间划分\四叉树</Filter>
+    </ClInclude>
+    <ClInclude Include="算法辅助工具.h">
+      <Filter>引擎\基础模块\基础工具集</Filter>
+    </ClInclude>
+    <ClInclude Include="随机数生成器.h">
+      <Filter>引擎\基础模块\基础工具集\随机数生成器\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="四叉树管理器.h">
+      <Filter>引擎\基础模块\空间划分\四叉树管理器\中心头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="四叉树扩大回调管理.hpp">
+      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="四叉树合并.hpp">
+      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="相邻四叉树查找.hpp">
+      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="四叉树智能创建.hpp">
+      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="函数预声明.h">
+      <Filter>引擎\基础模块\空间划分\四叉树管理器\中心头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="区块信息检索.hpp">
+      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="设置与交互.hpp">
+      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="四叉树信息计算.hpp">
+      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="随机数生成器.cpp">
+      <Filter>引擎\基础模块\基础工具集\随机数生成器\实现</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
