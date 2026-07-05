@@ -1,5 +1,5 @@
 #pragma once
-#include "函数预声明.h"
+#include "src/base/space/quadtree_manager/函数预声明.h"
 
 //上层管理方法注册
 template<typename T>
@@ -121,7 +121,7 @@ void Quadtree_Manager<T>::next_tree_get(const uint16_t& direct_ID, vector<uint16
 
 //四叉树数量问询
 template<typename T>
-void Quadtree_Manager<T>::tree_num_get(int& num)
+int Quadtree_Manager<T>::tree_num_get(void)
 {
-    num = tree_info.num_sequence.size();
+    return tree_info.num_sequence.size();
 }

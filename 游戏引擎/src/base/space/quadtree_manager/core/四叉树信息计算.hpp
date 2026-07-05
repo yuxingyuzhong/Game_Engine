@@ -1,5 +1,5 @@
 #pragma once
-#include "函数预声明.h"
+#include "src/base/space/quadtree_manager/函数预声明.h"
 
 //四叉树管理范围计算
 template<typename T>

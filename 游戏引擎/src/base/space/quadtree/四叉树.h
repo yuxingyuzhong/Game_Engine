@@ -1,7 +1,7 @@
 #ifndef THIS_QUADTREE
 #define THIS_QUADTREE
-#include "前置头文件包含.h"
-#include "公共命名空间使用.h"
+#include "common/前置头文件包含.h"
+#include "common/公共命名空间使用.h"
 
 //使用四叉树输出结构体
 using engine::tree_block_data;

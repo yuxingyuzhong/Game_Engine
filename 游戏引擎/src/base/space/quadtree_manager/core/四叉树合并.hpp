@@ -1,5 +1,5 @@
 #pragma once
-#include "函数预声明.h"
+#include "src/base/space/quadtree_manager/函数预声明.h"
 
 //四叉树合并_____收集候选组合
 template<typename T>
@@ -252,10 +252,10 @@ void Quadtree_Manager<T>::qurdtree_merge(void)
                 Id_store.old_tree_ID.push_back(tree[2]->qurdtree_ID);
                 Id_store.old_tree_ID.push_back(tree[3]->qurdtree_ID);
                 //记录待卸载四叉树指针
-                Id_store.poi_tree.push_back(tree[0]);
-                Id_store.poi_tree.push_back(tree[1]);
-                Id_store.poi_tree.push_back(tree[2]);
-                Id_store.poi_tree.push_back(tree[3]);
+                Id_store.ptr_tree.push_back(tree[0]);
+                Id_store.ptr_tree.push_back(tree[1]);
+                Id_store.ptr_tree.push_back(tree[2]);
+                Id_store.ptr_tree.push_back(tree[3]);
                 //临时存储范围查询所得信息
                 vector<tree_block_data<T>> block_info_old_tree{};
                 vector<tree_block_data<T>> block_info_new_tree{};
@@ -276,7 +276,7 @@ void Quadtree_Manager<T>::qurdtree_merge(void)
             }
 
             //对Id_store按编号降序排序
-            sort(Id_store.poi_tree.begin(), Id_store.poi_tree.end(),
+            sort(Id_store.ptr_tree.begin(), Id_store.ptr_tree.end(),
                 greater(), &tree_record<T>::qurdtree_ID);
             sort(Id_store.old_tree_ID.begin(), Id_store.old_tree_ID.end(),
                 greater());

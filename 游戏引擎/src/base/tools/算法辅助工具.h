@@ -1,7 +1,7 @@
 #ifndef THIS_ALGORITHM
 #define THIS_ALGORITHM
-#include "前置头文件包含.h"
-#include "公共命名空间使用.h"
+#include "common/前置头文件包含.h"
+#include "common/公共命名空间使用.h"
 
 //通用算法模块
 namespace Game_Engine

@@ -1,5 +1,5 @@
 #pragma once
-#include "函数预声明.h"
+#include "src/base/space/quadtree_manager/函数预声明.h"
 
 //四叉树智能创建——计算初始包围矩形及最大区块划分参数
 template<typename T>

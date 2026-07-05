@@ -1,8 +1,8 @@
 #pragma once
-#include "前置头文件包含.h"
-#include "公共命名空间使用.h"
-#include "四叉树.h"
-#include "算法辅助工具.h"
+#include "common/前置头文件包含.h"
+#include "common/公共命名空间使用.h"
+#include "src/base/space/quadtree/四叉树.h"
+#include "src/base/tools/算法辅助工具.h"
 
 //使用四叉树类
 using engine::Quadtree;
@@ -160,7 +160,7 @@ namespace Game_Engine
         //四叉树相邻树问询
         void next_tree_get(const uint16_t& direct_ID, vector<uint16_t>& other_ID);
         //四叉树数量问询
-        void tree_num_get(int& num);
+        int tree_num_get(void);
     };
 }
 

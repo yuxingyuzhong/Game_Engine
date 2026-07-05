@@ -64,52 +64,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="公共命名空间使用.h">
-      <Filter>引擎\公共头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="前置头文件包含.h">
-      <Filter>引擎\公共头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="四叉树.h">
-      <Filter>引擎\基础模块\空间划分\四叉树</Filter>
-    </ClInclude>
-    <ClInclude Include="算法辅助工具.h">
-      <Filter>引擎\基础模块\基础工具集</Filter>
-    </ClInclude>
-    <ClInclude Include="随机数生成器.h">
-      <Filter>引擎\基础模块\基础工具集\随机数生成器\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="四叉树管理器.h">
-      <Filter>引擎\基础模块\空间划分\四叉树管理器\中心头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="四叉树扩大回调管理.hpp">
-      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="四叉树合并.hpp">
-      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="相邻四叉树查找.hpp">
-      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="四叉树智能创建.hpp">
-      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="函数预声明.h">
-      <Filter>引擎\基础模块\空间划分\四叉树管理器\中心头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="区块信息检索.hpp">
-      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="设置与交互.hpp">
-      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="四叉树信息计算.hpp">
-      <Filter>引擎\基础模块\空间划分\四叉树管理器\实现头文件</Filter>
-    </ClInclude>
+    <ClCompile Include="主调文件\主调文件.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="随机数生成器.cpp">
-      <Filter>引擎\基础模块\基础工具集\随机数生成器\实现</Filter>
-    </ClCompile>
+    <ClInclude Include="common\引擎总头文件.h" />
   </ItemGroup>
 </Project>
