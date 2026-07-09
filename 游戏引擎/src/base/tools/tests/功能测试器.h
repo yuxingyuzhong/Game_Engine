@@ -1,5 +1,4 @@
-#ifndef THIS_TESTER
-#define THIS_TESTER
+#pragma once
 #include "common/前置头文件包含.h"
 #include "common/公共命名空间使用.h"
 #include "src/base/tools/random/随机数生成器.h"
@@ -26,6 +25,14 @@ namespace Game_Engine
 		//随机数生成引擎
 		Random_Generator gen_num;
 	public:
+		Gen_Coord(void)
+		{
+
+		}
+		~Gen_Coord(void)
+		{
+
+		}
 		//一键生成整数
 		int64_t operator ()(void)
 		{
@@ -209,7 +216,7 @@ namespace Game_Engine
 			itself.ptr_data->store = num;
 		}
 		//数据复制
-		static void copy(tree_block_data<Test_Data>& receiver, tree_block_data<Test_Data>& transmiter)
+		static void copy(tree_block_data<Test_Data>& receiver,tree_block_data<Test_Data>& transmiter)
 		{
 			//链接数据
 			receiver.ptr_data = transmiter.ptr_data;
@@ -217,6 +224,12 @@ namespace Game_Engine
 			transmiter.ptr_data = nullptr;
 			//继承坐标
 			receiver.node = transmiter.node;
+		}
+		//坐标输出
+		static void out(const tree_block_data<Test_Data>& itself)
+		{
+			//输出坐标
+			cout << itself.node;
 		}
 	};
 
@@ -247,5 +260,3 @@ namespace Game_Engine
 			const uint64_t& block_size,uint64_t test_times);
 	};
 }
-
-#endif

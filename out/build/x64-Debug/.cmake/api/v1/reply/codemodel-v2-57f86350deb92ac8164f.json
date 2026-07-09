@@ -7,7 +7,8 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-f040eec181a89de70dbe.json",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-a2fe9ba070ba608e3d1e.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.20"
@@ -16,7 +17,8 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -31,7 +33,8 @@
 					"name" : "\u6e38\u620f\u5f15\u64ce",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -40,8 +43,15 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "EngineCore::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-EngineCore-Debug-5d0a569e7f3eaca2bbb8.json",
+					"jsonFile" : "target-EngineCore-Debug-08caf3b7e8e4101929d7.json",
 					"name" : "EngineCore",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TestEngine::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TestEngine-Debug-08a599e775a81e8a02b7.json",
+					"name" : "TestEngine",
 					"projectIndex" : 0
 				}
 			]
@@ -50,8 +60,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug",
-		"source" : "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce"
+		"build" : "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug",
+		"source" : "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce"
 	},
 	"version" : 
 	{

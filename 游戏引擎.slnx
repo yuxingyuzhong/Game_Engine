@@ -1,7 +1,0 @@
-<Solution>
-  <Configurations>
-    <Platform Name="x64" />
-    <Platform Name="x86" />
-  </Configurations>
-  <Project Path="游戏引擎/游戏引擎.vcxproj" Id="91952e4c-164f-4fbf-91d6-ca436950b2cd" />
-</Solution>

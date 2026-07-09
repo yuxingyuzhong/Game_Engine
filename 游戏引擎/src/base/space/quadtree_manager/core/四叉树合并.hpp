@@ -8,44 +8,44 @@ void Quadtree_Manager<T>::quedtree_merge_collect(vector<vector<tree_record<T>*>>
     //四叉树大小情况记录
     int size_case = 0;
     //四叉树当前可扩大最大大小记录
-    int tree_size_may_largen = tree_size_largest_now;
+    int tree_size_may_largen = largest_tree_size;
     //若当前最大四叉树大小已达上限
     if (tree_size_may_largen == tree_info.max_tree_size)
         tree_size_may_largen /= 2;
 
     //不同大小四叉树存储
-    vector<vector<tree_record<T>*>> poi_screen_tree{};
+    vector<vector<tree_record<T>*>> ptr_screen_tree{};
     //数量筛选通过四叉树存储——等大四叉树
     vector<vector<tree_record<T>*>> num_size_qualified_tree{};
     //相邻四叉树筛选存储
-    vector<tree_record<T>*> poi_next_tree{};
+    vector<tree_record<T>*> ptr_next_tree{};
 
     //计算四叉树大小情况
     for (; (tree_size_may_largen /= 2) >= 256;)
         size_case++;
     //初始化元素
-    poi_screen_tree.resize(size_case, nullptr);
+    ptr_screen_tree.resize(size_case);
 
     //检测不同大小情况四叉树数量
-    for (int detect_time = 0; detect_time < tree_info.num_sequence.size(); detect_time++)
+    for (int detect_time = 0; detect_time < tree_info.ID_sequence.size(); detect_time++)
     {
         //重置四叉树大小情况记录
         size_case = 0;
         //计算当前四叉树大小情况
         //数组初始索引为0故不可使用>=
-        for (; (tree_info.num_sequence[detect_time] /= 2) > 256;)
+        for (; (tree_info.ID_sequence[detect_time]->size /= 2) > 256;)
             size_case++;
         //将当前四叉树放入相应分组
-        poi_screen_tree[size_case].push_back(tree_info.num_sequence[detect_time]);
+        ptr_screen_tree[size_case].push_back(tree_info.ID_sequence[detect_time]);
     }
 
     //筛选等大四叉树数量符合要求的四叉树大小情况
-    for (int screen_time = 0; screen_time < poi_screen_tree.size(); screen_time++)
+    for (int screen_time = 0; screen_time < ptr_screen_tree.size(); screen_time++)
     {
         //当同种大小四叉树大于等于4才可能发生合并
-        if (poi_screen_tree[screen_time].size() >= 4)
+        if (ptr_screen_tree[screen_time].size() >= 4)
         {
-            num_size_qualified_tree.push_back(poi_screen_tree[screen_time]);
+            num_size_qualified_tree.push_back(ptr_screen_tree[screen_time]);
         }
     }
 
@@ -70,33 +70,31 @@ void Quadtree_Manager<T>::quedtree_merge_collect(vector<vector<tree_record<T>*>>
                 //故不需要再调用矩形筛选
 
             //重置相邻四叉树集合
-            poi_next_tree.clear();
+            ptr_next_tree.clear();
             //交集筛选
-            next_tree_seek_classify(poi_next_tree, center_tree, now_tree_group);
+            filter_candidate_tree(ptr_next_tree, center_tree, now_tree_group);
 
             //因为中心四叉树也被包含其中
                //所以需要筛选出3棵相邻四叉树才可能出现可合并情况(即总数量 >= 4)
-            if (poi_next_tree.size() >= 4)
+            if (ptr_next_tree.size() >= 4)
             {
                 //寻找中心四叉树
-                for (int time = 0; time < poi_next_tree.size(); time++)
+                for (int time = 0; time < ptr_next_tree.size(); time++)
                 {
-                    if (poi_next_tree[time]->qurdtree_ID == center_tree->qurdtree_ID)
+                    if (ptr_next_tree[time]->quadtree_ID == center_tree->quadtree_ID)
                     {
                         //将中心四叉树放在首位
-                        swap(poi_next_tree[0], poi_next_tree[time]);
+                        swap(ptr_next_tree[0], ptr_next_tree[time]);
                         break;
                     }
                 }
 
                 //记录筛选出的组合
-                receiver.push_back(poi_next_tree);
+                receiver.push_back(ptr_next_tree);
 
                 // 将组合中的所有节点加入待删除集合
-                for (tree_record<T>* n : *poi_next_tree)
-                {
+                for (tree_record<T>* n : ptr_next_tree)
                     to_remove.insert(n);
-                }
             }
         }
         // 从当前组中移除所有被标记的节点
@@ -220,72 +218,74 @@ void Quadtree_Manager<T>::quedtree_merge_filter(const vector<vector<tree_record<
 //四叉树合并总函数
 template<typename T>
 void Quadtree_Manager<T>::qurdtree_merge(void)
-        {            //初步筛选合格四叉树
-            vector<vector<tree_record<T>*>> poi_intial_tree{};
-            //最终筛选合格四叉树
-            vector<vector<tree_record<T>*>> poi_final_tree{};
-            //待合并四叉树初步筛选
-            quedtree_merge_collect(poi_intial_tree);
-            //待合并四叉树最终筛选
-            quedtree_merge_filter(poi_intial_tree, poi_final_tree);
-            //待合并/卸载四叉树ID存储
-            merge_feedback Id_store{};
-            //新四叉树根节点坐标存储
-            coord_double new_tree{ 0.5,0.5 };
+{            //初步筛选合格四叉树
+    vector<vector<tree_record<T>*>> poi_intial_tree{};
+    //最终筛选合格四叉树
+    vector<vector<tree_record<T>*>> poi_final_tree{};
+    //待合并四叉树初步筛选
+    quedtree_merge_collect(poi_intial_tree);
+    //待合并四叉树最终筛选
+    quedtree_merge_filter(poi_intial_tree, poi_final_tree);
+    //待合并/卸载四叉树ID存储
+    merge_feedback<T> Id_store{};
+    //新四叉树根节点坐标存储
+    coord_double new_tree{ 0.5,0.5 };
 
-            //合并四叉树
-            for (int merge_time = 0; merge_time < poi_final_tree.size(); merge_time++)
-            {
-                //简化表示路径
-                auto& tree = poi_final_tree[merge_time];
-                //重置四叉树根节点坐标
-                new_tree.X = (tree[0]->root.X + tree[1]->root.X +
-                    tree[2]->root.X + tree[3]->root.X) / 2;
-                new_tree.Y = (tree[0]->root.Y + tree[1]->root.Y +
-                    tree[2]->root.Y + tree[3]->root.Y) / 2;
-                //创建新四叉树
-                qurdtree_build(new_tree, tree[0]->size * 2);
-                //记录合并/卸载四叉树编号信息
-                Id_store.new_tree_ID.push_back(tree_info.num_sequence.back()->qurdtree_ID);
-                Id_store.old_tree_ID.push_back(tree[0]->qurdtree_ID);
-                Id_store.old_tree_ID.push_back(tree[1]->qurdtree_ID);
-                Id_store.old_tree_ID.push_back(tree[2]->qurdtree_ID);
-                Id_store.old_tree_ID.push_back(tree[3]->qurdtree_ID);
-                //记录待卸载四叉树指针
-                Id_store.ptr_tree.push_back(tree[0]);
-                Id_store.ptr_tree.push_back(tree[1]);
-                Id_store.ptr_tree.push_back(tree[2]);
-                Id_store.ptr_tree.push_back(tree[3]);
-                //临时存储范围查询所得信息
-                vector<tree_block_data<T>> block_info_old_tree{};
-                vector<tree_block_data<T>> block_info_new_tree{};
+    //合并四叉树
+    for (int merge_time = 0; merge_time < poi_final_tree.size(); merge_time++)
+    {
+        //简化表示路径
+        auto& tree = poi_final_tree[merge_time];
+        //重置四叉树根节点坐标
+        new_tree.X = (tree[0]->root.X + tree[1]->root.X +
+            tree[2]->root.X + tree[3]->root.X) / 2;
+        new_tree.Y = (tree[0]->root.Y + tree[1]->root.Y +
+            tree[2]->root.Y + tree[3]->root.Y) / 2;
+        //创建新四叉树
+        qurdtree_build(new_tree, tree[0]->size * 2);
+        //记录合并/卸载四叉树编号信息
+        Id_store.new_tree_ID.push_back(tree_info.ID_sequence.back()->quadtree_ID);
+        Id_store.old_tree_ID.push_back(tree[0]->quadtree_ID);
+        Id_store.old_tree_ID.push_back(tree[1]->quadtree_ID);
+        Id_store.old_tree_ID.push_back(tree[2]->quadtree_ID);
+        Id_store.old_tree_ID.push_back(tree[3]->quadtree_ID);
+        //记录待卸载四叉树指针
+        Id_store.ptr_tree.push_back(tree[0]);
+        Id_store.ptr_tree.push_back(tree[1]);
+        Id_store.ptr_tree.push_back(tree[2]);
+        Id_store.ptr_tree.push_back(tree[3]);
+        //临时存储范围查询所得信息
+        vector<tree_block_data<T>*> block_info_old_tree{};
+        vector<tree_block_data<T>*> block_info_new_tree{};
 
-                //临时存储四叉树管理范围
-                coord_range tree_range{};
-                for (int seek_time = 0; seek_time < tree.size(); seek_time++)
-                {
-                    //计算当前四叉树管理范围
-                    border_qurdtree_calcu(tree_range, tree[seek_time]);
-                    //范围查询该范围内所有区块信息
-                    block_info_old_tree = tree[seek_time]->tree->range_seek(tree_range);
-                    block_info_new_tree = tree_info.num_sequence.back()->tree->range_seek(tree_range);
-                    //拷贝区块信息
-                    for (int copy_time = 0; copy_time < block_info_old_tree.size(); copy_time++)
-                        copy(block_info_new_tree[copy_time], block_info_old_tree[copy_time]);
-                }
-            }
-
-            //对Id_store按编号降序排序
-            sort(Id_store.ptr_tree.begin(), Id_store.ptr_tree.end(),
-                greater(), &tree_record<T>::qurdtree_ID);
-            sort(Id_store.old_tree_ID.begin(), Id_store.old_tree_ID.end(),
-                greater());
-            sort(Id_store.new_tree_ID.begin(), Id_store.new_tree_ID.end(),
-                greater());
-
-            //回调通知上级调用者四叉树合并信息
-            callback(Id_store);
-            //卸载已经被合并的四叉树
-            qurdtree_unload(Id_store);
+        //临时存储四叉树管理范围
+        coord_range tree_range{};
+        for (int seek_time = 0; seek_time < tree.size(); seek_time++)
+        {
+            //简化表示路径
+            auto& ptr_tree = tree[seek_time];
+            //计算当前四叉树管理范围
+            ptr_tree->tree->manage_range_calcu(tree_range, ptr_tree->root, ptr_tree->size);
+            //范围查询该范围内所有区块信息
+            tree[seek_time]->tree->range_seek(block_info_old_tree,tree_range);
+            tree_info.ID_sequence.back()->tree->range_seek(block_info_new_tree,tree_range);
+            //拷贝区块信息
+            for (int copy_time = 0; copy_time < block_info_old_tree.size(); copy_time++)
+                copy(*block_info_new_tree[copy_time], *block_info_old_tree[copy_time]);
         }
+    }
+
+    //对Id_store按编号降序排序
+    sort(Id_store.ptr_tree.begin(), Id_store.ptr_tree.end(),
+        greater(), &tree_record<T>::quadtree_ID);
+    sort(Id_store.old_tree_ID.begin(), Id_store.old_tree_ID.end(),
+        greater());
+    sort(Id_store.new_tree_ID.begin(), Id_store.new_tree_ID.end(),
+        greater());
+
+    //回调通知上级调用者四叉树合并信息
+    callback(Id_store);
+    //卸载已经被合并的四叉树
+    qurdtree_unload(Id_store);
+}
 

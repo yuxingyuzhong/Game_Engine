@@ -1,5 +1,3 @@
-#ifndef THIS_DEFINE_BEFORE
-#define THIS_DEFINE_BEFORE
 
 //============================================================================
 // 1. C 标准库头文件（C89/C99）
@@ -95,5 +93,3 @@
 // 提供 __cpuid、__rdtsc、__rdtscp 等硬件相关底层函数
 #include <intrin.h>
 
-
-#endif // THIS_DEFINE_BEFORE

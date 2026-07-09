@@ -1,5 +1,4 @@
-#ifndef THIS_RANDOM_GENERATOR
-#define THIS_RANDOM_GENERATOR
+#pragma once
 #include "common/前置头文件包含.h"
 #include "common/公共命名空间使用.h"
 
@@ -30,7 +29,7 @@ namespace Game_Engine
 		int64_t operator()(int64_t min, int64_t max);
 
 		// 构造函数
-		Random_Generator() ;
+		Random_Generator(void) ;
 		explicit Random_Generator(uint64_t seed_out);
 
 		// 种子初始化
@@ -38,5 +37,3 @@ namespace Game_Engine
 		void pcg32_seed_init();
 	};
 }
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef THIS_PUB_NAME_USE
-#define THIS_PUB_NAME_USE
+#pragma once
 #include "前置头文件包含.h"
 
 // —— C++ 标准库 I/O 与格式化 ——
@@ -271,4 +270,3 @@ using engine::coord_int;
 using engine::coord_double;
 using engine::coord_range;
 
-#endif

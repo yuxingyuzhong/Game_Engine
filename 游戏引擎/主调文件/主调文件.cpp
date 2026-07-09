@@ -15,11 +15,11 @@ int main(void)
 	//进行四叉树单点查找测试
 	//tester.qurdtree_block_seek_test(256, 128, 1024, 16, { 0.5,0.5 }, 500);
 	//进行四叉树范围查找测试
-	//tester.qurdtree_range_seek_test(256, 128, 1024, 16, { 0.5,0.5 }, 500);
+	//tester.qurdtree_range_seek_test(256, 512, 512, 16, { 0.5,0.5 }, 100);
 	//进行四叉树管理器智能创建合并测试
 	//tester.manager_tree_build_merge_test(256,1024,128,16384,16,500);
 	//进行四叉树管理器单点查找测试
-	//tester.manager_block_seel_test(256, 1024, 128, 1024, 16, { 0.5,0.5 }, 500);
+	tester.manager_block_seek_test(256, 1024, 128, 1024, 16, { 0.5,0.5 }, 500);
 	//进行四叉树管理器范围查找测试
-	//tester.manager_block_seek_test(256, 1024, 128, 1024, 16, { 0.5,0.5 }, 500);
+	//tester.manager_range_seek_test(256, 1024, 128, 1024, 16, { 0.5,0.5 }, 100);
 }

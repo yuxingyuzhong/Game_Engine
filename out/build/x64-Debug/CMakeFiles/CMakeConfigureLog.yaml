@@ -5,7 +5,7 @@ events:
     kind: "message-v1"
     backtrace:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineSystem.cmake:212 (message)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     message: |
       The system is: Windows - 10.0.26200 - AMD64
   -
@@ -16,7 +16,7 @@ events:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     mode: "file"
     variable: "src_in"
     description: "Path to a file."
@@ -81,7 +81,7 @@ events:
         - "D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja"
         - "D:\\VS2026\\Common7\\IDE\\VC\\Linux\\bin\\ConnectionManagerExe"
         - "D:\\VS2026\\VC\\vcpkg"
-      CMAKE_INSTALL_PREFIX: "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
+      CMAKE_INSTALL_PREFIX: "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
       ENV{INCLUDE}:
         - "D:\\VS2026\\VC\\Tools\\MSVC\\14.51.36231\\include"
         - "D:\\VS2026\\VC\\Tools\\MSVC\\14.51.36231\\ATLMFC\\include"
@@ -98,7 +98,7 @@ events:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
       Compiler: D:/VS2026/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe 
@@ -123,7 +123,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
       
       The CXX compiler identification is MSVC, found in:
-        E:/代码存储/代码仓库/游戏引擎/out/build/x64-Debug/CMakeFiles/4.3.1-msvc1/CompilerIdCXX/CMakeCXXCompilerId.exe
+        D:/代码存储/代码仓库/游戏引擎/out/build/x64-Debug/CMakeFiles/4.3.1-msvc1/CompilerIdCXX/CMakeCXXCompilerId.exe
       
   -
     kind: "message-v1"
@@ -131,11 +131,11 @@ events:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:1347 (message)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:250 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     message: |
       Detecting CXX compiler /showIncludes prefix:
         main.c
-        注意: 包含文件:  E:\\代码存储\\代码仓库\\游戏引擎\\out\\build\\x64-Debug\\CMakeFiles\\ShowIncludes\\foo.h
+        注意: 包含文件:  D:\\代码存储\\代码仓库\\游戏引擎\\out\\build\\x64-Debug\\CMakeFiles\\ShowIncludes\\foo.h
         
       Found prefix "注意: 包含文件:  "
   -
@@ -145,7 +145,7 @@ events:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:65 (__resolve_tool_path)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:103 (__resolve_linker_path)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     mode: "program"
     variable: "_CMAKE_TOOL_WITH_PATH"
     description: "Path to a program."
@@ -190,7 +190,7 @@ events:
       - "C:/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/"
       - "E:/Flutter/flutter/bin/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Microsoft/WindowsApps/"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
       - "E:/JavaJDK/jre/bin\"/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Programs/Microsoft/jdk-21.0.5.11-hotspot/bin/"
       - "E:/Users/\u7ec8\u7109/AppData/Local/Programs/Eclipse Adoptium/jdk-17.0.15.6-hotspot/bin/"
@@ -252,7 +252,7 @@ events:
         - "D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja"
         - "D:\\VS2026\\Common7\\IDE\\VC\\Linux\\bin\\ConnectionManagerExe"
         - "D:\\VS2026\\VC\\vcpkg"
-      CMAKE_INSTALL_PREFIX: "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
+      CMAKE_INSTALL_PREFIX: "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
   -
     kind: "find-v1"
     backtrace:
@@ -260,7 +260,7 @@ events:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:65 (__resolve_tool_path)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:104 (__resolve_linker_path)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     mode: "program"
     variable: "_CMAKE_TOOL_WITH_PATH"
     description: "Path to a program."
@@ -305,7 +305,7 @@ events:
       - "C:/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/"
       - "E:/Flutter/flutter/bin/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Microsoft/WindowsApps/"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
       - "E:/JavaJDK/jre/bin\"/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Programs/Microsoft/jdk-21.0.5.11-hotspot/bin/"
       - "E:/Users/\u7ec8\u7109/AppData/Local/Programs/Eclipse Adoptium/jdk-17.0.15.6-hotspot/bin/"
@@ -407,9 +407,9 @@ events:
       - "C:/Users/\u7ec8\u7109/AppData/Local/Microsoft/WindowsApps/lld-link.com"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Microsoft/WindowsApps/lld-link.exe"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Microsoft/WindowsApps/lld-link"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/lld-link.com"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/lld-link.exe"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/lld-link"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/lld-link.com"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/lld-link.exe"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/lld-link"
       - "E:/JavaJDK/jre/bin\"/lld-link.com"
       - "E:/JavaJDK/jre/bin\"/lld-link.exe"
       - "E:/JavaJDK/jre/bin\"/lld-link"
@@ -489,13 +489,13 @@ events:
         - "D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja"
         - "D:\\VS2026\\Common7\\IDE\\VC\\Linux\\bin\\ConnectionManagerExe"
         - "D:\\VS2026\\VC\\vcpkg"
-      CMAKE_INSTALL_PREFIX: "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
+      CMAKE_INSTALL_PREFIX: "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
   -
     kind: "find-v1"
     backtrace:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     mode: "program"
     variable: "CMAKE_LINKER"
     description: "Path to a program."
@@ -540,7 +540,7 @@ events:
       - "C:/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/"
       - "E:/Flutter/flutter/bin/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Microsoft/WindowsApps/"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
       - "E:/JavaJDK/jre/bin\"/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Programs/Microsoft/jdk-21.0.5.11-hotspot/bin/"
       - "E:/Users/\u7ec8\u7109/AppData/Local/Programs/Eclipse Adoptium/jdk-17.0.15.6-hotspot/bin/"
@@ -602,13 +602,13 @@ events:
         - "D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja"
         - "D:\\VS2026\\Common7\\IDE\\VC\\Linux\\bin\\ConnectionManagerExe"
         - "D:\\VS2026\\VC\\vcpkg"
-      CMAKE_INSTALL_PREFIX: "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
+      CMAKE_INSTALL_PREFIX: "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
   -
     kind: "find-v1"
     backtrace:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     mode: "program"
     variable: "CMAKE_MT"
     description: "Path to a program."
@@ -653,7 +653,7 @@ events:
       - "C:/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/"
       - "E:/Flutter/flutter/bin/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Microsoft/WindowsApps/"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
       - "E:/JavaJDK/jre/bin\"/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Programs/Microsoft/jdk-21.0.5.11-hotspot/bin/"
       - "E:/Users/\u7ec8\u7109/AppData/Local/Programs/Eclipse Adoptium/jdk-17.0.15.6-hotspot/bin/"
@@ -742,13 +742,13 @@ events:
         - "D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja"
         - "D:\\VS2026\\Common7\\IDE\\VC\\Linux\\bin\\ConnectionManagerExe"
         - "D:\\VS2026\\VC\\vcpkg"
-      CMAKE_INSTALL_PREFIX: "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
+      CMAKE_INSTALL_PREFIX: "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
   -
     kind: "find-v1"
     backtrace:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     mode: "program"
     variable: "CMAKE_AR"
     description: "Path to a program."
@@ -793,7 +793,7 @@ events:
       - "C:/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/"
       - "E:/Flutter/flutter/bin/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Microsoft/WindowsApps/"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
       - "E:/JavaJDK/jre/bin\"/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Programs/Microsoft/jdk-21.0.5.11-hotspot/bin/"
       - "E:/Users/\u7ec8\u7109/AppData/Local/Programs/Eclipse Adoptium/jdk-17.0.15.6-hotspot/bin/"
@@ -855,7 +855,7 @@ events:
         - "D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja"
         - "D:\\VS2026\\Common7\\IDE\\VC\\Linux\\bin\\ConnectionManagerExe"
         - "D:\\VS2026\\VC\\vcpkg"
-      CMAKE_INSTALL_PREFIX: "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
+      CMAKE_INSTALL_PREFIX: "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
   -
     kind: "find-v1"
     backtrace:
@@ -864,7 +864,7 @@ events:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Platform/Windows-MSVC.cmake:569 (__windows_compiler_msvc_enable_rc)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Platform/Windows-MSVC-CXX.cmake:6 (__windows_compiler_msvc)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeCXXInformation.cmake:48 (include)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     mode: "program"
     variable: "CMAKE_RC_COMPILER"
     description: "RC compiler"
@@ -909,7 +909,7 @@ events:
       - "C:/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/"
       - "E:/Flutter/flutter/bin/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Microsoft/WindowsApps/"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/\"E:/JavaJDK/bin/"
       - "E:/JavaJDK/jre/bin\"/"
       - "C:/Users/\u7ec8\u7109/AppData/Local/Programs/Microsoft/jdk-21.0.5.11-hotspot/bin/"
       - "E:/Users/\u7ec8\u7109/AppData/Local/Programs/Eclipse Adoptium/jdk-17.0.15.6-hotspot/bin/"
@@ -929,9 +929,9 @@ events:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/sbin/"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug/bin/"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug/sbin/"
-      - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug/"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug/bin/"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug/sbin/"
+      - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug/"
     searched_directories:
       - "D:/VS2026/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/rc.com"
       - "D:/VS2026/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/rc.exe"
@@ -1010,23 +1010,23 @@ events:
         - "D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja"
         - "D:\\VS2026\\Common7\\IDE\\VC\\Linux\\bin\\ConnectionManagerExe"
         - "D:\\VS2026\\VC\\vcpkg"
-      CMAKE_INSTALL_PREFIX: "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
+      CMAKE_INSTALL_PREFIX: "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "C:/Program Files"
         - "C:/Program Files (x86)"
         - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake"
-        - "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
+        - "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/install/x64-Debug"
   -
     kind: "try_compile-v1"
     backtrace:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-lhrlz4"
-      binary: "E:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-lhrlz4"
+      source: "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-sw3o93"
+      binary: "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-sw3o93"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -1037,11 +1037,11 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'E:/代码存储/代码仓库/游戏引擎/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-lhrlz4'
+        Change Dir: 'D:/代码存储/代码仓库/游戏引擎/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-sw3o93'
         
-        Run Build Command(s): D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja\\ninja.exe -v cmTC_b97d3
-        [1/2] D:\\VS2026\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -D_MBCS  /DWIN32 /D_WINDOWS /EHsc  /Zi /Ob0 /Od /RTC1 -MDd /showIncludes /FoCMakeFiles\\cmTC_b97d3.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_b97d3.dir\\ /FS -c D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-4.3\\Modules\\CMakeCXXCompilerABI.cpp
-        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe -E vs_link_exe --msvc-ver=1951 --intdir=CMakeFiles\\cmTC_b97d3.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- D:\\VS2026\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_b97d3.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_b97d3.exe /implib:cmTC_b97d3.lib /pdb:cmTC_b97d3.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja\\ninja.exe -v cmTC_10c59
+        [1/2] D:\\VS2026\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -D_MBCS  /DWIN32 /D_WINDOWS /EHsc  /Zi /Ob0 /Od /RTC1 -MDd /showIncludes /FoCMakeFiles\\cmTC_10c59.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_10c59.dir\\ /FS -c D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-4.3\\Modules\\CMakeCXXCompilerABI.cpp
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && D:\\VS2026\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe -E vs_link_exe --msvc-ver=1951 --intdir=CMakeFiles\\cmTC_10c59.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100261~1.0\\x64\\mt.exe --manifests  -- D:\\VS2026\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_10c59.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_10c59.exe /implib:cmTC_10c59.lib /pdb:cmTC_10c59.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
   -
@@ -1049,7 +1049,7 @@ events:
     backtrace:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     message: |
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
@@ -1067,7 +1067,7 @@ events:
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
       - "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:4 (project)"
+      - "CMakeLists.txt:6 (project)"
     message: |
       Running the CXX compiler's linker: "D:/VS2026/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/link.exe" "-v"
       Microsoft (R) Incremental Linker Version 14.51.36248.0

@@ -14,35 +14,56 @@ void Quadtree_Manager<T>::callback_sign(const function<void(tree_block_data<T>& 
 
 //四叉树最小区块单元大小设置
 template<typename T>
-void Quadtree_Manager<T>::set_block_size(const int& size)
+void Quadtree_Manager<T>::set_block_size(const uint64_t& block_size)
 {
-    tree_info.block_size = size;
-    for (int set_time = 0; set_time < tree_info.num_sequence.size(); set_time++)
+    //记录最小区块单元信息
+    tree_info.block_size = block_size;
+    //设置四叉树最小区块单元信息
+    auto& tree_group = tree_info.ID_sequence;
+    for (int set_time = 0; set_time < tree_group.size(); set_time++)
     {
-        tree_info.num_sequence[set_time]->tree->set_block_size(tree_info.block_size);
+        tree_group[set_time]->tree->set_block_size(tree_info.block_size);
     }
 }
 
 //四叉树边长上限设置
 template<typename T>
-void Quadtree_Manager<T>::set_max_size(const int& size)
+void Quadtree_Manager<T>::set_max_size(const uint64_t& tree_size)
 {
-    tree_info.max_tree_size = size;
-    for (int set_time = 0; set_time < tree_info.num_sequence.size(); set_time++)
+    //记录四叉树上限大小信息
+    tree_info.max_tree_size = tree_size;
+    //设置四叉树上限大小信息
+    auto& tree_group = tree_info.ID_sequence;
+    for (int set_time = 0; set_time < tree_group.size(); set_time++)
     {
-        tree_info.num_sequence[set_time]->tree->set_max_size(tree_info.max_tree_size);;
+        tree_group[set_time]->tree->set_max_size(tree_info.max_tree_size);;
     }
 }
 
+//四叉树边长下限设置
+template<typename T>
+void Quadtree_Manager<T>::set_min_size(const uint64_t& tree_size)
+{
+    //记录四叉树下限大小信息
+    tree_info.min_tree_size = tree_size;
+    //设置四叉树下限大小信息
+    auto& tree_group = tree_info.ID_sequence;
+    for (int set_time = 0; set_time < tree_group.size(); set_time++)
+    {
+        tree_group[set_time]->tree->set_max_size(tree_info.min_tree_size);;
+    }
+}
+
+//坐标四叉树归属获取
 template<typename T>
 bool Quadtree_Manager<T>::coord_inclusion_get(const coord_int& coord, uint16_t& ID)
 {
     //查找其直属四叉树
-    tree_record<T>* now_tree = direct_qurdtree_seek(coord);
+    tree_record<T>* tree = direct_qurdtree_seek(coord);
     //若存在该四叉树则返回true
-    if (now_tree != nullptr)
+    if (tree != nullptr)
     {
-        ID = now_tree->qurdtree_ID;
+        ID = tree->quadtree_ID;
         return true;
     }
     //若不存在则返回false
@@ -50,59 +71,61 @@ bool Quadtree_Manager<T>::coord_inclusion_get(const coord_int& coord, uint16_t& 
         return false;
 }
 
-//坐标范围四叉树归属数量问询
+//坐标范围四叉树归属数量获取
 template<typename T>
 bool Quadtree_Manager<T>::range_inclusion_get(const coord_range& range, const uint16_t& ID)
 {
     //临时构造结构封装ID信息（对象）
-    tree_record<T> temp_node{ nullptr, {}, 256, ID };
-    tree_record<T>* target = &temp_node;
+    tree_record<T> temp_record{ nullptr, {}, 256, ID };
+    tree_record<T>* target = &temp_record;
 
+    //简化表示路径
+    auto& tree_group = tree_info.ID_sequence;
     //查找索引信息
-    int index = binary_search(tree_info.num_sequence.begin(), tree_info.num_sequence.end(),
-        target->qurdtree_ID, greater(), &tree_record<T>::qurdtree_ID);
+    int index = binary_search(tree_group.begin(), tree_group.end(),
+        target->quadtree_ID, greater(), &tree_record<T>::quadtree_ID);
     //若索引查找失败则直接返回false
     if (index == -1)
-    {
         return false;
-    }
 
-    // 计算索引对应四叉树管理范围
-    coord_range this_tree_range{};
-    border_qurdtree_calcu(this_tree_range, tree_info.num_sequence[index]);
+    //简化表示路径
+    auto& ptr_tree = tree_group[index];
+    //计算索引对应四叉树管理范围
+    coord_range tree_range{};
+    ptr_tree->tree->manage_range_calcu(tree_range, ptr_tree.root, ptr_tree.size);
 
     //检测当前四叉树是否完全覆盖参数坐标范围
     //若是则该参数坐标范围归属单棵四叉树
-    if (this_tree_range.left <= range.left &&
-        this_tree_range.right >= range.right &&
-        this_tree_range.down <= range.down &&
-        this_tree_range.up >= range.up)
+    if (tree_range.left <= range.left &&
+        tree_range.right >= range.right &&
+        tree_range.down <= range.down &&
+        tree_range.up >= range.up)
         return true;
     //若否则归属多棵
     else
         return false;
 }
 
-//四叉树相邻树问询
+//四叉树相邻树获取
 template<typename T>
 void Quadtree_Manager<T>::next_tree_get(const uint16_t& direct_ID, vector<uint16_t>& other_ID)
 {
     //构造包含直属四叉树ID信息的临时对象
-    tree_record<T> now_tree{};
-    tree_record<T>* target = &now_tree;
-    target->qurdtree_ID = direct_ID;
+    tree_record<T> temp_record{ nullptr, {}, 256, direct_ID };
+    tree_record<T>* target = &temp_record;
+
+    //简化表示路径
+    auto& tree_group = tree_info.ID_sequence;
     //二分查找该ID对应四叉树
-    int index = binary_search(tree_info.num_sequence.begin(), tree_info.num_sequence.end(),
+    int index = binary_search(tree_group.begin(), tree_group.end(),
         target->qurdtree_ID, greater(), &tree_record<T>::qurdtree_ID);
     //若未找到直属四叉树则直接返回
     if (index == -1)
-    {
         return;
-    }
-    else
-        target = tree_info.num_sequence[index];
-
-    //临时相邻四叉树查找结果存储
+    
+    //若查找成功则获取该记录完整信息
+    target = tree_group[index];
+    //相邻四叉树查找结果存储
     vector<tree_record<T>*> receiver{};
     //根据直属四叉树寻找相邻四叉树
     next_tree_seek(receiver, target);
@@ -113,15 +136,15 @@ void Quadtree_Manager<T>::next_tree_get(const uint16_t& direct_ID, vector<uint16
         //对receiver按编号降序排序
         sort(receiver.begin(), receiver.end(),
             greater(), &tree_record<T>::qurdtree_ID);
-        //设置相应编号
-        for (int time = 0; time < receiver.size(); time++)
-            other_ID.push_back(receiver[time]->qurdtree_ID);
+        //记录相应编号
+        for (int record_time = 0; record_time < receiver.size(); record_time++)
+            other_ID.push_back(receiver[record_time]->qurdtree_ID);
     }
 }
 
-//四叉树数量问询
+//四叉树数量获取
 template<typename T>
 int Quadtree_Manager<T>::tree_num_get(void)
 {
-    return tree_info.num_sequence.size();
+    return tree_info.ID_sequence.size();
 }

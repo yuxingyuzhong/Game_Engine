@@ -1,5 +1,4 @@
-#ifndef THIS_ALGORITHM
-#define THIS_ALGORITHM
+#pragma once
 #include "common/前置头文件包含.h"
 #include "common/公共命名空间使用.h"
 
@@ -21,6 +20,7 @@ namespace Game_Engine
 			else
 				return static_cast<int>(mid - original_first);  // 使用原始起始位置计算索引
 		}
+		//若查找失败则返回无效索引
 		return -1;
 	}
 
@@ -119,5 +119,3 @@ using engine::binary_search;
 //使用二项式值计算算法
 using engine::bino_distr_calcu;
 
-
-#endif 
