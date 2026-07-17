@@ -9,8 +9,6 @@
 using engine::Random_Generator;
 //使用四叉树输出结构体
 using engine::tree_block_data;
-//使用四叉树管理器输出结构体
-using engine::tree_manager_handle;
 //使用四叉树
 using engine::Quadtree;
 //使用四叉树生成器

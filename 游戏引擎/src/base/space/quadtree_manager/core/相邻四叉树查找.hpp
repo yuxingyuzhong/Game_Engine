@@ -3,8 +3,8 @@
 
 //相邻四叉树查找_____矩形筛选
 template<typename T>
-void Quadtree_Manager<T>::rectangle_screen(vector<tree_record<T>*>& receiver, const tree_record<T>* tree,
-    const coord_range& range)
+void Quadtree_Manager<T>::rectangle_filter(vector<tree_record<T>*>& receiver, const tree_record<T>* tree,
+    const coord_range& range,const vector<tree_record<T>*>* tree_group)
 {
     /*/
     矩形筛选逻辑：选定待查找树，记录其根节点坐标，然后以根节点坐标为原点
@@ -18,18 +18,21 @@ void Quadtree_Manager<T>::rectangle_screen(vector<tree_record<T>*>& receiver, co
     //临时筛选结果接收
     vector<tree_record<T>*> candidate{};
 
+    //若外界未提供四叉树集合则调用X轴四叉树序列
+    if (tree_group == nullptr)
+        tree_group = &X_sequence;
+
     //检测X轴坐标
-    auto& tree_group = tree_info.X_sequence;
-    for (int screen_time = 0; screen_time < tree_group.size(); screen_time++)
+    for (int screen_time = 0; screen_time < tree_group->size(); screen_time++)
     {
         //若候选四叉树根节点X坐标位于矩形筛选范围内
         //且与主体四叉树不为同一棵四叉树则满足条件
 
         //简化表示路径
-        auto& now_tree = tree_group[screen_time];
+        auto& now_tree = (*tree_group)[screen_time];
         if (now_tree->root.X >= range.left &&
             now_tree->root.X <= range.right &&
-            now_tree->quadtree_ID != tree->quadtree_ID)
+            now_tree->root != tree->root)
             candidate.push_back(now_tree);
     }
 
@@ -48,7 +51,7 @@ void Quadtree_Manager<T>::rectangle_screen(vector<tree_record<T>*>& receiver, co
         auto& now_tree = candidate[screen_time];
         if (now_tree->root.Y >= range.down &&
             now_tree->root.Y <= range.up &&
-            now_tree->quadtree_ID != tree->quadtree_ID)
+            now_tree->root != tree->root)
             receiver.push_back(now_tree);
     }
 }
@@ -67,39 +70,37 @@ vector<tree_record<T>*> Quadtree_Manager<T>::next_tree_classify(vector<tree_reco
 
     //确认筛选候选者四叉树存储
     vector<tree_record<T>*> verify_candidate{};
-    //四级筛选合格四叉树存储
-    vector<tree_record<T>*> verify_qualifier{};
 
     //根节点坐标差值
     coord_int root_diff = { 0,0 };
     //筛选条件命中次数
-    int screen_hits = 0;
+    int filter_hits = 0;
 
-    for (int screen_time = 0; screen_time < candidate.size(); screen_time++)
+    for (int filter = 0; filter < candidate.size(); filter++)
     {
         //重置筛选条件命中次数
-        screen_hits = 0;
+        filter_hits = 0;
         //重新计算根节点X坐标差值
-        root_diff.X = abs(tree->root.X - candidate[screen_time]->root.X);
+        root_diff.X = abs(tree->root.X - candidate[filter]->root.X);
         //重新计算根节点Y坐标差值
-        root_diff.Y = abs(tree->root.Y - candidate[screen_time]->root.Y);
+        root_diff.Y = abs(tree->root.Y - candidate[filter]->root.Y);
 
         //若X轴坐标差值小于等于两四叉树边长和之一半
         //则满足条件
-        if (root_diff.X <= (tree->size + candidate[screen_time]->size) / 2)
-            screen_hits++;
+        if (root_diff.X == (tree->size + candidate[filter]->size) / 2)
+            filter_hits++;
         //若Y轴坐标差值小于等于两四叉树边长和之一半
         //则满足条件
-        if (root_diff.Y <= (tree->size + candidate[screen_time]->size) / 2)
-            screen_hits++;
+        if (root_diff.Y == (tree->size + candidate[filter]->size) / 2)
+            filter_hits++;
         //若满足两个条件则必定为对角线相邻树
         //结束其筛选
-        if (screen_hits == 2)
-            receiver.push_back(candidate[screen_time]);
+        if (filter_hits == 2)
+            receiver.push_back(candidate[filter]);
         //若满足一个条件则为主体四叉树周围一排树
         //筛选进入第四级
-        else if (screen_hits == 1)
-            verify_candidate.push_back(candidate[screen_time]);
+        else if (filter_hits == 1)
+            verify_candidate.push_back(candidate[filter]);
     }
 
     //返回确认筛选候选者
@@ -127,10 +128,10 @@ void Quadtree_Manager<T>::next_tree_verify(vector<tree_record<T>*>& receiver, co
     //当前候选四叉树边界存储
     coord_range candidate_tree_range{};
 
-    for (int screen_time = 0; screen_time < candidate.size(); screen_time++)
+    for (int filter_time = 0; filter_time < candidate.size(); filter_time++)
     {
         //简化表示路径
-        auto& ptr_tree = candidate[screen_time];
+        auto& ptr_tree = candidate[filter_time];
         //重置候选相邻四叉树边界
         ptr_tree->tree->manage_range_calcu(candidate_tree_range, ptr_tree->root, ptr_tree->size);
 
@@ -146,13 +147,13 @@ void Quadtree_Manager<T>::next_tree_verify(vector<tree_record<T>*>& receiver, co
 
         //当一侧交集不为0即为相邻树
         if (is_x_next == true || is_y_next == true)
-            receiver.push_back(candidate[screen_time]);
+            receiver.push_back(candidate[filter_time]);
     }
 }
 
 //候选树筛选
 template<typename T>
-void Quadtree_Manager<T>::filter_candidate_tree(vector<tree_record<T>*>& receiver, const tree_record<T>* tree,
+void Quadtree_Manager<T>::candidate_tree_filter(vector<tree_record<T>*>& receiver, const tree_record<T>* tree,
     const vector<tree_record<T>*>& candidate)
 {
     //若筛选出候选四叉树
@@ -177,10 +178,11 @@ void Quadtree_Manager<T>::filter_candidate_tree(vector<tree_record<T>*>& receive
 
 //相邻四叉树查找总函数
 template<typename T>
-void Quadtree_Manager<T>::next_tree_seek(vector<tree_record<T>*>& receiver, const tree_record<T>* tree)
+void Quadtree_Manager<T>::next_tree_seek(vector<tree_record<T>*>& receiver, const tree_record<T>* tree, 
+    const vector<tree_record<T>*>* tree_group)
 {
     //矩形四叉树筛选结果存储
-    vector<tree_record<T>*> ptr_rectan_tree{};
+    vector<tree_record<T>*> rectan_trees{};
     //筛选以四叉树为中心的矩形范围内是否存在相邻四叉树
     coord_range tree_range{};
     //计算矩形筛选范围
@@ -189,14 +191,14 @@ void Quadtree_Manager<T>::next_tree_seek(vector<tree_record<T>*>& receiver, cons
     tree_range.up    = tree->root.Y + (tree->size + largest_tree_size) / 2;
     tree_range.down  = tree->root.Y - (tree->size + largest_tree_size) / 2;
     //进行矩形筛选
-    rectangle_screen(ptr_rectan_tree, tree, tree_range);
+    rectangle_filter(rectan_trees, tree, tree_range,tree_group);
     //若未筛选出候选四叉树或内存分配失败则直接返回
-    if (ptr_rectan_tree.size() == 0)
+    if (rectan_trees.size() == 0)
     {
-        receiver = ptr_rectan_tree;
+        receiver = rectan_trees;
         return;
     }
 
     //过滤矩形筛选结果
-    filter_candidate_tree(receiver,tree,ptr_rectan_tree);
+    candidate_tree_filter(receiver,tree,rectan_trees);
 }

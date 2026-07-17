@@ -5,9 +5,9 @@
 //通用算法模块
 namespace Game_Engine
 {
-	// 修复后的 binary_search：返回全局索引（相对于原始 first）
+	// 修复后的 point_binary_search：返回全局索引（相对于原始 first）
 	template<typename RandomIt, typename T, typename Compare, typename Projection = std::identity>
-	int binary_search(RandomIt first, RandomIt last, const T& target,
+	int point_binary_search(RandomIt first, RandomIt last, const T& target,
 		const Compare& comp, Projection proj = {})
 	{
 		RandomIt original_first = first;  // 保存原始起始位置
@@ -22,6 +22,59 @@ namespace Game_Engine
 		}
 		//若查找失败则返回无效索引
 		return -1;
+	}
+
+	template<typename RandomIt, typename T, typename Compare,
+		typename Projection = std::identity>
+	std::pair<int, int> range_binary_search(RandomIt first, RandomIt last,
+		const T& target,
+		const Compare& comp,
+		Projection proj = {})
+	{
+		// 1. 计算下界：第一个使得 comp(proj(*it), target) 为 false 的元素
+		//    即第一个不小于 target 的元素
+		auto lower = first;
+		auto end = last;
+		auto count = std::distance(first, last);
+		while (count > 0) {
+			auto step = count / 2;
+			auto it = lower;
+			std::advance(it, step);
+			if (comp(proj(*it), target)) {
+				lower = ++it;
+				count -= step + 1;
+			}
+			else {
+				count = step;
+			}
+		}
+
+		// 2. 计算上界：第一个使得 comp(target, proj(*it)) 为 true 的元素
+		//    即第一个大于 target 的元素
+		auto upper = lower;      // 从上界开始搜索
+		count = std::distance(upper, last);
+		while (count > 0) {
+			auto step = count / 2;
+			auto it = upper;
+			std::advance(it, step);
+			if (!comp(target, proj(*it))) {   // 即 target >= proj(*it) 
+				upper = ++it;
+				count -= step + 1;
+			}
+			else {
+				count = step;
+			}
+		}
+
+		// 3. 检查下界是否有效且与目标等价
+		if (lower == last || comp(proj(*lower), target) || comp(target, proj(*lower))) {
+			return { -1, -1 };   // 未找到任何等价元素
+		}
+
+		// 4. 返回闭区间的下标
+		auto left_index = static_cast<int>(std::distance(first, lower));
+		auto right_index = static_cast<int>(std::distance(first, upper)) - 1;
+		return { left_index, right_index };
 	}
 
 	//特定位数 数值和计算（引用版本）
@@ -114,8 +167,10 @@ namespace Game_Engine
 //使用位操作通用算法
 using engine::bit_set;
 using engine::bit_calcu;
-//使用二分查找通用算法
-using engine::binary_search;
+//使用点二分查找算法
+using engine::point_binary_search;
+//使用范围二分查找算法
+using engine::range_binary_search;
 //使用二项式值计算算法
 using engine::bino_distr_calcu;
 

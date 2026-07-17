@@ -23,7 +23,7 @@ int Quadtree<T>::point_seekable_analyse(const coord_int& target)
 	if (target.X < tree_range.left || target.X > tree_range.right
 		|| target.Y > tree_range.up || target.Y < tree_range.down)
 	{
-		//若当前四叉树大小以及大于等于上限大小则查找不可行
+    	//若当前四叉树大小以及大于等于上限大小则查找不可行
 		if (state.size >= state.max_size)
 		{
 			//若存在回调管理函数则报告上级
@@ -47,6 +47,7 @@ int Quadtree<T>::point_seekable_analyse(const coord_int& target)
 			{
 				//重新计算四叉树管理范围
 				manage_range_calcu(tree_range, state.root, state.size);
+
 				//重新比较四叉树是否已经包含待查找位置
 				//若未包含则返回分析持续值
 				if (target.X < tree_range.left || target.X > tree_range.right
@@ -114,9 +115,34 @@ void Quadtree<T>::range_seekable_analyse(const coord_range& format_range, coord_
 
 }
 
+//递归栈操作
+template <typename T>
+void Quadtree<T>::recur_stack_operate(vector<recur_record>& recur_stack,
+	Node*& ptr, coord_range& range, int& level,
+	bool push_back)
+{
+	//若为弹栈操作
+	if (push_back == true)
+		recur_stack.push_back({ ptr,range ,level });
+	//若为压栈操作
+	else
+	{
+		//简化表示路径
+		auto& record = recur_stack.back();
+		//获取记录指针
+		ptr = record.node;
+		//获取记录范围
+		range = record.node_range;
+		//获取记录递归级数
+		level = record.recur_level;
+		//弹出栈顶记录
+		recur_stack.pop_back();
+	}
+}
+
 //最小区块单元查找
 template <typename T>
-void Quadtree<T>::block_seek(tree_block_data<T>*& receiver, const coord_int& target)
+void Quadtree<T>::block_seek(tree_block_data<T>*& receiver, const coord_int& target, bool stable)
 {
 	//四叉树上限上限临时存储
 	int max_size = state.max_size;
@@ -167,10 +193,10 @@ void Quadtree<T>::block_seek(tree_block_data<T>*& receiver, const coord_int& tar
 		//递归子节点
 		//若当前不为最后一级则创建中间节点
 		if (recur_level_now < recur_level_max - 1)
-			child_node_recur(child_node, recur_direct, MIDDLE);
+			child_node_recur(child_node, recur_direct, MIDDLE,stable);
 		//若当前为最后一级递归则创建叶子节点
 		else if (recur_level_now == recur_level_max - 1)
-			child_node_recur(child_node, recur_direct, LEAF);
+			child_node_recur(child_node, recur_direct, LEAF,stable);
 
 		//若内存分配失败则直接返回
 		if (child_node == nullptr)
@@ -188,7 +214,7 @@ void Quadtree<T>::block_seek(tree_block_data<T>*& receiver, const coord_int& tar
 		receiver = new(nothrow) tree_block_data<T>;
 		//若内存分配失败则返回
 		if (receiver == nullptr)
-			return;
+			return;		
 	}
 
 	//记录查询结果
@@ -199,7 +225,7 @@ void Quadtree<T>::block_seek(tree_block_data<T>*& receiver, const coord_int& tar
 
 //范围区块单元查找
 template <typename T>
-void Quadtree<T>::range_seek(vector<tree_block_data<T>*>& receiver, const coord_range& target_range)
+void Quadtree<T>::range_seek(vector<tree_block_data<T>*>& receiver, const coord_range& target_range, bool stable)
 {
 	//可查询范围存储
 	coord_range seekable_range{};
@@ -266,29 +292,50 @@ void Quadtree<T>::range_seek(vector<tree_block_data<T>*>& receiver, const coord_
 		//且当前不为叶子层级
 		//则向栈存储信息
 		if (recursive_num > 1 && recur_level_now != recur_level_max - 1)
-			stack.push_back({ parent_node,parent_range ,recur_level_now });
+		    recur_stack_operate(stack,parent_node, parent_range,
+				recur_level_now,true);
 
 		//若当前不为最后一级递归
 		//则下级节点为中间节点
 		if (recur_level_now < recur_level_max - 1)
 		{
+			//弹栈操作标记位
+			bool is_pop_back = true;
+
 			//父节点递归
-			//若递归失败则结束查找进程
-			if (!child_node_recur(parent_node, recur_direct, MIDDLE))
-				break;
-			//更新父节点范围
-			coord_range old_parent_range = parent_range;
-			child_node_range_calcu(recur_direct, parent_range, old_parent_range);
+			//若递归成功则结束查找进程
+			if (child_node_recur(parent_node, recur_direct, MIDDLE,stable))
+			{
+				//存储父节点范围
+				coord_range old_range = parent_range;
+				//更新父节点范围
+				child_node_range_calcu(recur_direct, parent_range, old_range);
+				//更新递归级数
+				recur_level_now++;
+				//标记无需弹栈
+				is_pop_back = false;
+			}
+			
 			//若当前层级尚有未查找方向
 			if (recursive_num > 1)
+			{
 				//更新递归方向
 				recur_direct++;
+				//标记无需弹栈
+				is_pop_back = false;
+			}
 			//若当前层级无未查找方向
 			else
 				//重置当前层级递归方向记录
 				recur_direct = NW;
-			//更新递归级数
-			recur_level_now++;
+
+			//若弹栈操作为真且栈内元素为零则直接结束查找
+			if (is_pop_back == true && stack.size() == 0)
+				break;
+			//若弹栈操作为真且栈内元素不为零则读取信息
+			else if(is_pop_back == true && stack.size() != 0)
+				recur_stack_operate(stack, parent_node, parent_range,
+					recur_level_now, false);
 		}
 		//若当前为最后一级递归
 		//则下级节点为叶子节点
@@ -307,9 +354,9 @@ void Quadtree<T>::range_seek(vector<tree_block_data<T>*>& receiver, const coord_
 				//子节点指针存储
 				Node* child_node = parent_node;
 				//递归子节点
-				//若递归失败则结束查找进程
-				if (!child_node_recur(child_node, recur_direct, LEAF))
-					break;
+				//若递归失败则查找下一节点
+				if (!child_node_recur(child_node, recur_direct, LEAF,stable))
+					continue;
 				//记录查询结果
 				auto* new_data = new(nothrow) tree_block_data<T>
 					((child_range.left + child_range.right) / 2.0f,
@@ -329,18 +376,8 @@ void Quadtree<T>::range_seek(vector<tree_block_data<T>*>& receiver, const coord_
 				break;
 			//反之则从堆栈中读取信息
 			else
-			{
-				//简化表示路径
-				auto& record = stack.back();
-				//获取记录指针
-				parent_node = record.node;
-				//获取记录范围
-				parent_range = record.node_range;
-				//获取记录递归级数
-				recur_level_now = record.recur_level;
-				//弹出栈顶记录
-				stack.pop_back();
-			}
+				recur_stack_operate(stack, parent_node, 
+					parent_range, recur_level_now,false);
 		}
 	}
 }

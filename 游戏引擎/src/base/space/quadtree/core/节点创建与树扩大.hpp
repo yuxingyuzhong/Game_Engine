@@ -3,25 +3,22 @@
 
 //子节点递归
 template <typename T>
-bool Quadtree<T>::child_node_recur(Node*& this_node, const int& direct, const Node_type& mode)
+bool Quadtree<T>::child_node_recur(Node*& this_node, const int& direct, const Node_type& type, bool stable)
 {
-	//若当前子节点为空
-	//则递归指针指向子节点并分配内存
-	if (this_node->ptr_child[direct] == nullptr)
-	{
-		this_node->ptr_child[direct] = new(nothrow) Node(mode);
-		this_node = this_node->ptr_child[direct];
-		//若内存分配失败则返回false
-		if (this_node == nullptr)
-			return false;
-	}
-	//若子节点不为空指针且该子节点为中间节点
-	//则递归指针指向子节点
-	else
-		this_node = this_node->ptr_child[direct];
+	//若当前子节点为空且为稳定查询模式
+	//则为子节点分配内存
+	if (this_node->ptr_child[direct] == nullptr && stable == true)
+		this_node->ptr_child[direct] = new(nothrow) Node(type);
 
+	//递归指针子节点
+	this_node = this_node->ptr_child[direct];
+
+	//若子节点为空则返回false
+	if (this_node == nullptr)
+		return false;
 	//若无异常发生则返回true
-	return true;
+	else
+	    return true;
 }
 
 //四叉树扩大

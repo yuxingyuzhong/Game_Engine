@@ -30,8 +30,8 @@ void Quadtree_Manager<T>::prepare_smart_create_params(const vector<coord_int>& c
             recta_range.down = coord_set[time].Y;
     }
 
-    // 确定最大区块边长（位移量）
-    father_block_size = tree_info.max_tree_size;
+    //确定最大区块边长（位移量）
+    father_block_size = settings.max_tree_size;
 
     //计算矩形宽度
     int width = (recta_range.right - recta_range.left + 1);
@@ -181,7 +181,7 @@ void Quadtree_Manager<T>::divide_single_father_block(const vector<coord_int>& co
 
 //四叉树智能创建主函数
 template<typename T>
-void Quadtree_Manager<T>::qurdtree_create_smart(const vector<coord_int>& coord_set)
+void Quadtree_Manager<T>::qurdtree_build_smart(const vector<coord_int>& coord_set)
 {
     // 智能创建逻辑：
     // 先用一个初始矩形包裹住所有坐标点
@@ -190,39 +190,42 @@ void Quadtree_Manager<T>::qurdtree_create_smart(const vector<coord_int>& coord_s
     // 直至保证子区块尽可能小，且里面的点尽可能多
     // 尽可能远离区块边界
 
+    //简化表示路径
+    auto& tree_group = X_sequence;
+
     //若四叉树集合尚未存在
-    if (tree_info.X_sequence.size() == 0)
+    if (tree_group.size() == 0)
     {
         // —————————— 第一步：准备包围矩形和最大区块参数 ——————————
 
         //点集分布范围存储
         coord_range recta_range{};
-        //最大父区块数量
-        int father_block_num_all = 0;
-        //最大父区块边长
-        int father_block_size = 0;
+        //最大区块数量
+        int max_block_num_total = 0;
+        //最大区块边长
+        int max_block_size = 0;
         //计算矩形范围和最大区块参数
-        prepare_smart_create_params(coord_set, recta_range, father_block_num_all, father_block_size);
+        prepare_smart_create_params(coord_set, recta_range, max_block_num_total, max_block_size);
 
         // —————————— 第二步：遍历点集划分可递归区块 ——————————
 
         //各区块内坐标个数记录
-        vector<int> father_block_coord_count(father_block_num_all, 0);
+        vector<int> father_block_coord_count(max_block_num_total, 0);
 
         //访问索引记录
         int index = 0;
         //中转坐标存储
         coord_int middle_store{};
         //水平竖直方向包含区块数目计算
-        int father_block_num_X = (recta_range.right - recta_range.left + 1) / father_block_size;
+        int father_block_num_X = (recta_range.right - recta_range.left + 1) / max_block_size;
 
         //统计各区块包含坐标数
         for (int time = 0; time < coord_set.size(); time++)
         {
             //计算当前点所在列号（水平方向第几块）
-            int col_index = (coord_set[time].X - recta_range.left) / father_block_size;
+            int col_index = (coord_set[time].X - recta_range.left) / max_block_size;
             //计算当前点所在行号（垂直方向从上往下第几块）
-            int row_index = (recta_range.up - coord_set[time].Y) / father_block_size;
+            int row_index = (recta_range.up - coord_set[time].Y) / max_block_size;
             //合成一维区块索引
             int index = row_index * father_block_num_X + col_index;
 
@@ -246,29 +249,29 @@ void Quadtree_Manager<T>::qurdtree_create_smart(const vector<coord_int>& coord_s
         vector<uint64_t> tree_size{};
 
         //寻找可划分区块
-        for (int find_index = 0; find_index < father_block_num_all; find_index++)
+        for (int find_index = 0; find_index < max_block_num_total; find_index++)
         {
-            //重置区块边界
+            // 重置区块边界（修正为闭区间）
             left = recta_range.left;
-            right = left + father_block_size;
+            right = left + max_block_size - 1;   // 修正：减1
             up = recta_range.up;
-            down = up - father_block_size;
+            down = up - max_block_size + 1;      // 修正：加1
 
             //对符合条件的区块进行划分
             if (father_block_coord_count[find_index] != 0)
             {
                 //计算区块左边界
-                left += (find_index % father_block_num_X) * father_block_size;
-                //计算区块有边界
-                right = left + father_block_size;
+                left += (find_index % father_block_num_X) * max_block_size;
+                //计算区块右边界（闭区间）
+                right = left + max_block_size - 1;   // 修正：减1
                 //计算区块上边界
-                up -= (find_index / father_block_num_X) * father_block_size;
-                //计算区块下边界
-                down = up - father_block_size;
+                up -= (find_index / father_block_num_X) * max_block_size;
+                //计算区块下边界（闭区间）
+                down = up - max_block_size + 1;      // 修正：加1
 
                 //调用区块划分函数
                 divide_single_father_block(coord_set, left, right, up, down,
-                    father_block_size, father_block_coord_count[find_index],
+                    max_block_size, father_block_coord_count[find_index],
                     root, tree_size);
             }
         }
@@ -276,7 +279,7 @@ void Quadtree_Manager<T>::qurdtree_create_smart(const vector<coord_int>& coord_s
         // —————————— 第四步：统一创建所有四叉树 ——————————
         for (int create_time = 0; create_time < root.size(); create_time++)
         {
-            qurdtree_build(root[create_time], tree_size[create_time]);
+            quadtree_build(root[create_time], tree_size[create_time]);
         }
     }
     //若四叉树集合已经存在
@@ -286,15 +289,10 @@ void Quadtree_Manager<T>::qurdtree_create_smart(const vector<coord_int>& coord_s
         for (int exam_time = 0; exam_time < coord_set.size(); exam_time++)
         {
             //若点集坐标尚未被四叉树覆盖
-            //则调用单区块查询函数
-            //利用其自适应查询机制完成四叉树的自适应创建
-            if (direct_qurdtree_seek(coord_set[exam_time]) == nullptr)
-            {
-                //临时构造句柄
-                tree_manager_handle<T>* handle = nullptr;
-                block_info_seek(handle, coord_set[exam_time]);
-            }
+            //则调用扩大管理函数
+            //利用其自适应机制完成四叉树的创建
+            if (quadtree_inclusion_seek(coord_set[exam_time]) == nullptr)
+                tree_expand_approve(tree_group.back()->root, coord_set[exam_time],true);
         }
     }
 }
-

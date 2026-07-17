@@ -6,7 +6,7 @@ template<typename T>
 tree_record<T>* Quadtree_Manager<T>::callback_tree_seek(const coord_double& root)
 {
     //简化表示路径
-    auto& tree_group = tree_info.ID_sequence;
+    auto& tree_group = X_sequence;
     //寻找回调管理四叉树
     for (int seek_time = 0; seek_time < tree_group.size(); seek_time++)
     {
@@ -21,24 +21,37 @@ tree_record<T>* Quadtree_Manager<T>::callback_tree_seek(const coord_double& root
 
 //四叉树扩大管理_____新四叉树管理范围计算
 template<typename T>
-void Quadtree_Manager<T>::new_tree_range_calcu(const tree_record<T>* primary_tree, 
+void Quadtree_Manager<T>::new_tree_range_calcu(const tree_record<T>* baseline_tree,
     const coord_int& target, coord_range& new_tree)
 {
-
-    //设置扫描起点
-    //固定在当前树中心简化判断
-    //同时伴随一定性能损耗
-
     //简化表示路径
-    auto& min_tree_size = tree_info.min_tree_size;
-    //初始化新四叉树X轴左边界
-    new_tree.left  = (primary_tree->root.X + 0.5) - min_tree_size;
-    //初始化新四叉树X轴右边界
-    new_tree.right = new_tree.left + (min_tree_size - 1);
-    //初始化新四叉树Y轴上边界
-    new_tree.up    = (primary_tree->root.Y - 0.5) + min_tree_size;
-    //初始化新四叉树Y轴下边界
-    new_tree.down  = new_tree.up - (min_tree_size - 1);
+    auto& min_tree_size = settings.min_tree_size;
+    auto& root = baseline_tree->root;
+    //计算新四叉树起始范围
+    baseline_tree->tree->manage_range_calcu(new_tree, root, min_tree_size);
+
+    //若基准四叉树大小不为初始大小
+    //则对起始范围进行进一步校准
+    if (baseline_tree->size != settings.min_tree_size)
+    {
+        //X轴偏移量
+        uint64_t offset_x = min_tree_size / 2;
+        //Y轴偏移量
+        uint64_t offset_y = min_tree_size / 2;
+
+        //若目标X轴坐标小于根节点坐标
+        if (target.X < root.X)
+            offset_x *= -1;
+        //若目标Y轴坐标小于根节点坐标
+        if (target.Y < root.Y)
+            offset_y *= -1;
+
+        //校准范围
+        new_tree.left += offset_x;
+        new_tree.right += offset_x;
+        new_tree.up += offset_y;
+        new_tree.down += offset_y;
+    }
 
     //计算新四叉树管理范围
     for (;;)
@@ -81,7 +94,7 @@ void Quadtree_Manager<T>::new_tree_range_calcu(const tree_record<T>* primary_tre
 
 //四叉树扩大管理方法
 template<typename T>
-bool Quadtree_Manager<T>::tree_expand_approve(const coord_double& root, const coord_int& target)
+bool Quadtree_Manager<T>::tree_expand_approve(const coord_double& root, const coord_int& target,bool internal)
 {
     //获取当前回调管理四叉树信息
     tree_record<T>* now_tree = nullptr;
@@ -89,8 +102,14 @@ bool Quadtree_Manager<T>::tree_expand_approve(const coord_double& root, const co
     //若回调管理四叉树查询失败则直接返回
     if (now_tree == nullptr)
         return false;
-    //若四叉树大小未达到上限则进行扩大可行性分析
-    else if(now_tree->size < tree_info.max_tree_size)
+
+    //若目标点直属四叉树查找成功则直接返回
+    if (quadtree_inclusion_seek(target) != nullptr)
+        return false;
+    //若目标点直属四叉树查找失败
+    //且当前函数非内部调用
+    //且回调管理四叉树大小未达到上限则进行扩大可行性分析
+    else if(internal == false && now_tree->size < settings.max_tree_size)
     {
         //矩形筛选范围存储
         coord_range rectan_range{};
@@ -104,7 +123,7 @@ bool Quadtree_Manager<T>::tree_expand_approve(const coord_double& root, const co
         rectan_range.up = now_tree->root.Y + (now_tree->size + now_tree->size) / 2;
         rectan_range.down = now_tree->root.Y - (now_tree->size + now_tree->size) / 2;
         //进入矩形筛选
-        rectangle_screen(ptr_rectan_tree, now_tree, rectan_range);
+        rectangle_filter(ptr_rectan_tree, now_tree, rectan_range);
 
         //若不存在其他四叉树根节点
         //则继续筛选扩大区域外
@@ -113,14 +132,14 @@ bool Quadtree_Manager<T>::tree_expand_approve(const coord_double& root, const co
         if (ptr_rectan_tree.size() == 0)
         {
             //存储相邻四叉树
-            vector<tree_record<T>*> ptr_next_tree{};
+            vector<tree_record<T>*> next_trees{};
             //重定义四叉树大小以满足筛选需要
             now_tree->size *= 2;
             //查找相邻区域四叉树
-            next_tree_seek(ptr_next_tree, now_tree);
+            next_tree_seek(next_trees, now_tree);
 
             //若存在相邻四叉树则筛选重叠四叉树
-            if (ptr_next_tree.size() > 0)
+            if (next_trees.size() > 0)
             {
                 //重置四叉树存储
                 vector<tree_record<T>*> ptr_overlap_tree{};
@@ -133,27 +152,52 @@ bool Quadtree_Manager<T>::tree_expand_approve(const coord_double& root, const co
                             return false;
                     };
                 //确认筛选——筛选重叠四叉树
-                next_tree_verify(ptr_overlap_tree, now_tree, ptr_next_tree, screen_method);
+                next_tree_verify(ptr_overlap_tree, now_tree, next_trees, screen_method);
 
                 //恢复四叉树真实大小记录
                 now_tree->size /= 2;
                 //若不存在重叠四叉树则扩大可行
                 if (ptr_overlap_tree.size() == 0)
                 {
+                    //更新四叉树大小记录
+                    now_tree->size *= 2;
                     //若满足条件则重置当前最大四叉树记录
-                    if (now_tree->size * 2 > largest_tree_size)
-                        largest_tree_size = now_tree->size * 2;
+                    if (now_tree->size> largest_tree_size)
+                        largest_tree_size = now_tree->size;
+
+                    //简化表示路径
+                    auto& records = tree_cache.records;
+                    auto& ranges = tree_cache.ranges;
+                    //检查缓存是否失效
+                    for (int exam_time = 0; exam_time < records.size(); exam_time++)
+                    {
+                        //若缓存失效则更新缓存
+                        if (now_tree == records[exam_time])
+                            now_tree->tree->manage_range_calcu(ranges[exam_time],
+                                now_tree->root, now_tree->size);
+                    }
+
                     return true;
                 }
             }
             //若不存在相邻四叉树则扩大可行
             else
             {
-                //恢复四叉树真实大小记录
-                now_tree->size /= 2;
                 //若满足条件则重置当前最大四叉树记录
-                if (now_tree->size * 2 > largest_tree_size)
-                    largest_tree_size = now_tree->size * 2;
+                if (now_tree->size> largest_tree_size)
+                    largest_tree_size = now_tree->size;
+
+                //简化表示路径
+                auto& records = tree_cache.records;
+                auto& ranges = tree_cache.ranges;
+                //检查缓存是否失效
+                for (int exam_time = 0; exam_time < records.size(); exam_time++)
+                {
+                    //若缓存失效则更新缓存
+                    if (now_tree == records[exam_time])
+                        now_tree->tree->manage_range_calcu(ranges[exam_time],
+                            now_tree->root, now_tree->size);
+                }
                 return true;
             }
         }
@@ -168,29 +212,14 @@ bool Quadtree_Manager<T>::tree_expand_approve(const coord_double& root, const co
     //获取新四叉树管理范围
     new_tree_range_calcu(now_tree, target, new_tree_range);
     //计算新四叉树根节点位置
-    new_root.X = (new_tree_range.left + new_tree_range.right) / 2;
-    new_root.Y = (new_tree_range.up + new_tree_range.down) / 2;
+    new_root.X = (new_tree_range.left + new_tree_range.right) / 2.0f;
+    new_root.Y = (new_tree_range.up + new_tree_range.down) / 2.0f;
 
-    //简化表示
-    auto& tree_group = tree_info.ID_sequence;
-    //寻找待创建四叉树是否已经存在
-    for (int seek_time = 0; seek_time < tree_group.size(); seek_time++)
-    {
-        //若存在则将其移动到编号序列末尾
-        if (tree_group[seek_time]->root.X == new_root.X &&
-            tree_group[seek_time]->root.Y == new_root.Y)
-        {
-            //移动目标可查询四叉树到序列末尾
-            //完成句柄更新前置工作
-            rotate(tree_group.begin() + seek_time, tree_group.begin() + seek_time + 1,
-                tree_group.end());
-            //返回扩大不可行
-            return false;
-        }
-    }
+    //创建新四叉树
+    quadtree_build(new_root,settings.min_tree_size);
 
-    //若不存在则创建新四叉树
-    qurdtree_build(new_root);
+    cout << "新四叉树根节点:\n" << new_root;
+    cout << "新四叉树大小:" << settings.min_tree_size << endl;
     //返回扩大不可行
     return false;
 }

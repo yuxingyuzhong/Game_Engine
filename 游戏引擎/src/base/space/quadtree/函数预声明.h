@@ -2,6 +2,8 @@
 #include "common/前置头文件包含.h"
 #include "common/公共命名空间使用.h"
 
+//使用四叉树状态结构体
+using engine::tree_state;
 //使用四叉树输出结构体
 using engine::tree_block_data;
 
@@ -12,29 +14,7 @@ namespace Game_Engine
 	class Quadtree
 	{
 		// ========================================================================
-		// 一、公开接口
-		// ========================================================================
-	public:
-		//构造函数
-		Quadtree(const uint64_t& size = 256, const coord_double& root = { 0.5,0.5 });
-		//析构函数
-		~Quadtree(void);
-
-		//最小区块单元大小设置
-		void set_block_size(const uint64_t& size);
-		//四叉树边长上限设置
-		void set_max_size(const uint64_t& size);
-		//四叉树回调管理方法设置
-		void set_callback_manage
-		(const function<bool(coord_double root, coord_int target)>& cb);
-
-		//最小区块单元查找
-		void block_seek(tree_block_data<T>*& receiver, const coord_int& target);
-		//范围区块单元查找
-		void range_seek(vector<tree_block_data<T>*>& receiver, const coord_range& target_range);
-
-		// ========================================================================
-		// 二、内部类型定义（支撑数据结构的"零件"）
+		// 一、内部类型定义（支撑数据结构的"零件"）
 		// ========================================================================
 	private:
 		//节点类型枚举
@@ -79,25 +59,40 @@ namespace Game_Engine
 			coord_range node_range{};
 			int recur_level = 0;
 		};
-
-		//树信息结构体
-		struct tree_state
-		{
-			//为避免根节点中心偏移现象
-			//故采用小数坐标
-
-			//根节点坐标
-			coord_double root = { 0.5,0.5 };
-			//四叉树大小
-			uint64_t size = 256;
-			//四叉树大小上限
-			uint64_t max_size = 9223372036854775808;//初始化2的63次方
-			//最小区块单元大小
-			uint64_t block_size = 16;
-
-		}state;
+		//四叉树状态记录
+		tree_state state;
 		//外界上级管理对象回调管理方法----四叉树扩大行为权限申请
 		function<bool(const coord_double& root, const coord_int& target)> callback;
+
+		// ========================================================================
+		// 二、公开接口
+		// ========================================================================
+	public:
+		//构造函数
+		Quadtree(const uint64_t& size = 256, const coord_double& root = { 0.5,0.5 });
+		//析构函数
+		~Quadtree(void);
+		//析构函数辅助函数
+		void unload(int now_level, const int& max_level,Node* ptr_now);
+
+		// ---- 设置 ----
+		//最小区块单元大小设置
+		void set_block_size(const uint64_t& size);
+		//四叉树边长上限设置
+		void set_max_size(const uint64_t& size);
+		//四叉树回调管理方法设置
+		void set_callback_manage
+		(const function<bool(coord_double root, coord_int target)>& cb);
+
+		// ---- 查询 ----
+		//最小区块单元查找
+		void block_seek(tree_block_data<T>*& receiver, const coord_int& target, bool stable);
+		//范围区块单元查找
+		void range_seek(vector<tree_block_data<T>*>& receiver, const coord_range& target_range, bool stable);
+
+		// ---- 读取 ----
+		//四叉树状态获取
+		const tree_state& tree_state_get(void);
 
 		// ========================================================================
 		// 三、底层计算工具
@@ -130,7 +125,7 @@ namespace Game_Engine
 		// ========================================================================
 	private:
 		//子节点递归
-		bool child_node_recur(Node*& this_node, const int& direct, const Node_type& mode);
+		bool child_node_recur(Node*& this_node, const int& direct, const Node_type& type, bool stable);
 
 		//四叉树扩大
 		bool tree_expand(void);
@@ -144,6 +139,11 @@ namespace Game_Engine
 
 		//范围查询可行性分析
 		void range_seekable_analyse(const coord_range& format_range, coord_range& seekable_range);
+
+		//递归栈操作
+		void recur_stack_operate(vector<recur_record>& recur_stack,
+			Node*& ptr, coord_range& range, int& level,
+			bool push_back);
 	};
 }
 

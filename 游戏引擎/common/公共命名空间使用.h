@@ -20,6 +20,7 @@ using std::array;
 using std::unordered_set;
 using std::unordered_map;
 using std::unique_ptr;
+using std::pair;
 
 // —— C++ 通用工具 ——
 using std::nothrow;
@@ -30,6 +31,7 @@ using std::move;
 using std::swap;
 using std::rotate;
 using std::popcount;
+using std::is_pointer_v;
 
 // —— C++ 数学 ——
 using std::sqrt;
@@ -109,15 +111,49 @@ namespace Game_Engine
 		double Y = 0.0;
 
 		//等于运算符重载
+		//-----精确相等比较（基于 ULP）-----
+		//使用 ULP（Unit in the Last Place）比较，可适应任意大小坐标，
+		//避免绝对容差在大数值下失效的问题。
 		bool operator==(const coord_double& other) const
 		{
-			const double eps = 1e-9;  // 容差范围，适配double精度
-			return std::abs(X - other.X) < eps && std::abs(Y - other.Y) < eps;
+			// 1. 处理特殊值：NaN 和无穷
+			if (std::isnan(X) || std::isnan(other.X) ||
+				std::isnan(Y) || std::isnan(other.Y))
+				return false;
+			if (std::isinf(X) || std::isinf(other.X) ||
+				std::isinf(Y) || std::isinf(other.Y))
+				return X == other.X && Y == other.Y;
+
+			// 2. 计算两个 double 之间的 ULP 距离（绝对值）
+			auto ulp_distance = [](double lhs, double rhs) -> uint64_t {
+				if (lhs == rhs) return 0;
+				// 将 double 按位转换为 64 位整数（IEEE 754 格式）
+				uint64_t lhs_bits = *reinterpret_cast<const uint64_t*>(&lhs);
+				uint64_t rhs_bits = *reinterpret_cast<const uint64_t*>(&rhs);
+				// 如果符号不同，则差值极大（视为不相等）
+				if ((lhs_bits & 0x8000000000000000ULL) !=
+					(rhs_bits & 0x8000000000000000ULL))
+					return UINT64_MAX;
+				// 计算整数差值（即 ULP 数量）
+				if (lhs_bits > rhs_bits) std::swap(lhs_bits, rhs_bits);
+				return rhs_bits - lhs_bits;
+				};
+
+			const uint64_t max_ulp = 4;  // 允许 4 个 ULP 误差（通常足够）
+			return ulp_distance(X, other.X) <= max_ulp &&
+				ulp_distance(Y, other.Y) <= max_ulp;
 		}
 		//不等于运算符重载
 		bool operator!=(const coord_double& other) const
 		{
 			return !(*this == other);
+		}
+		//赋值运算符重载
+		coord_double& operator=(const coord_double& other) 
+		{
+			X = other.X;
+			Y = other.Y;
+			return *this;
 		}
 
 		// 输出重载（友元版本，放在结构体内部声明）
@@ -171,43 +207,65 @@ namespace Game_Engine
 	//类模板前向声明
 	template<typename T> class Quadtree_Manager;
 
-	//四叉树节点结构体
+	//四叉树状态结构体
+	//用于四叉树
+	struct tree_state
+	{
+		//为避免根节点中心偏移现象
+		//故采用小数坐标
+		//根节点坐标
+		coord_double root = { 0.5,0.5 };
+		//四叉树大小
+		uint64_t size = 256;
+		//四叉树大小上限
+		uint64_t max_size = 9223372036854775808;//初始化2的63次方
+		//最小区块单元大小
+		uint64_t block_size = 16;
+	};
+
+	//四叉树记录结构体
 	//用于四叉树管理器
 	template<typename T>
 	struct tree_record
 	{
+	private:
 		//四叉树指针
 		Quadtree<T>* tree = nullptr;
+	public:
+		//四叉树管理器友元声明
+		friend Quadtree_Manager<T>;
 		//四叉树根节点坐标
 		coord_double root{ 0.5,0.5 };
 		//四叉树大小
 		uint16_t size = 256;
-		//四叉树编号
-		uint16_t quadtree_ID = 0;
 	};
 
-	//四叉树合并/卸载信息结构体
-	//用于四叉树管理器，角色管理器
-	template<typename T>
-	struct merge_feedback
+	//四叉树管理器设置结构体
+	//用于四叉树管理器
+	struct tree_manager_settings
 	{
-	private:
-		vector<tree_record<T>*> ptr_tree{};
-	public:
-		//待合并/卸载四叉树ID
-		vector<uint16_t> old_tree_ID{};
-		//新建四叉树ID
-		vector<uint16_t> new_tree_ID{};
-		//四叉树管理器友元
-		friend class Quadtree_Manager<T>;
+		//最小区块单元大小
+		uint64_t block_size = 16;
+		//四叉树大小上限
+		uint64_t max_tree_size = 65536;
+		//四叉树大小下限
+		uint64_t min_tree_size = 256;
+		//缓存启用状态
+		bool is_cache_enabled = true;
+		//缓存启用阈值
+		uint64_t cache_active_threshold = 32;
+		//缓存条目上限
+		uint64_t max_cache_records = 16;
 	};
 
 	// 四叉树输出信息结构体
-	// 用于四叉树及四叉树管理器，食物类
+	// 用于四叉树及四叉树管理器
 	template<typename T>
 	struct tree_block_data
 	{
 	public:
+		//友元声明，允许四叉树管理器类访问私有成员
+		friend class Quadtree_Manager<T>;
 		//友元声明，允许四叉树类访问私有成员
 		friend class Quadtree<T>;
 		//友元声明，允许被包装对象访问私有成员
@@ -228,36 +286,6 @@ namespace Game_Engine
 	private:
 		coord_double node = { 0.5f, 0.5f };  // 使用 0.5f 强调 float 类型
 		T* ptr_data = nullptr;
-	};
-
-	//四叉树管理器输出信息结构体
-	//用于四叉树管理器，事件中心，角色管理器
-	template<typename T>
-	struct tree_manager_handle
-	{
-	private:
-		//四叉树及其信息指针
-		tree_record<T>* ptr_tree = nullptr;
-	public:
-		//默认构造函数
-		tree_manager_handle()
-		{}
-		tree_manager_handle(tree_record<T>* tree, int id, tree_block_data<T>* data_ptr)
-			: ptr_tree(tree), ID(id), ptr_data(data_ptr)
-		{}
-		//默认析构函数
-		~tree_manager_handle()
-		{
-
-		}
-		//四叉树管理器友元
-		friend class Quadtree_Manager<T>;
-		//四叉树编号
-		//树ID从1开始
-		//0为初始标记
-		uint16_t ID = 0;
-		//查找目标区块
-		tree_block_data<T>* ptr_data = nullptr;
 	};
 
 }
