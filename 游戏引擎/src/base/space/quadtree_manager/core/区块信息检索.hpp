@@ -1,5 +1,5 @@
 #pragma once
-#include "src/base/space/quadtree_manager/函数预声明.h"
+#include "src/base/space/Quadtree_Manager/函数预声明.h"
 
 //查询范围列表修改
 template<typename T>

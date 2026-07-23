@@ -1,8 +1,9 @@
 #pragma once
 #include "common/前置头文件包含.h"
 #include "common/公共命名空间使用.h"
-#include "src/base/space/quadtree/四叉树.h"
-#include "src/base/tools/算法辅助工具.h"
+#include "四叉树管理器通信结构体.h"
+#include "src/base/space/Quadtree/四叉树.h"
+#include "src/base/tools/Auxi_Algorithm/算法辅助工具.h"
 
 //使用四叉树类
 using engine::Quadtree;

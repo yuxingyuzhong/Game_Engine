@@ -1,6 +1,7 @@
 #pragma once
 #include "common/前置头文件包含.h"
 #include "common/公共命名空间使用.h"
+#include "四叉树通信结构体.h"
 
 //使用四叉树状态结构体
 using engine::tree_state;
@@ -94,6 +95,10 @@ namespace Game_Engine
 		//四叉树状态获取
 		const tree_state& tree_state_get(void);
 
+		// ---- 维护 ---- 
+		//四叉树扩大
+		bool tree_expand(void);
+
 		// ========================================================================
 		// 三、底层计算工具
 		// ========================================================================
@@ -126,9 +131,6 @@ namespace Game_Engine
 	private:
 		//子节点递归
 		bool child_node_recur(Node*& this_node, const int& direct, const Node_type& type, bool stable);
-
-		//四叉树扩大
-		bool tree_expand(void);
 
 		// ========================================================================
 		// 五、查询前置支撑（为检索做动态适配）

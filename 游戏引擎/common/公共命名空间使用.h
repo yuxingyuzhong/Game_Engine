@@ -9,6 +9,7 @@ using std::format;
 using std::iostream;
 using std::ifstream;
 using std::ofstream;
+using std::error_code;
 using std::istreambuf_iterator;
 
 // —— C++ 字符串与正则 ——
@@ -20,7 +21,10 @@ using std::array;
 using std::unordered_set;
 using std::unordered_map;
 using std::unique_ptr;
+using std::shared_ptr;
+using std::weak_ptr;
 using std::pair;
+using std::hash;
 
 // —— C++ 通用工具 ——
 using std::nothrow;
@@ -32,6 +36,7 @@ using std::swap;
 using std::rotate;
 using std::popcount;
 using std::is_pointer_v;
+using std::make_unique;
 
 // —— C++ 数学 ——
 using std::sqrt;
@@ -45,7 +50,8 @@ using std::ranges::less;
 using std::ranges::sort;
 using std::ranges::fill;
 
-//前向声明名称空间
+// —— C++json解析库 ——
+using nlohmann::json;
 
 //通用模块
 namespace Game_Engine
@@ -197,97 +203,6 @@ namespace Game_Engine
 			return os;
 		}
 	};
-}
-
-//四叉树及四叉树管理器模块
-namespace Game_Engine
-{
-	//类模板前向声明
-	template<typename T> class Quadtree;
-	//类模板前向声明
-	template<typename T> class Quadtree_Manager;
-
-	//四叉树状态结构体
-	//用于四叉树
-	struct tree_state
-	{
-		//为避免根节点中心偏移现象
-		//故采用小数坐标
-		//根节点坐标
-		coord_double root = { 0.5,0.5 };
-		//四叉树大小
-		uint64_t size = 256;
-		//四叉树大小上限
-		uint64_t max_size = 9223372036854775808;//初始化2的63次方
-		//最小区块单元大小
-		uint64_t block_size = 16;
-	};
-
-	//四叉树记录结构体
-	//用于四叉树管理器
-	template<typename T>
-	struct tree_record
-	{
-	private:
-		//四叉树指针
-		Quadtree<T>* tree = nullptr;
-	public:
-		//四叉树管理器友元声明
-		friend Quadtree_Manager<T>;
-		//四叉树根节点坐标
-		coord_double root{ 0.5,0.5 };
-		//四叉树大小
-		uint16_t size = 256;
-	};
-
-	//四叉树管理器设置结构体
-	//用于四叉树管理器
-	struct tree_manager_settings
-	{
-		//最小区块单元大小
-		uint64_t block_size = 16;
-		//四叉树大小上限
-		uint64_t max_tree_size = 65536;
-		//四叉树大小下限
-		uint64_t min_tree_size = 256;
-		//缓存启用状态
-		bool is_cache_enabled = true;
-		//缓存启用阈值
-		uint64_t cache_active_threshold = 32;
-		//缓存条目上限
-		uint64_t max_cache_records = 16;
-	};
-
-	// 四叉树输出信息结构体
-	// 用于四叉树及四叉树管理器
-	template<typename T>
-	struct tree_block_data
-	{
-	public:
-		//友元声明，允许四叉树管理器类访问私有成员
-		friend class Quadtree_Manager<T>;
-		//友元声明，允许四叉树类访问私有成员
-		friend class Quadtree<T>;
-		//友元声明，允许被包装对象访问私有成员
-		friend T;
-
-		//默认构造函数
-		tree_block_data() {}
-		//列表构造函数：直接接收坐标和 T* 指针
-		tree_block_data(float x, float y, T* ptr)
-		{
-			node.X = x;
-			node.Y = y;
-			ptr_data = ptr;
-		}
-		//默认析构函数
-		~tree_block_data() {}
-
-	private:
-		coord_double node = { 0.5f, 0.5f };  // 使用 0.5f 强调 float 类型
-		T* ptr_data = nullptr;
-	};
-
 }
 
 //命名空间别名

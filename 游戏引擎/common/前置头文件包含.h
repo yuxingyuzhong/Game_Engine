@@ -44,6 +44,7 @@
 #include <fstream>      // std::ifstream, std::ofstream, std::fstream
 #include <sstream>      // std::stringstream
 #include <format>       // std::format (C++20)
+#include <filesystem>   
 
 // ----- 算法与迭代器 -----
 #include <algorithm>    // sort, find, reverse, swap, max_element, min_element
@@ -71,6 +72,14 @@
 
 // ----- C++20 调试信息 -----
 #include <source_location>  // std::source_location
+
+// ----- Lua C++ API（外部库）-----
+#include "src/base/lib/Lua/lua.h"       // Lua 核心 API
+#include "src/base/lib/Lua/lauxlib.h"   // Lua 辅助库
+#include "src/base/lib/Lua/lualib.h"    // Lua 标准库
+
+// ----- JSON 解析（外部库）-----
+#include "src/base/lib/Json/json.hpp"  // 轻量级 JSON 库
 
 //============================================================================
 // 3. 编译器与平台相关（仅 Windows）

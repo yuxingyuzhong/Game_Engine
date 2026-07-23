@@ -1,5 +1,5 @@
 #pragma once
-#include "src/base/space/quadtree_manager/函数预声明.h"
+#include "src/base/space/Quadtree_Manager/函数预声明.h"
 
 //四叉树扩大管理_____回调管理四叉树查找
 template<typename T>
@@ -107,9 +107,8 @@ bool Quadtree_Manager<T>::tree_expand_approve(const coord_double& root, const co
     if (quadtree_inclusion_seek(target) != nullptr)
         return false;
     //若目标点直属四叉树查找失败
-    //且当前函数非内部调用
     //且回调管理四叉树大小未达到上限则进行扩大可行性分析
-    else if(internal == false && now_tree->size < settings.max_tree_size)
+    else if(now_tree->size < settings.max_tree_size)
     {
         //矩形筛选范围存储
         coord_range rectan_range{};
@@ -164,6 +163,9 @@ bool Quadtree_Manager<T>::tree_expand_approve(const coord_double& root, const co
                     //若满足条件则重置当前最大四叉树记录
                     if (now_tree->size> largest_tree_size)
                         largest_tree_size = now_tree->size;
+                    //若当前函数为内部调用
+                    if (internal == true)
+                        now_tree->tree->tree_expand();
 
                     //简化表示路径
                     auto& records = tree_cache.records;
@@ -186,6 +188,9 @@ bool Quadtree_Manager<T>::tree_expand_approve(const coord_double& root, const co
                 //若满足条件则重置当前最大四叉树记录
                 if (now_tree->size> largest_tree_size)
                     largest_tree_size = now_tree->size;
+                //若当前函数为内部调用
+                if (internal == true)
+                    now_tree->tree->tree_expand();
 
                 //简化表示路径
                 auto& records = tree_cache.records;
@@ -218,8 +223,6 @@ bool Quadtree_Manager<T>::tree_expand_approve(const coord_double& root, const co
     //创建新四叉树
     quadtree_build(new_root,settings.min_tree_size);
 
-    cout << "新四叉树根节点:\n" << new_root;
-    cout << "新四叉树大小:" << settings.min_tree_size << endl;
     //返回扩大不可行
     return false;
 }

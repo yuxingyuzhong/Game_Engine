@@ -1,5 +1,5 @@
 #pragma once
-#include "src/base/space/quadtree/函数预声明.h"
+#include "src/base/space/Quadtree/函数预声明.h"
 
 //递归级数计算
 template <typename T>

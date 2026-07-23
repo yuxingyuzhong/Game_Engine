@@ -1,0 +1,201 @@
+{
+	"globsDependent" : 
+	[
+		{
+			"expression" : "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/*.cpp",
+			"paths" : 
+			[
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/plugin/Tests/\u529f\u80fd\u6d4b\u8bd5\u5668.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/entity/Dynamic_Entity/core/\u52a8\u6001\u5b9e\u4f53.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/entity/Entity_Manager/core/\u5b9e\u4f53\u7ba1\u7406\u5668.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/event/Event_Broker/core/\u4e8b\u4ef6\u4e2d\u8f6c\u5668.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lapi.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lauxlib.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lbaselib.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lcode.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lcorolib.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lctype.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/ldblib.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/ldebug.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/ldo.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/ldump.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lfunc.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lgc.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/linit.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/liolib.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/llex.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lmathlib.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lmem.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/loadlib.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lobject.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lopcodes.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/loslib.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lparser.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lstate.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lstring.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lstrlib.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/ltable.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/ltablib.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/ltm.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lundump.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lutf8lib.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lvm.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/lib/Lua/lzio.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/tools/Config_Loader/core/\u914d\u7f6e\u52a0\u8f7d\u5668.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/tools/Random/\u968f\u673a\u6570\u751f\u6210\u5668.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/tools/Script_System/LuaScript/core/Lua\u811a\u672c.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/tools/Script_System/LuaTable/core/Lua\u8868.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/src/base/tools/Script_System/ScriptComponent/core/\u811a\u672c\u7ec4\u4ef6.cpp",
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/\u4e3b\u8c03\u6587\u4ef6/\u4e3b\u8c03\u6587\u4ef6.cpp"
+			],
+			"recurse" : true
+		},
+		{
+			"expression" : "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/\u4e3b\u8c03\u6587\u4ef6/*.cpp",
+			"paths" : 
+			[
+				"D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/\u6e38\u620f\u5f15\u64ce/\u4e3b\u8c03\u6587\u4ef6/\u4e3b\u8c03\u6587\u4ef6.cpp"
+			],
+			"recurse" : true
+		}
+	],
+	"inputs" : 
+	[
+		{
+			"path" : "CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "out/build/x64-Debug/CMakeFiles/4.3.1-msvc1/CMakeSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeSystemSpecificInitialize.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Platform/Windows-Initialize.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "out/build/x64-Debug/CMakeFiles/4.3.1-msvc1/CMakeCXXCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeSystemSpecificInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeGenericSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeInitializeConfigs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Platform/Windows.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Platform/WindowsPaths.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeCXXInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Compiler/MSVC-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Compiler/MSVC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Platform/Windows-MSVC-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Platform/Windows-MSVC.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "out/build/x64-Debug/CMakeFiles/4.3.1-msvc1/CMakeRCCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeRCInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Internal/CMakeCXXLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Internal/CMakeCommonLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Linker/MSVC-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Linker/MSVC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Platform/Linker/Windows-MSVC-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "D:/VS2026/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.3/Modules/Platform/Linker/Windows-MSVC.cmake"
+		}
+	],
+	"kind" : "cmakeFiles",
+	"paths" : 
+	{
+		"build" : "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce/out/build/x64-Debug",
+		"source" : "D:/\u4ee3\u7801\u5b58\u50a8/\u4ee3\u7801\u4ed3\u5e93/\u6e38\u620f\u5f15\u64ce"
+	},
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 1
+	}
+}
