@@ -23,7 +23,10 @@ void Random_Generator::pcg32_seed_init(uint64_t seed_out)
 
 void Random_Generator::pcg32_seed_init()
 {
-    uint64_t seed = (uint64_t)time(nullptr) ^ (uint64_t)__rdtsc();
+    static uint64_t counter = 0;
+    auto now = std::chrono::high_resolution_clock::now();
+    auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
+    uint64_t seed = static_cast<uint64_t>(ns) ^ static_cast<uint64_t>(std::time(nullptr)) ^ (++counter);
     g_pcg32.state = 0;
     g_pcg32.inc = (seed << 1u) | 1u;
     (void)pcg32_random_raw();

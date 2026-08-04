@@ -1,10 +1,9 @@
 #pragma once
 #include "common/前置头文件包含.h"
-#include "common/公共命名空间使用.h"
 #include"src/base/space/Quadtree/四叉树通信结构体.h"
 
-//游戏引擎命名空间
-namespace Game_Engine
+//引擎命名空间
+namespace engine
 {
 	//四叉树管理器前向声明
 	template <typename T>
@@ -24,7 +23,7 @@ namespace Game_Engine
 		//四叉树管理器友元声明
 		friend Quadtree_Manager<T>;
 		//四叉树根节点坐标
-		coord_double root{ 0.5,0.5 };
+		coord2D_double root{ 0.5,0.5 };
 		//四叉树大小
 		uint16_t size = 256;
 	};

@@ -1,9 +1,8 @@
 #pragma once
 #include "common/前置头文件包含.h"
-#include "common/公共命名空间使用.h"
 
 //通用算法模块
-namespace Game_Engine
+namespace engine
 {
 	// 修复后的 binary_search：返回全局索引（相对于原始 first）
 	template<typename RandomIt, typename T, typename Compare, typename Projection = std::identity>
@@ -79,7 +78,7 @@ namespace Game_Engine
 
 	// ----- 新增容器重载（直接传递容器） -----
 
-// binary_search 的容器版本
+    // binary_search 的容器版本
 	template<typename Container, typename T, typename Compare, typename Projection = std::identity>
 	int binary_search(const Container& container, const T& target,
 		const Compare& comp, Projection proj = {})
@@ -171,7 +170,7 @@ namespace Game_Engine
 		}
 
 		// 递推初始值 P(0) = (1-p)^n
-		double pk = pow(1.0 - probability, test_time);
+		double pk = std::pow(1.0 - probability, test_time);
 		if (success_time == 0) {
 			receiver = pk;
 			return;
@@ -187,14 +186,4 @@ namespace Game_Engine
 		receiver = pk;
 	}
 }
-
-//使用位操作通用算法
-using engine::bit_set;
-using engine::bit_calcu;
-//使用点二分查找算法
-using engine::binary_search;
-//使用范围二分查找算法
-using engine::range_binary_search;
-//使用二项式值计算算法
-using engine::bino_distr_calcu;
 

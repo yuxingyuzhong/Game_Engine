@@ -1,0 +1,5 @@
+{
+  "type": "Minotaur",
+  "initialize_path": "scripts/monster/minotaur.lua",
+  "acls": []
+}

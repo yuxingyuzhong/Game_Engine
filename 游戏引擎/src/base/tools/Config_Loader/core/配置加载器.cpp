@@ -1,168 +1,268 @@
 #include "src/base/tools/Config_Loader/局部命名空间使用.h"
+#include "src/base/tools/Logging/日志系统.h"
 
-namespace fs = std::filesystem;
-
-//目录递归扫描
-void Config_Loader::content_scan(vector<string>& receiver)
+//引擎命名空间
+namespace engine
 {
-    //错误信息记录
-    error_code ec;
-
-    // 递归目录迭代器
-    for (auto it = fs::recursive_directory_iterator(scan_content, ec);
-        it != fs::recursive_directory_iterator();
-        ++it)
+    //可执行文件目录注册
+    void Config_Loader::exe_path_sign(const path& exe_path)
     {
-        if (ec) 
-        {
-            //发生错误时（如权限不足），跳过当前条目并清除错误状态
-            ec.clear();
-            continue;
-        }
-
-        // 只收集普通文件（过滤掉目录、符号链接等）
-        if (it->is_regular_file(ec)) 
-            receiver.push_back(it->path().string());
-        // 如果检查时出错也跳过
-        if (ec) 
-            ec.clear();
+        //记录可执行文件目录
+        this->exe_path = exe_path;
+        //获取基目录
+        this->base_path = exe_path.parent_path() / "assets";
     }
 
-}
-
-//文件跳转检测
-bool Config_Loader::skip_exam(const string& path)
-{
-    //禁止非指定前缀
-    if (path.rfind(skip_root_content, 0) != 0)
-        return false;
-    //禁止上级目录跳转
-    else if(path.find("..") != string::npos)
-        return false;
-    //其余情况通过
-    else
-        return true;
-}
-
-//文件读取
-void Config_Loader::file_read(const string& path, json& receiver)
-{
-    try
+    //目录递归扫描
+    void Config_Loader::content_scan(vector<u8string>& receiver)
     {
-        //打开指定文件
-        ifstream file(path);
-        //若文件打开失败
-        if (!file.is_open())
+        //构建实际扫描目录
+        path actual_scan_dir = base_path / scan_content;
+        //异常信息记录
+        error_code ec;
+
+        //构建递归查找迭代器
+        auto it = recursive_directory_iterator(actual_scan_dir, ec);
+        //若迭代器创建出现异常
+        if (error_out(ec))
+            return;
+
+        //递归查找文件
+        for (; it != recursive_directory_iterator(); it.increment(ec))
         {
-            cout << "Config_Loader::文件打开失败\n";
-            //返回空JSON
-            receiver = json();   
+            //若迭代器创建/递增出现异常
+            if (error_out(ec))
+                continue;
+
+            //检查文件是否可读取
+            if (it->is_regular_file(ec))
+                //若可读取则记录文件路径
+                receiver.push_back(it->path().u8string());
+
+            //若文件查询过程中发生异常
+            if (error_out(ec))
+                continue;
+        }
+    }
+
+    //路径安全检查
+    bool Config_Loader::skip_safety_inspect(const u8string& config_path)
+    {
+        //转化变量格式
+        path suspect_path = config_path;
+
+        //若未解析出有效路径
+        if (suspect_path.begin() == suspect_path.end())
+        {
+            Log::out("路径无效");
+            return false;
+        }
+
+        //若路径开头非"config/"路径
+        if (suspect_path.begin()->string() != "config")
+        {
+            Log::out("路径跳出指定目录: \"config\"");
+            return false;
+        }
+
+        //检查路径中是否存在危险跳转符号".."
+        for (const auto& part : suspect_path)
+            //若检测出跳转符号
+            if (part.string() == "..")
+            {
+                Log::out("存在父目录返回符号");
+                return false;
+            }
+
+        //异常信息记录
+        error_code ec;
+        //拼接绝对路径
+        suspect_path = base_path / suspect_path;
+        //若访问路径不存在或发生系统错误
+        if (!exists(suspect_path, ec))
+        {
+            Log::out("访问路径不存在");
+            error_out(ec);
+            return false;
+        }
+        //若访问路径非可读取文件
+        if (!is_regular_file(suspect_path, ec))
+        {
+            Log::out("访问路径不可读取");
+            error_out(ec);
+            return false;
+        }
+
+        //若所有检查均通过
+        return true;
+    }
+
+    //文件读取
+    void Config_Loader::file_read(const path& file_path, json& receiver)
+    {
+        try
+        {
+            //打开目标文件
+            ifstream file(file_path);
+            //若文件打开失败
+            if (!file.is_open())
+            {
+                Log::out("Config_Loader::文件打开失败");
+                receiver = json();
+                return;
+            }
+            //读取文件内容
+            file >> receiver;
+        }
+        catch (const json::parse_error& e)
+        {
+            Log::out("Config_Loader::文件格式非法");
+            receiver = json();
+        }
+        catch (const std::exception& e)
+        {
+            Log::out("Config_Loader::未知错误:");
+            Log::out("错误路径如下: {}", file_path.string());
+            Log::out("错误信息如下: {}", e.what());
+            receiver = json();
+        }
+    }
+
+    //异常信息输出
+    bool Config_Loader::error_out(error_code& error_info)
+    {
+        //若异常信息不存在
+        if (!error_info)
+            //返回异常未输出
+            return false;
+        //若异常信息存在
+        else
+        {
+            //输出异常信息
+            cout << error_info << endl;
+            //清空异常信息
+            error_info.clear();
+            //返回异常已输出
+            return true;
+        }
+    }
+
+    //任务执行
+    void Config_Loader::act(void)
+    {
+        //若未检测到配置发送入口
+        if (!event_entry)
+        {
+            Log::out("Config_Loader::未注册事件中转站依赖");
+            Log::out("配置工作无法完成");
             return;
         }
-        //读取文件内容并解析
-        file >> receiver;
-    }
-    //若文件内容非合法json
-    catch (const json::parse_error& e)
-    {
-        cout << "Config_Loader::文件格式非法\n";
-        //返回空JSON
-        receiver = json();
-    }
-    catch (const std::exception& e)
-    {
-        cout << "Config_Loader::未知错误\n" << path.c_str() << e.what();
-        //返回空JSON
-        receiver = json();
-    }
-}
 
-//任务执行
-void Config_Loader::act(void)
-{
-    //若未注册事件中转站依赖
-    if (!send)
-    {
-        cout << "Config_Loader::未注册事件中转站依赖\n无法工作\n";
-        return;
-    }
-    //路由文件内容记录
-    json route_json;
-    //路由文件路径记录
-    vector<string> paths{};
-    //扫描获取路由文件路径
-    content_scan(paths);
-    //循环读取路由文件
-    for (int read_time = 0; read_time < paths.size(); read_time++)
-    {
-        //读取路由文件
-        file_read(paths[read_time], route_json);
-        //若路由文件格式非法
-        if (!route_json.is_array())
+        //跳转路由记录
+        json route_config;
+        //扫描目录记录
+        vector<u8string> paths{};
+        //扫描路由文件（绝对路径）
+        content_scan(paths);
+
+        //若扫描结果为空
+        if (paths.empty())
         {
-            cout << "Config_Loader::路由文件内容格式非法\n";
-            continue;
+            Log::out("Config_Loader::未检测到任何路由文件");
+            return;
         }
 
-        //遍历文件内路由条目
-        for (const auto& entry : route_json)
+        for (const auto& path_string : paths)
         {
-            // 字段完整性检查
-            if (!entry.contains("module") || !entry.contains("config_path"))
+            //路由配置文件读取路径转换
+            path read_path = path_string;
+            //读取路由配置文件
+            file_read(read_path, route_config);
+
+            //若路由配置文件格式非数组形式
+            if (!route_config.is_array())
             {
-                cout << "Config_Loader::文件跳转所需字段未包含\n";
+                Log::out("Config_Loader::当前路由文件内容格式非json数组");
+                Log::out("正在读取下一份配置文件");
                 continue;
             }
 
-            //模块标签记录
-            string module = entry["module"];
-            //配置路径记录
-            string config_path = entry["config_path"];
-
-            //若存在字段为空
-            if (module.empty() || config_path.empty())
+            //读取配置数据
+            for (const auto& route_data : route_config)
             {
-                cout<< "Config_Loader::所需字段无内容\n";
-                continue;
+                //若配置数据不包含指定字段
+                if (!route_data.contains("module") || !route_data.contains("config_path"))
+                {
+                    Log::out("Config_Loader::未包含指定字段:");
+                    Log::out("\"module\" and \"config_path\"");
+                    continue;
+                }
+                //若配置数据非字符串
+                if (!route_data["module"].is_string() || !route_data["config_path"].is_string())
+                {
+                    Log::out("Config_Loader::所需字段存储内容异常");
+                    Log::out("未检测到目标字符串");
+                    continue;
+                }
+                //若配置数据指定字段内容为空
+                if ((route_data["module"].empty() || route_data["config_path"].empty()))
+                {
+                    Log::out("Config_Loader::所需字段无内容");
+                    continue;
+                }
+
+                //存储目标模块信息
+                std::string module = route_data["module"];
+                //缓冲跳转路径
+                std::string config_path = route_data["config_path"];
+                //转换为可用格式
+                u8string u8config_path(config_path.begin(), config_path.end());
+
+                //跳转路径安全检查
+                if (!skip_safety_inspect(u8config_path))
+                {
+                    Log::out("Config_Loader::存在恶意跳转");
+                    Log::out("跳转路径: {}", config_path); ;
+                    continue;
+                }
+
+                //格式化为绝对文件路径
+                path absolute_config_path = base_path / u8config_path;
+                //配置数据记录
+                json config_data;
+                //读取配置文件
+                file_read(absolute_config_path, config_data);
+
+                //若配置数据读取失败
+                if (config_data.is_null())
+                {
+                    Log::out("Config_Loader::配置读取失败");
+                    Log::out("失败路径:{}", absolute_config_path.string());
+                    continue;
+                }
+
+                //构造配置事件
+                shared_ptr<config_event> event(new(nothrow) config_event());
+                //若配置事件构造失败
+                if (event == nullptr)
+                    return;
+                //填充事件分类
+                event->category = "Config";
+                //填充事件标签
+                event->tag = "Load";
+                //填充目标模块
+                event->target_module = module;
+                //填充配置数据
+                event->config = config_data;
+                //发送事件
+                event_entry({ event });
             }
-
-            //若安全检查未通过
-            if (!skip_exam(config_path))
-            {
-                cout<< "Config_Loader::存在恶意跳转\n" << config_path.c_str() << endl;
-                continue;
-            }
-
-            //配置文件信息存储
-            json config_data;
-            //读取配置文件
-            file_read(config_path, config_data);
-
-            //若读取失败
-            if (config_data.is_null())
-            {
-                cout << "Config_Loader::配置读取失败\n" << config_path.c_str() << endl;
-                continue;
-            }
-
-            //构建事件
-            config_event* evt = new config_event();
-            //标明事件类型
-            evt->category = "Config";
-            evt->tag = "Load";
-            //指定发送目标
-            evt->target_module = module;
-            //记录json包参数
-            evt->config = config_data;
-            //发送事件
-            send({ evt });
         }
     }
-}
 
-//事件发送接口注册
-void Config_Loader::sign_event_entry(function<void(vector<config_event*>event_set)> cb)
-{
-    //注册事件发送接口
-    send = cb;
+    //事件发送接口注册
+    void Config_Loader::event_entry_sign(function<void(vector<shared_ptr<config_event>>event_set)> cb)
+    {
+        event_entry = cb;
+    }
 }

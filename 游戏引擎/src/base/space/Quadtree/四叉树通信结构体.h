@@ -1,9 +1,9 @@
 #pragma once
 #include "common/前置头文件包含.h"
-#include "common/公共命名空间使用.h"
+#include "common/coord_types.h"
 
 //游戏引擎命名空间
-namespace Game_Engine
+namespace engine
 {
 	//四叉树管理器前向声明
 	template <typename T>
@@ -15,10 +15,18 @@ namespace Game_Engine
 	//四叉树状态结构体
 	struct tree_state
 	{
+	private:
+		//使用2D整数坐标
+		using coord2D_int = engine::coord2D_int;
+		//使用2D浮点坐标
+		using coord2D_double = engine::coord2D_double;
+		//使用2D范围坐标
+		using coord2D_range = engine::coord2D_range;
+	public:
 		//为避免根节点中心偏移现象
 		//故采用小数坐标
 		//根节点坐标
-		coord_double root = { 0.5,0.5 };
+		coord2D_double root = { 0.5,0.5 };
 		//四叉树大小
 		uint64_t size = 256;
 		//四叉树大小上限
@@ -31,6 +39,13 @@ namespace Game_Engine
 	template<typename T>
 	struct tree_block_data
 	{
+	private:
+		//使用2D整数坐标
+		using coord2D_int = engine::coord2D_int;
+		//使用2D浮点坐标
+		using coord2D_double = engine::coord2D_double;
+		//使用2D范围坐标
+		using coord2D_range = engine::coord2D_range;
 	public:
 		//友元声明，允许四叉树管理器类访问私有成员
 		friend class Quadtree_Manager<T>;
@@ -52,7 +67,8 @@ namespace Game_Engine
 		~tree_block_data() {}
 
 	private:
-		coord_double node = { 0.5f, 0.5f };  // 使用 0.5f 强调 float 类型
+		coord2D_double node = { 0.5f, 0.5f };  // 使用 0.5f 强调 float 类型
 		T* ptr_data = nullptr;
 	};
+
 }

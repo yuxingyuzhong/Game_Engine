@@ -1,0 +1,5 @@
+{
+  "type": "Slime_King",
+  "initialize_path": "scripts/monster/slime_king.lua",
+  "acls": [ "Slime" ]
+}

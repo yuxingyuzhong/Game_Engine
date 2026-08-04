@@ -1,0 +1,18 @@
+{
+  "type": "Goblin",
+  "initialize_path": "scripts/initialize/哥布林 (Goblin).lua",
+  "acls": {
+    "master": "Goblin",
+    "minion_set": []
+  },
+  "needed_events": [
+    {
+      "category": "Entity",
+      "tag": "Request"
+    },
+    {
+      "category": "config",
+      "tag": "damage"
+    }
+  ]
+}

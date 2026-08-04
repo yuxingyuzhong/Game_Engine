@@ -74,12 +74,15 @@
 #include <source_location>  // std::source_location
 
 // ----- Lua C++ API（外部库）-----
-#include "src/base/lib/Lua/lua.h"       // Lua 核心 API
-#include "src/base/lib/Lua/lauxlib.h"   // Lua 辅助库
-#include "src/base/lib/Lua/lualib.h"    // Lua 标准库
+#include <lua.h>       // Lua 核心 API
+#include <lauxlib.h>   // Lua 辅助库（luaL_newstate 等）
+#include <lualib.h>    // Lua 标准库（luaL_openlibs 等）
 
 // ----- JSON 解析（外部库）-----
-#include "src/base/lib/Json/json.hpp"  // 轻量级 JSON 库
+#include <nlohmann/json.hpp>
+
+// ----- Lua 封装（外部库）-----
+#include <sol/sol.hpp>  // Sol2 的唯一入口
 
 //============================================================================
 // 3. 编译器与平台相关（仅 Windows）
