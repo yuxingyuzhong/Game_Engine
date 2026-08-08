@@ -3,8 +3,8 @@
 //引擎命名空间
 namespace engine
 {
-    //接收者登记注册
-    void Event_Broker::sign_up(const std::string& module_name, const vector<config_event>& needed_events,
+    //订阅者登记注册
+    void Event_Broker::info_register(const std::string& module_name, const vector<config_event>& needed_events,
         function<void(shared_ptr<config_event> evt)> event_entry)
     {
         //订阅者ID记录
@@ -30,10 +30,10 @@ namespace engine
         }
 
         //注册需要事件
-        for (int sign_time = 0; sign_time < needed_events.size(); sign_time++)
+        for (int register_time = 0; register_time < needed_events.size(); register_time++)
         {
             //简化表示路径
-            auto& event = needed_events[sign_time];
+            auto& event = needed_events[register_time];
 
             //若事件所属分类未指定则略过
             if (event.category.empty())

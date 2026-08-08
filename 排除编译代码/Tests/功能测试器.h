@@ -8,7 +8,7 @@
 //使用随机数生成器
 using engine::Random_Generator;
 //使用四叉树输出结构体
-using engine::tree_block_data;
+using engine::tree_chunk_data;
 //使用四叉树
 using engine::Quadtree;
 //使用四叉树生成器
@@ -184,8 +184,8 @@ namespace engine
 				return false;
 		}
 		//静态比较函数
-		static bool compare(const tree_block_data<Test_Data>& itself,
-			const tree_block_data<Test_Data>& other)
+		static bool compare(const tree_chunk_data<Test_Data>& itself,
+			const tree_chunk_data<Test_Data>& other)
 		{
 			//输出具体比较信息
 			cout << format("预期目标值: {} / 实际目标值: {}\n",
@@ -208,13 +208,13 @@ namespace engine
 			}
 		}
 		//数值设置
-		static void set_num(const tree_block_data<Test_Data>& itself,
+		static void set_num(const tree_chunk_data<Test_Data>& itself,
 			const int64_t& num)
 		{
 			itself.ptr_data->store = num;
 		}
 		//数据复制
-		static void copy(tree_block_data<Test_Data>& receiver,tree_block_data<Test_Data>& transmiter)
+		static void copy(tree_chunk_data<Test_Data>& receiver,tree_chunk_data<Test_Data>& transmiter)
 		{
 			//链接数据
 			receiver.ptr_data = transmiter.ptr_data;
@@ -224,7 +224,7 @@ namespace engine
 			receiver.node = transmiter.node;
 		}
 		//坐标输出
-		static void out(const tree_block_data<Test_Data>& itself)
+		static void out(const tree_chunk_data<Test_Data>& itself)
 		{
 			//输出坐标
 			cout << itself.node;

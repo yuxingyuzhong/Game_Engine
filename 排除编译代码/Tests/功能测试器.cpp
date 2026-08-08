@@ -22,9 +22,9 @@ void Tester::qurdtree_block_seek_test(const uint64_t& tree_size_start,
 	//测试坐标存储
 	vector<coord2D_int> coord_group;
 	//坐标查询结果存储
-	vector<tree_block_data<Test_Data>*> handle_group{};
+	vector<tree_chunk_data<Test_Data>*> handle_group{};
 	//坐标查询结果存储
-	vector<tree_block_data<Test_Data>*> range_group{};
+	vector<tree_chunk_data<Test_Data>*> range_group{};
 	//当前测试半径存储
 	uint64_t radius_now = coord_radius_start;
 
@@ -69,7 +69,7 @@ void Tester::qurdtree_block_seek_test(const uint64_t& tree_size_start,
 		for (int test_time = 0; test_time < test_times; test_time++)
 		{
 			//检验句柄
-			tree_block_data<Test_Data>* examiner = nullptr;
+			tree_chunk_data<Test_Data>* examiner = nullptr;
 			//重新查询相同坐标
 			tree->block_seek(examiner, coord_group[test_time],true);
 			//若两次查询结果都为空句柄
@@ -134,7 +134,7 @@ void Tester::qurdtree_range_seek_test(const uint64_t& tree_size_start,
 	//测试范围存储
 	coord2D_range test_range;
 	//坐标查询结果存储
-	vector<tree_block_data<Test_Data>*> receiver{};
+	vector<tree_chunk_data<Test_Data>*> receiver{};
 
 	//循环测试四叉树基本功能
 	for (; ;)
@@ -219,7 +219,7 @@ void Tester::manager_block_seek_test(const uint64_t& tree_size_start, const uint
 	//当前测试半径
 	int radius_now = coord_radius_start;
 	//坐标查询结果存储
-	vector<tree_block_data<Test_Data>*> handle_group{};
+	vector<tree_chunk_data<Test_Data>*> handle_group{};
 	//循环测试单点查找功能
 	for (;;)
 	{
@@ -259,7 +259,7 @@ void Tester::manager_block_seek_test(const uint64_t& tree_size_start, const uint
 		for (int test_time = 0; test_time < test_times; test_time++)
 		{
 			//检验句柄
-			tree_block_data<Test_Data>* examiner = nullptr;
+			tree_chunk_data<Test_Data>* examiner = nullptr;
 			//重新查询相同坐标
 			manager.seek(examiner, coord_group[test_time],true);
 			//若两次查询结果都为空句柄
@@ -320,7 +320,7 @@ void Tester::manager_range_seek_test(const uint64_t& tree_size_start, const uint
 	//当前测试半径
 	int radius_now = range_radius_start;
 	//坐标查询结果存储
-	vector<tree_block_data<Test_Data>*> seek_result{};
+	vector<tree_chunk_data<Test_Data>*> seek_result{};
 
 	for (;;)
 	{

@@ -88,34 +88,20 @@ endif()
 target_include_directories(EngineCore PUBLIC "${PROJECT_ROOT_DIR}/游戏引擎")
 
 # =============================================================================
-# 5. 第三方库（全部为源码，无需额外链接外部 .lib）
+# 5. 第三方库
 # =============================================================================
 
 # ---------- Sol2（纯头文件库） ----------
-# Sol2 的所有代码都在头文件里，只需要让编译器能找到它们即可。
-# 你的 Sol2 头文件位于：游戏引擎/src/base/lib/Sol2/include/
-# 该目录下应有 sol/ 子文件夹（包含 sol.hpp, forward.hpp 等）
-set(SOL2_ROOT "${PROJECT_ROOT_DIR}/游戏引擎/src/base/lib/Sol2/include")
+set(SOL2_ROOT "${PROJECT_ROOT_DIR}/游戏引擎/external/Sol2/include")
 target_include_directories(EngineCore PUBLIC "${SOL2_ROOT}")
 
 # ---------- Lua（源码直接编译） ----------
-# Lua 的源码（.c 或 .cpp）已经通过 ENGINE_SOURCES 加入工程，
-# 这里只需添加头文件路径，让编译器能找到 lua.h、lauxlib.h 等。
-# 假设 lua.h 位于：游戏引擎/src/base/lib/Lua/ 下
-# （如果你的 lua.h 在子目录里，如 src/，请相应调整）
-set(LUA_SRC_DIR "${PROJECT_ROOT_DIR}/游戏引擎/src/base/lib/Lua")
+set(LUA_SRC_DIR "${PROJECT_ROOT_DIR}/游戏引擎/external/Lua")
 target_include_directories(EngineCore PUBLIC "${LUA_SRC_DIR}")
 
 # ---------- Json（纯头文件库） ----------
-# nlohmann/json 是一个JSON解析库，仅需包含头文件。
-# 头文件位于：游戏引擎/src/base/lib/Json/
-set(JSON_ROOT "${PROJECT_ROOT_DIR}/游戏引擎/src/base/lib/Json")
+set(JSON_ROOT "${PROJECT_ROOT_DIR}/游戏引擎/external/Json")
 target_include_directories(EngineCore PUBLIC "${JSON_ROOT}")
-
-# ！！！重要提醒！！！
-# 请确保你使用的 Lua 版本是 5.4 稳定版（LUA_VERSION_NUM == 504），
-# 因为 Sol2 当前不支持 5.5（开发版）。如果你误用了 5.5 的头文件，
-# 编译时会报 "unsupported Lua version" 错误。
 
 # =============================================================================
 # 6. 平台兼容性设置（编译选项、宏定义、输出目录）

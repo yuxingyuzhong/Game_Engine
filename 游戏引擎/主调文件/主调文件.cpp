@@ -22,7 +22,7 @@ int main(void)
 		const std::vector<config_event>& events,
 		std::function<void(std::shared_ptr<config_event>)> event_entry)
 		{
-			event_broker.sign_up(name, events, event_entry);
+			event_broker.info_register(name, events, event_entry);
 		};
 	auto receive = [&event_broker](std::vector<std::shared_ptr<config_event>> event_set)
 		{
@@ -30,15 +30,16 @@ int main(void)
 		};
 
 	//实体管理器依赖注入
-	entity_Manager.register_event_interface(sign_up,receive);
+	entity_Manager.event_terminal.attach_entry_register(sign_up);
+	entity_Manager.event_terminal.event_entry_register(receive);
 
 	//配置加载器依赖注入
-	config_loader.event_entry_sign(receive);
+	config_loader.event_terminal.event_entry_register(receive);
 	//获取可执行文件目录
 	char buffer[MAX_PATH];
 	GetModuleFileNameA(NULL, buffer, MAX_PATH);
 	//输入可执行文件绝对路径
-	config_loader.exe_path_sign(buffer);
+	config_loader.exe_path_register(buffer);
 	//加载配置
 	config_loader.act();
 }

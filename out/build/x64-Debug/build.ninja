@@ -49,398 +49,376 @@ cmake_ninja_workdir = D$:\代码存储\代码仓库\游戏引擎\out\build\x64-D
 
 build cmake_object_order_depends_target_EngineCore: phony || .
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lapi.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lapi.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lapi.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lapi.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lauxlib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lauxlib.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lauxlib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lauxlib.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lbaselib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lbaselib.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lbaselib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lbaselib.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lcode.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lcode.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lcode.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lcode.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lcorolib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lcorolib.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lcorolib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lcorolib.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lctype.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lctype.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lctype.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lctype.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ldblib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\ldblib.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ldblib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\ldblib.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ldebug.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\ldebug.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ldebug.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\ldebug.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ldo.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\ldo.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ldo.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\ldo.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ldump.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\ldump.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ldump.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\ldump.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lfunc.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lfunc.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lfunc.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lfunc.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lgc.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lgc.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lgc.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lgc.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\linit.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\linit.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\linit.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\linit.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\liolib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\liolib.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\liolib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\liolib.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\llex.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\llex.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\llex.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\llex.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lmathlib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lmathlib.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lmathlib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lmathlib.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lmem.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lmem.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lmem.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lmem.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\loadlib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\loadlib.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\loadlib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\loadlib.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lobject.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lobject.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lobject.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lobject.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lopcodes.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lopcodes.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lopcodes.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lopcodes.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\loslib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\loslib.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\loslib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\loslib.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lparser.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lparser.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lparser.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lparser.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lstate.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lstate.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lstate.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lstate.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lstring.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lstring.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lstring.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lstring.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lstrlib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lstrlib.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lstrlib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lstrlib.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ltable.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\ltable.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ltable.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\ltable.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ltablib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\ltablib.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ltablib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\ltablib.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ltm.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\ltm.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ltm.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\ltm.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lundump.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lundump.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lundump.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lundump.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lutf8lib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lutf8lib.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lutf8lib.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lutf8lib.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lvm.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lvm.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lvm.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lvm.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lzio.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua\lzio.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lzio.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua\lzio.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\external\Lua
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\tools\Config_Loader\core\配置加载器.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\tools\Config_Loader\core\配置加载器.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\src\core\ScriptComponents\EffectComponent\core\效应组件.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\core\ScriptComponents\EffectComponent\core\效应组件.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\tools\Config_Loader\core
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\core\ScriptComponents\EffectComponent\core
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
 
-build CMakeFiles\EngineCore.dir\游戏引擎\src\base\tools\Random\随机数生成器.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\tools\Random\随机数生成器.cpp || cmake_object_order_depends_target_EngineCore
+build CMakeFiles\EngineCore.dir\游戏引擎\src\core\ScriptComponents\SkillWrapComponent\core\技能参数组件.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\core\ScriptComponents\SkillWrapComponent\core\技能参数组件.cpp || cmake_object_order_depends_target_EngineCore
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\base\tools\Random
-  TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
-  TARGET_PDB = lib\EngineCore.pdb
-  TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
-
-build CMakeFiles\EngineCore.dir\游戏引擎\src\core\Script_System\EffectComponent\core\效应组件.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\core\Script_System\EffectComponent\core\效应组件.cpp || cmake_object_order_depends_target_EngineCore
-  CONFIG = Debug
-  DEFINES = -D_CRT_SECURE_NO_WARNINGS
-  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
-  OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\core\Script_System\EffectComponent\core
-  TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
-  TARGET_PDB = lib\EngineCore.pdb
-  TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
-
-build CMakeFiles\EngineCore.dir\游戏引擎\src\core\Script_System\SkillWrapComponent\core\技能参数组件.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\core\Script_System\SkillWrapComponent\core\技能参数组件.cpp || cmake_object_order_depends_target_EngineCore
-  CONFIG = Debug
-  DEFINES = -D_CRT_SECURE_NO_WARNINGS
-  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
-  OBJECT_DIR = CMakeFiles\EngineCore.dir
-  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\core\Script_System\SkillWrapComponent\core
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\core\ScriptComponents\SkillWrapComponent\core
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
@@ -449,7 +427,7 @@ build CMakeFiles\EngineCore.dir\游戏引擎\src\core\entity\Dynamic_Entity\core
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
   OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\core\entity\Dynamic_Entity\core
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
@@ -460,7 +438,7 @@ build CMakeFiles\EngineCore.dir\游戏引擎\src\core\entity\Entity_Manager\core
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
   OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\core\entity\Entity_Manager\core
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
@@ -471,9 +449,53 @@ build CMakeFiles\EngineCore.dir\游戏引擎\src\core\event\Event_Broker\core\�
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\EngineCore.dir
   OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\core\event\Event_Broker\core
+  TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
+  TARGET_PDB = lib\EngineCore.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
+
+build CMakeFiles\EngineCore.dir\游戏引擎\src\core\event\Event_Terminal\core\事件终端.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\core\event\Event_Terminal\core\事件终端.cpp || cmake_object_order_depends_target_EngineCore
+  CONFIG = Debug
+  DEFINES = -D_CRT_SECURE_NO_WARNINGS
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
+  OBJECT_DIR = CMakeFiles\EngineCore.dir
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\core\event\Event_Terminal\core
+  TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
+  TARGET_PDB = lib\EngineCore.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
+
+build CMakeFiles\EngineCore.dir\游戏引擎\src\tools\Config_Checker\core\配置检查器.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\tools\Config_Checker\core\配置检查器.cpp || cmake_object_order_depends_target_EngineCore
+  CONFIG = Debug
+  DEFINES = -D_CRT_SECURE_NO_WARNINGS
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
+  OBJECT_DIR = CMakeFiles\EngineCore.dir
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\tools\Config_Checker\core
+  TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
+  TARGET_PDB = lib\EngineCore.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
+
+build CMakeFiles\EngineCore.dir\游戏引擎\src\tools\Config_Loader\core\配置加载器.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\tools\Config_Loader\core\配置加载器.cpp || cmake_object_order_depends_target_EngineCore
+  CONFIG = Debug
+  DEFINES = -D_CRT_SECURE_NO_WARNINGS
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
+  OBJECT_DIR = CMakeFiles\EngineCore.dir
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\tools\Config_Loader\core
+  TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
+  TARGET_PDB = lib\EngineCore.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
+
+build CMakeFiles\EngineCore.dir\游戏引擎\src\tools\Random\随机数生成器.cpp.obj: CXX_COMPILER__EngineCore_unscanned_Debug D$:\代码存储\代码仓库\游戏引擎\游戏引擎\src\tools\Random\随机数生成器.cpp || cmake_object_order_depends_target_EngineCore
+  CONFIG = Debug
+  DEFINES = -D_CRT_SECURE_NO_WARNINGS
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
+  OBJECT_DIR = CMakeFiles\EngineCore.dir
+  OBJECT_FILE_DIR = CMakeFiles\EngineCore.dir\游戏引擎\src\tools\Random
   TARGET_COMPILE_PDB = CMakeFiles\EngineCore.dir\EngineCore.pdb
   TARGET_PDB = lib\EngineCore.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\EngineCore.dir
@@ -486,7 +508,7 @@ build CMakeFiles\EngineCore.dir\游戏引擎\src\core\event\Event_Broker\core\�
 #############################################
 # Link the static library lib\EngineCore.lib
 
-build lib\EngineCore.lib: CXX_STATIC_LIBRARY_LINKER__EngineCore_Debug CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lapi.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lauxlib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lbaselib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lcode.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lcorolib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lctype.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ldblib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ldebug.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ldo.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ldump.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lfunc.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lgc.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\linit.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\liolib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\llex.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lmathlib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lmem.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\loadlib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lobject.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lopcodes.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\loslib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lparser.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lstate.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lstring.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lstrlib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ltable.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ltablib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\ltm.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lundump.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lutf8lib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lvm.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\lib\Lua\lzio.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\tools\Config_Loader\core\配置加载器.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\base\tools\Random\随机数生成器.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\core\Script_System\EffectComponent\core\效应组件.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\core\Script_System\SkillWrapComponent\core\技能参数组件.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\core\entity\Dynamic_Entity\core\动态实体.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\core\entity\Entity_Manager\core\实体管理器.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\core\event\Event_Broker\core\事件中转器.cpp.obj
+build lib\EngineCore.lib: CXX_STATIC_LIBRARY_LINKER__EngineCore_Debug CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lapi.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lauxlib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lbaselib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lcode.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lcorolib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lctype.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ldblib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ldebug.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ldo.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ldump.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lfunc.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lgc.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\linit.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\liolib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\llex.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lmathlib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lmem.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\loadlib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lobject.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lopcodes.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\loslib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lparser.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lstate.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lstring.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lstrlib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ltable.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ltablib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\ltm.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lundump.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lutf8lib.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lvm.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\external\Lua\lzio.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\core\ScriptComponents\EffectComponent\core\效应组件.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\core\ScriptComponents\SkillWrapComponent\core\技能参数组件.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\core\entity\Dynamic_Entity\core\动态实体.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\core\entity\Entity_Manager\core\实体管理器.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\core\event\Event_Broker\core\事件中转器.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\core\event\Event_Terminal\core\事件终端.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\tools\Config_Checker\core\配置检查器.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\tools\Config_Loader\core\配置加载器.cpp.obj CMakeFiles\EngineCore.dir\游戏引擎\src\tools\Random\随机数生成器.cpp.obj
   CONFIG = Debug
   LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64
@@ -511,7 +533,7 @@ build CMakeFiles\TestEngine.dir\游戏引擎\主调文件\主调文件.cpp.obj: 
   CONFIG = Debug
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /MP /utf-8
-  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\src\base\lib\Json
+  INCLUDES = -ID:\代码存储\代码仓库\游戏引擎\游戏引擎 -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Sol2\include -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Lua -ID:\代码存储\代码仓库\游戏引擎\游戏引擎\external\Json
   OBJECT_DIR = CMakeFiles\TestEngine.dir
   OBJECT_FILE_DIR = CMakeFiles\TestEngine.dir\游戏引擎\主调文件
   TARGET_COMPILE_PDB = CMakeFiles\TestEngine.dir\
