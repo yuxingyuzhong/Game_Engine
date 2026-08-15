@@ -11,8 +11,8 @@ endif()
 # 1. 项目基本信息
 # =============================================================================
 # 项目名称：游戏引擎（支持中文，但建议英文）
-# 语言：C++（我们同时会编译 C 文件，但主语言设定为 CXX 以启用 C++ 标准）
-project(游戏引擎 LANGUAGES CXX)
+# 语言：C 和 C++（明确启用 C，以便 .c 文件默认按 C 编译）
+project(游戏引擎 LANGUAGES C CXX)
 
 # 强制使用 C++20 标准（Sol2 需要 C++17 以上，这里设 20 更现代）
 set(CMAKE_CXX_STANDARD 20)
@@ -43,6 +43,10 @@ if(ENGINE_SOURCES)
 
     # 2) 排除 "主调文件" 目录（该目录包含 main()，不应编入静态库）
     list(FILTER ENGINE_SOURCES EXCLUDE REGEX "/主调文件/")
+
+    # 3) 排除配置编辑器目录（该目录包含独立的 main()，不应编入静态库）
+list(FILTER ENGINE_SOURCES EXCLUDE REGEX "/src/tools/GUI/Config_Editor/")
+
 endif()
 
 # 如果过滤后没有源文件，终止配置并给出明确错误提示
@@ -60,25 +64,6 @@ message(STATUS "引擎源文件数量: ${ENGINE_SOURCES}")
 # 3. 创建引擎静态库（核心）
 # =============================================================================
 add_library(EngineCore STATIC ${ENGINE_SOURCES})
-
-# ----- 特殊处理：仅将 Lua 源码目录下的文件强制按 C 编译 -----
-# 只处理位于 ${LUA_SRC_DIR} 目录下的源文件（无论扩展名是 .c 还是 .cpp）
-set(LUA_SOURCES "")
-foreach(SOURCE ${ENGINE_SOURCES})
-    # 获取源文件所在的目录（统一为 Unix 风格路径，便于比较）
-    get_filename_component(SOURCE_DIR "${SOURCE}" DIRECTORY)
-    string(REPLACE "\\" "/" SOURCE_DIR "${SOURCE_DIR}")
-    string(REPLACE "\\" "/" LUA_DIR_NORM "${LUA_SRC_DIR}")
-    # 如果该文件就在 Lua 源码目录下，则加入集合
-    if(SOURCE_DIR STREQUAL LUA_DIR_NORM)
-        list(APPEND LUA_SOURCES ${SOURCE})
-    endif()
-endforeach()
-
-if(LUA_SOURCES)
-    set_source_files_properties(${LUA_SOURCES} PROPERTIES LANGUAGE C)
-    message(STATUS "已强制将 Lua 源码目录下的 ${LUA_SOURCES} 个文件按 C 语言编译")
-endif()
 
 # =============================================================================
 # 4. 头文件搜索路径设置（使用 PUBLIC 让依赖者继承）
@@ -103,8 +88,55 @@ target_include_directories(EngineCore PUBLIC "${LUA_SRC_DIR}")
 set(JSON_ROOT "${PROJECT_ROOT_DIR}/游戏引擎/external/Json")
 target_include_directories(EngineCore PUBLIC "${JSON_ROOT}")
 
+# ---------- 新增：GLFW ----------
+set(GLFW_ROOT "${PROJECT_ROOT_DIR}/游戏引擎/external/glfw")
+target_include_directories(EngineCore PUBLIC "${GLFW_ROOT}")
+
+# ---------- 新增：GLAD ----------
+set(GLAD_ROOT "${PROJECT_ROOT_DIR}/游戏引擎/external/glad")
+target_include_directories(EngineCore PUBLIC "${GLAD_ROOT}/include")
+
+# ---------- 新增：Dear ImGui ----------
+
+set(IMGUI_ROOT "${PROJECT_ROOT_DIR}/游戏引擎/external/Dear_ImGui/imgui")
+target_include_directories(EngineCore PUBLIC "${IMGUI_ROOT}")
+
+set(IMGUI_BACKENDS "${PROJECT_ROOT_DIR}/游戏引擎/external/Dear_ImGui/backends")
+target_include_directories(EngineCore PUBLIC "${IMGUI_BACKENDS}")
+
+# ---------- 新增：公共包含路径打印 ----------
+
+get_target_property(ENGINE_PUBLIC_INCLUDES EngineCore INTERFACE_INCLUDE_DIRECTORIES)
+message(STATUS "EngineCore 公共包含路径: ${ENGINE_PUBLIC_INCLUDES}")
+
 # =============================================================================
-# 6. 平台兼容性设置（编译选项、宏定义、输出目录）
+# 6. 链接第三方库（新增）
+# =============================================================================
+
+# 查找 OpenGL 库（跨平台）
+find_package(OpenGL REQUIRED)
+
+# 链接 GLFW 静态库和 OpenGL
+target_link_libraries(EngineCore PUBLIC
+    "${GLFW_ROOT}/glfw3.lib"
+    OpenGL::GL
+)
+
+# 定义 GLFW_STATIC 宏，确保 GLFW 头文件使用静态库模式
+target_compile_definitions(EngineCore PUBLIC GLFW_STATIC)
+
+# 如果是 MSVC，补充 Windows 系统库（GLFW 依赖）
+if(MSVC)
+    target_link_libraries(EngineCore PUBLIC
+        opengl32.lib
+        user32.lib
+        gdi32.lib
+        shell32.lib
+    )
+endif()
+
+# =============================================================================
+# 7. 平台兼容性设置（编译选项、宏定义、输出目录）
 # =============================================================================
 if(MSVC)
     # MSVC 特有选项：
@@ -128,7 +160,7 @@ set_target_properties(EngineCore PROPERTIES
 )
 
 # =============================================================================
-# 7. 安装规则（方便部署）
+# 8. 安装规则（方便部署）
 # =============================================================================
 # 将引擎的头文件安装到 include/EngineCore/ 下
 install(DIRECTORY "${PROJECT_ROOT_DIR}/游戏引擎/"
@@ -145,7 +177,7 @@ install(TARGETS EngineCore
 )
 
 # =============================================================================
-# 8. 可执行测试目标（用于调试引擎）
+# 9. 可执行测试目标（用于调试引擎）
 # =============================================================================
 # 搜索主调文件目录下的 .cpp 文件（通常包含 main() 函数）
 file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS
@@ -178,6 +210,37 @@ else()
 endif()
 
 # =============================================================================
-# 9. 预留插件/模块接口（将来可添加子目录）
+# 10. 预留插件/模块接口（将来可添加子目录）
 # =============================================================================
 # add_subdirectory(Plugins/CombatProxy)
+
+# =============================================================================
+# 11. 配置编辑器独立可执行文件
+# =============================================================================
+# 搜索 Config_Editor 目录下的 .cpp 文件（包括 main）
+file(GLOB_RECURSE EDITOR_SOURCES
+    "${PROJECT_ROOT_DIR}/游戏引擎/src/tools/GUI/Config_Editor/core/*.cpp"
+)
+
+if(EDITOR_SOURCES)
+    # 创建独立可执行文件
+    add_executable(ConfigEditor ${EDITOR_SOURCES})
+
+    # 链接引擎核心静态库（复用所有第三方库和引擎逻辑）
+    target_link_libraries(ConfigEditor PRIVATE EngineCore)
+
+    # 应用与 TestEngine 相同的编译选项
+    if(MSVC)
+        target_compile_options(ConfigEditor PRIVATE /MP /utf-8)
+        target_compile_definitions(ConfigEditor PRIVATE _CRT_SECURE_NO_WARNINGS)
+    endif()
+
+    # 输出到项目根目录（与 TestEngine 并列）
+    set_target_properties(ConfigEditor PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${PROJECT_ROOT_DIR}/游戏引擎"
+    )
+
+    message(STATUS "配置编辑器已添加: ConfigEditor.exe")
+else()
+    message(WARNING "未找到配置编辑器源文件，将不会生成 ConfigEditor.exe。")
+endif()

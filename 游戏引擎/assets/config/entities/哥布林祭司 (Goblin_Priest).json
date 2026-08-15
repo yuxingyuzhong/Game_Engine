@@ -1,5 +1,4 @@
 {
   "type": "Goblin_Priest",
-  "initialize_path": "scripts/monster/goblin_priest.lua",
   "acls": [ "Goblin" ]
 }

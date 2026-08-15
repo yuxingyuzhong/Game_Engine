@@ -1,5 +1,5 @@
 #pragma once
-#include "src/core/space/Quadtree/函数预声明.h"
+#include "../函数预声明.h"
 
 //展开命名空间
 namespace engine

@@ -1,26 +1,26 @@
 [
   {
-    "module": "Entity_Mangaer",
-    "config_path": "config/entities/牛头人 (Minotaur).json"
+    "config_path": "config/entities/牛头人 (Minotaur).json",
+    "module": "Entity_Mangaer"
   },
   {
-    "module": "Entity_Mangaer",
-    "config_path": "config/entities/牛头人战士 (Minotaur_Warrior).json"
+    "config_path": "config/entities/牛头人战士 (Minotaur_Warrior).json",
+    "module": "Entity_Mangaer"
   },
   {
-    "module": "Entity_Mangaer",
-    "config_path": "config/entities/哥布林 (Goblin).json"
+    "config_path": "config/entities/哥布林 (Goblin).json",
+    "module": "Entity_Mangaer"
   },
   {
-    "module": "Entity_Mangaer",
-    "config_path": "config/entities/哥布林祭司 (Goblin_Priest).json"
+    "config_path": "config/entities/哥布林祭司 (Goblin_Priest).json",
+    "module": "Entity_Mangaer"
   },
   {
-    "module": "Entity_Mangaer",
-    "config_path": "config/entities/史莱姆 (Slime).json"
+    "config_path": "config/entities/史莱姆 (Slime).json",
+    "module": "Entity_Mangaer"
   },
   {
-    "module": "Entity_Mangaer",
-    "config_path": "config/entities/史莱姆王 (Slime_King).json"
+    "config_path": "config/entities/史莱姆王 (Slime_King).json",
+    "module": "Entity_Mangaer"
   }
 ]

@@ -1,8 +1,20 @@
 #pragma once
+//预编译头
 #include "common/前置头文件包含.h"
+
+// ———— 空间相关 ————
+
+//获取四叉树管理器通信结构体
+//内部包含"四叉树管理器通信结构体.h"
+//均用于函数返回值
 #include "四叉树管理器通信结构体.h"
+//获取四叉树
 #include "src/core/space/Quadtree/四叉树.h"
-#include "src/tools/Auxi_Algorithm/算法辅助工具.h"
+
+// ———— 工具相关 ————
+
+//获取辅助算法
+#include "src/tools/Non_GUI/Auxi_Algorithm/算法辅助工具.h"
 
 //展开命名空间
 namespace engine

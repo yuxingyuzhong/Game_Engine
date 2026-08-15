@@ -74,9 +74,12 @@
 #include <source_location>  // std::source_location
 
 // ----- Lua C++ API（外部库）-----
-#include <lua.h>       // Lua 核心 API
-#include <lauxlib.h>   // Lua 辅助库（luaL_newstate 等）
-#include <lualib.h>    // Lua 标准库（luaL_openlibs 等）
+extern "C"
+{
+	#include <lua.h>       // Lua 核心 API
+    #include <lauxlib.h>   // Lua 辅助库（luaL_newstate 等）
+    #include <lualib.h>    // Lua 标准库（luaL_openlibs 等）
+}
 
 // ----- JSON 解析（外部库）-----
 #include <nlohmann/json.hpp>
@@ -84,10 +87,20 @@
 // ----- Lua 封装（外部库）-----
 #include <sol/sol.hpp>  // Sol2 的唯一入口
 
+// ----- OpenGL 加载器（GLAD）-----
+#include <glad/gl.h>
+
+// ----- 窗口与输入（GLFW）-----
+#include <GLFW/glfw3.h>
+
+// ----- Dear ImGui UI 库 -----
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 //============================================================================
 // 3. 编译器与平台相关（仅 Windows）
 //============================================================================
 #ifdef _WIN32
 #include <windows.h>    // Windows API
-#include <intrin.h>     // __cpuid, __rdtsc
 #endif

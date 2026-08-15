@@ -1,6 +1,9 @@
 #pragma once
+//预编译头
 #include "common/前置头文件包含.h"
+//获取预定义坐标类型
 #include "common/types/坐标类型.h"
+//获取预定义通信结构体(用于函数返回值)
 #include "四叉树通信结构体.h"
 
 namespace engine
@@ -71,8 +74,6 @@ namespace engine
 		Quadtree(const uint64_t& size = 256, const coord2D_double& root = { 0.5,0.5 });
 		//析构函数
 		~Quadtree(void);
-		//析构函数辅助函数
-		void unload(int now_level, const int& max_level,Node* ptr_now);
 
 		// ---- 设置 ----
 		//最小区块单元大小设置
@@ -123,6 +124,9 @@ namespace engine
 
 		// ———— 结构维护 ————
 	private:
+		//四叉树卸载
+		void unload(int now_level, const int& max_level, Node* ptr_now);
+
 		//子节点递归
 		bool child_node_recur(Node*& this_node, const int& direct, const Node_type& type, bool stable);
 

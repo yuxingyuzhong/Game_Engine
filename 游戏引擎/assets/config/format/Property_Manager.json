@@ -1,0 +1,22 @@
+{
+  "builtin": true,
+  "dir": "property",
+  "fields": [
+    {
+      "desc": "实体类型标识，与实体配置的 type 一致",
+      "display": "type（实体类型）",
+      "name": "type",
+      "required": true,
+      "type": "string"
+    },
+    {
+      "desc": "属性槽初始化 Lua 脚本路径，相对 assets/ 目录，Property_Manager 使用",
+      "display": "initialize_path（属性槽初始化脚本）",
+      "name": "initialize_path",
+      "required": true,
+      "type": "script"
+    }
+  ],
+  "module": "Property_Manager",
+  "route": "property.json"
+}

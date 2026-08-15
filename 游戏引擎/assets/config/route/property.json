@@ -1,0 +1,26 @@
+[
+  {
+    "config_path": "config/property/牛头人 (Minotaur).json",
+    "module": "Property_Manager"
+  },
+  {
+    "config_path": "config/property/牛头人战士 (Minotaur_Warrior).json",
+    "module": "Property_Manager"
+  },
+  {
+    "config_path": "config/property/哥布林 (Goblin).json",
+    "module": "Property_Manager"
+  },
+  {
+    "config_path": "config/property/哥布林祭司 (Goblin_Priest).json",
+    "module": "Property_Manager"
+  },
+  {
+    "config_path": "config/property/史莱姆 (Slime).json",
+    "module": "Property_Manager"
+  },
+  {
+    "config_path": "config/property/史莱姆王 (Slime_King).json",
+    "module": "Property_Manager"
+  }
+]

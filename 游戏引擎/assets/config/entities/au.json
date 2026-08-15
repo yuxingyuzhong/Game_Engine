@@ -1,0 +1,13 @@
+{
+  "acls": [
+    "au"
+  ],
+  "decision_load_path": "scripts/behavior/au_Behavior.lua",
+  "needed_events": [
+    [
+      "Entity",
+      "Request"
+    ]
+  ],
+  "type": "au"
+}

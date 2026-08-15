@@ -9,6 +9,7 @@ using std::vector;
 using std::any;
 
 // ---------- 智能指针 ----------
+using std::nothrow;
 using std::shared_ptr;
 
 // ---------- 函数包装器 ----------

@@ -1,0 +1,36 @@
+{
+  "builtin": true,
+  "dir": "entities",
+  "fields": [
+    {
+      "desc": "实体类型标识，保存后配置文件会自动迁移",
+      "display": "type（实体类型）",
+      "name": "type",
+      "required": true,
+      "type": "string"
+    },
+    {
+      "desc": "决策树行为脚本路径，相对 assets/ 目录，Entity_Manager 使用",
+      "display": "decision_load_path（决策树行为脚本）",
+      "name": "decision_load_path",
+      "required": true,
+      "type": "script"
+    },
+    {
+      "desc": "允许从属的实体类型列表（master 为实体类型自身）",
+      "display": "acls（从属权限列表）",
+      "name": "acls",
+      "required": true,
+      "type": "string_list"
+    },
+    {
+      "desc": "订阅事件列表，每项 = [分类, 标签]，如 [Entity, Request]",
+      "display": "needed_events（订阅事件列表）",
+      "name": "needed_events",
+      "required": true,
+      "type": "pair_list"
+    }
+  ],
+  "module": "Entity_Manager",
+  "route": "entity.json"
+}

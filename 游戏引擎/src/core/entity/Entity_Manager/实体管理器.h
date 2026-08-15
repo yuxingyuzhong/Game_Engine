@@ -1,11 +1,18 @@
 #pragma once
+//预编译头
 #include "common/前置头文件包含.h"
+//获取预定义事件类型
 #include "common/types/事件类型.h"
+//获取事件终端
 #include "src/core/event/Event_Terminal/事件终端.h"
-#include "src/tools/Config_Checker/配置检查器.h"
+//获取动态实体
 #include "src/core/entity/Dynamic_Entity/动态实体.h"
-#include "src/tools/Auxi_Algorithm/算法辅助工具.h"
+//获取预定义sol2库类型别名
 #include "common/external/Sol2/sol类型别名.h"
+//获取配置检查器
+#include "src/tools/Non_GUI/Config_Checker/配置检查器.h"
+//获取辅助算法(如binary_search)
+#include "src/tools/Non_GUI/Auxi_Algorithm/算法辅助工具.h"
 
 namespace engine
 {
@@ -57,12 +64,14 @@ namespace engine
         //当前实体ID
         int64_t now_ID = 10000;
 
-        //初始化脚本集合
-        std::unordered_map<std::string,LuaState> initialize_scripts;
+        //决策树加载路径集合
+        std::unordered_map<std::string,std::string> decision_load_paths;
         //从属权限集合
         std::vector<ownership_acl> acl_set{};
         //从属转移信息集合
         std::vector<ownership_transfer> transfer_records{};
+        //属性槽绑定通道
+        std::function<std::unordered_map<std::string, double>* (const uint64_t& ID)> bind_entry;
         //活跃实体集合
         std::vector<entity_record> entity_set{};
 
@@ -71,14 +80,19 @@ namespace engine
         Entity_Manager();
         //析构函数
         ~Entity_Manager() = default;
+        //注册属性槽绑定通道
+        void bind_entry_register(std::function<std::unordered_map<std::string, double>*
+            (const uint64_t& ID)> bind_entry);
+        //事件中转站接入
+        void attach(void);
 
         // ———— 配置相关 ————
 
     private:
         //配置字段检验
         bool config_field_parse(const nlohmann::json& config);
-        //实体初始化脚本注册
-        void intialize_script_register(const std::string& entity_type,const std::string& path);
+        //决策树加载路径注册
+        void decision_tree_register(const std::string& entity_type,const std::string& path);
         //实体从属权限注册
         void owner_acl_register(const std::string& master,const std::vector<std::string>& minion_set);
 
@@ -97,12 +111,12 @@ namespace engine
         void entity_act(void);
 
         // ———— 事件相关 ————
+
+        //外部事件处理
+        void outer_event_process(std::shared_ptr<config_event> evt);
     private:
         //内部事件仲裁
         void inner_event_govern(std::shared_ptr<config_event> event, std::vector<minion>& minions);
-    public:
-        //外部事件处理
-        void outer_event_process(std::shared_ptr<config_event> evt);
     };
 
 }

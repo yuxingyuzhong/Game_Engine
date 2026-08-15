@@ -1,5 +1,5 @@
 #pragma once
-#include "src/core/space/Quadtree/函数预声明.h"
+#include "../函数预声明.h"
 
 //展开命名空间
 namespace engine
@@ -10,7 +10,7 @@ namespace engine
 	{
 		/*函数逻辑：
 				  0，代表分析已经结束，查找不可行
-				  1，代表分析正在支持，查找可能可行
+				  1，代表分析正在进行，查找可能可行
 				  2，代表分析已经结束，查找可行
 		*/
 
@@ -107,15 +107,15 @@ namespace engine
 					if (!tree_expand())
 						break;
 				}
+
 				//若当前四叉树大小以及大于等于上限大小则直接结束计算
-				else if (state.size >= state.max_size)
+				if (state.size >= state.max_size)
 					break;
 			}
 			//反之则直接退出
 			else
 				break;
 		}
-
 	}
 
 	//递归栈操作
@@ -228,7 +228,8 @@ namespace engine
 
 	//范围区块单元查找
 	template <typename T>
-	void Quadtree<T>::range_seek(std::vector<tree_chunk_data<T>*>& receiver, const coord2D_range& target_range, bool stable)
+	void Quadtree<T>::range_seek(std::vector<tree_chunk_data<T>*>& receiver, 
+		const coord2D_range& target_range, bool stable)
 	{
 		//可查询范围存储
 		coord2D_range seekable_range{};
@@ -306,7 +307,7 @@ namespace engine
 				bool is_pop_back = true;
 
 				//父节点递归
-				//若递归成功则结束查找进程
+				//若递归失败则弹栈
 				if (child_node_recur(parent_node, recur_direct, MIDDLE, stable))
 				{
 					//存储父节点范围

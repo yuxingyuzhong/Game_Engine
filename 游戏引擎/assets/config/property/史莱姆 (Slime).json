@@ -1,0 +1,4 @@
+{
+  "type": "Slime",
+  "initialize_path": "scripts/monster/slime.lua"
+}

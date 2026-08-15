@@ -1,5 +1,7 @@
 #pragma once
+//预编译头
 #include "common/前置头文件包含.h"
+//获取预定义坐标类型
 #include "common/types/坐标类型.h"
 
 //游戏引擎命名空间
@@ -15,13 +17,6 @@ namespace engine
 	//四叉树状态结构体
 	struct tree_state
 	{
-	private:
-		//使用2D整数坐标
-		using coord2D_int = engine::coord2D_int;
-		//使用2D浮点坐标
-		using coord2D_double = engine::coord2D_double;
-		//使用2D范围坐标
-		using coord2D_range = engine::coord2D_range;
 	public:
 		//为避免根节点中心偏移现象
 		//故采用小数坐标
@@ -35,25 +30,10 @@ namespace engine
 		uint64_t block_size = 16;
 	};
 
-	//四叉树输出信息结构体
+	//节点数据结构体
 	template<typename T>
 	struct tree_chunk_data
 	{
-	private:
-		//使用2D整数坐标
-		using coord2D_int = engine::coord2D_int;
-		//使用2D浮点坐标
-		using coord2D_double = engine::coord2D_double;
-		//使用2D范围坐标
-		using coord2D_range = engine::coord2D_range;
-	public:
-		//友元声明，允许四叉树管理器类访问私有成员
-		friend class Quadtree_Manager<T>;
-		//友元声明，允许四叉树类访问私有成员
-		friend class Quadtree<T>;
-		//友元声明，允许被包装对象访问私有成员
-		friend T;
-
 		//默认构造函数
 		tree_chunk_data() {}
 		//列表构造函数：直接接收坐标和 T* 指针
@@ -66,9 +46,7 @@ namespace engine
 		//默认析构函数
 		~tree_chunk_data() {}
 
-	private:
 		coord2D_double node = { 0.5f, 0.5f };  // 使用 0.5f 强调 float 类型
 		T* ptr_data = nullptr;
 	};
-
 }

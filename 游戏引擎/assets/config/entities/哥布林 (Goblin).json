@@ -1,6 +1,5 @@
 {
   "type": "Goblin",
-  "initialize_path": "scripts/initialize/哥布林 (Goblin).lua",
   "acls": {
     "master": "Goblin",
     "minion_set": []

@@ -10,36 +10,75 @@ int main(void)
 	//引入全部名称空间
 	using namespace engine;
 
-	//事件中心初始化
+	//事件中转站
 	Event_Broker event_broker;
-	//配置加载器初始化
+	//配置加载器
 	Config_Loader config_loader;
-	//实体管理器初始化
-	Entity_Manager entity_Manager;
+	//属性槽管理器
+	Property_Manager prop_manager;
+	//效应管理器
+	Effect_Manager effect_manager;
+	//实体管理器
+	Entity_Manager entity_manager;
 
-	//事件中转站依赖封装
-	auto sign_up = [&event_broker](const std::string& name,
+	// ———— 事件中转站提供依赖封装 ————
+
+	//接入入口封装
+	auto attach_entry = [&event_broker](const std::string& name,
 		const std::vector<config_event>& events,
 		std::function<void(std::shared_ptr<config_event>)> event_entry)
 		{
 			event_broker.info_register(name, events, event_entry);
 		};
-	auto receive = [&event_broker](std::vector<std::shared_ptr<config_event>> event_set)
+	//事件入口封装
+	auto event_entry = [&event_broker](std::vector<std::shared_ptr<config_event>> event_set)
 		{
 		event_broker.receive(event_set);
 		};
 
-	//实体管理器依赖注入
-	entity_Manager.event_terminal.attach_entry_register(sign_up);
-	entity_Manager.event_terminal.event_entry_register(receive);
+	// ———— 属性槽管理器初始化 ———— 
 
-	//配置加载器依赖注入
-	config_loader.event_terminal.event_entry_register(receive);
-	//获取可执行文件目录
-	char buffer[MAX_PATH];
-	GetModuleFileNameA(NULL, buffer, MAX_PATH);
-	//输入可执行文件绝对路径
-	config_loader.exe_path_register(buffer);
+	//接入入口注入
+	prop_manager.event_terminal.attach_entry_register(attach_entry);
+	//接入事件中转站
+	prop_manager.attach();
+	//属性槽获取通道封装
+	auto prop_bind_entry = [&prop_manager](const uint64_t& ID) -> std::unordered_map<std::string, double>*
+		{
+			return prop_manager.prop_slot_get(ID);
+		};
+
+	// ———— 效应管理器初始化 ————
+
+	//接入入口注入
+	effect_manager.event_terminal.attach_entry_register(attach_entry);
+	//事件入口注入
+	effect_manager.event_terminal.event_entry_register(event_entry);
+	//接入事件中转站
+	effect_manager.attach();
+	//属性槽获取通道注入
+	effect_manager.bind_entry_register(prop_bind_entry);
+
+	// ———— 实体管理器初始化 ————
+
+	//接入入口注入
+	entity_manager.event_terminal.attach_entry_register(attach_entry);
+	//事件入口注入
+	entity_manager.event_terminal.event_entry_register(event_entry);
+	//接入事件中转站
+	entity_manager.attach();
+	//属性槽获取通道注入
+	entity_manager.bind_entry_register(prop_bind_entry);
+
+	// ———— 配置加载器初始化 ————
+	
+	//事件入口注入
+	config_loader.event_terminal.event_entry_register(event_entry);
 	//加载配置
 	config_loader.act();
+
+	for (;;)
+	{
+
+	}
 }
