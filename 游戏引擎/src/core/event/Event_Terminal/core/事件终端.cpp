@@ -2,9 +2,7 @@
 
 namespace engine
 {
-	// ———— 单事件重载 ————
-	
-	//事件发送入口注册
+	//事件发送入口注册 —— 单事件重载
 	bool Event_Terminal::event_entry_register
 	(function<void(shared_ptr<config_event> events)>event_entry)
 	{
@@ -18,26 +16,8 @@ namespace engine
 
 		return true;
 	}
-
-	//事件发送入口注册 —— 额外参数重载
-	bool Event_Terminal::event_entry_register
-	(function<void(shared_ptr<config_event> events, any others)>event_entry)
-	{
-		//为事件发送入口分配内存
-		this->ex_event_entry.reset(new(nothrow) function
-			<void(shared_ptr<config_event> events, any others)>);
-		//若内存分配失败
-		if (!this->ex_event_entry)
-			return false;
-		else
-			*(this->ex_event_entry) = event_entry;
-
-		return true;
-	}
-
-	// ———— 多事件重载 ————
 	
-	//事件发送入口注册
+	//事件发送入口注册 —— 多事件重载
 	bool Event_Terminal::event_entry_register
 	(function<void(vector<shared_ptr<config_event>> events)>event_entry)
 	{
@@ -48,22 +28,6 @@ namespace engine
 			return false;
 		else
 			*(this->events_entry) = event_entry;
-
-		return true;
-	}
-
-	//事件发送入口注册 —— 额外参数重载
-	bool Event_Terminal::event_entry_register
-	(function<void(vector<shared_ptr<config_event>> events,any others)>event_entry)
-	{
-		//为事件发送入口分配内存
-		this->ex_events_entry.reset(new(nothrow) function
-			<void(vector<shared_ptr<config_event>> events, any others)>);
-		//若内存分配失败
-		if (!this->ex_events_entry)
-			return false;
-		else
-			*(this->ex_events_entry) = event_entry;
 
 		return true;
 	}
@@ -139,9 +103,7 @@ namespace engine
 			return 0;
 	}
 
-	// ———— 单事件重载 ————
-
-	//事件发送
+	//事件发送 —— 单事件重载
 	bool Event_Terminal::event_send(std::shared_ptr<config_event> event, const int64_t& acl_key)
 	{
 		//若权限密钥匹配
@@ -163,31 +125,7 @@ namespace engine
 			return false;
 	}
 
-	//事件发送 —— 额外参数重载
-	bool Event_Terminal::event_send(std::shared_ptr<config_event> event, std::any others, const int64_t& acl_key)
-	{
-		//若权限密钥匹配
-		if (this->acl_key == acl_key)
-		{
-			//若事件发送入口已激活
-			if (ex_event_entry)
-			{
-				//发送事件
-				(*ex_event_entry)(event, others);
-				//返回发送成功
-				return true;
-			}
-			else
-				return false;
-		}
-		//若密钥不匹配则发送失败
-		else
-			return false;
-	}
-
-	// ———— 多事件重载 ————
-
-	//事件发送
+	//事件发送 —— 多事件重载
 	bool Event_Terminal::event_send(vector<shared_ptr<config_event>> events, const int64_t& acl_key)
 	{
 		//若权限密钥匹配
@@ -198,28 +136,6 @@ namespace engine
 			{
 				//发送事件
 				(*events_entry)(events);
-				//返回发送成功
-				return true;
-			}
-			else
-				return false;
-		}
-		//若密钥不匹配则发送失败
-		else
-			return false;
-	}
-
-	//事件发送 —— 额外参数重载
-	bool Event_Terminal::event_send(vector<shared_ptr<config_event>> events, any others, const int64_t& acl_key)
-	{
-		//若权限密钥匹配
-		if (this->acl_key == acl_key)
-		{
-			//若事件发送入口已激活
-			if (ex_events_entry)
-			{
-				//发送事件
-				(*ex_events_entry)(events, others);
 				//返回发送成功
 				return true;
 			}

@@ -231,6 +231,20 @@ namespace
             }
         }
     }
+    //========================================================================
+    // GLFW 窗口关闭回调（关闭确认接线）
+    // -----------------------------------------------------------------------
+    // 用户点窗口 × 时并不直接关闭：先通知编辑器（有未保存修改则弹确认窗），
+    // 并拦截默认关闭；编辑器确认退出后由主循环真正关闭窗口。
+    //========================================================================
+    void 窗口关闭回调(GLFWwindow* window)
+    {
+        配置编辑器* 编辑器 = static_cast<配置编辑器*>(glfwGetWindowUserPointer(window));
+        if (编辑器 != nullptr)
+            编辑器->请求关闭窗口();
+        //先拦截默认关闭行为，由编辑器决定何时真正退出
+        glfwSetWindowShouldClose(window, GLFW_FALSE);
+    }
 }
 
 //============================================================================
@@ -260,7 +274,7 @@ int main(void)
     int 窗口高度 = (int)(屏幕高度 * 0.92f);
 
     //创建窗口
-    GLFWwindow* window = glfwCreateWindow(窗口宽度, 窗口高度, "实体配置编辑器", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(窗口宽度, 窗口高度, "配置编辑器", nullptr, nullptr);
     if (window == nullptr)
     {
         glfwTerminate();
@@ -303,6 +317,10 @@ int main(void)
     配置编辑器 编辑器;
     编辑器.加载();
 
+    //关闭确认接线：窗口 × 按钮先交给编辑器（有未保存修改时弹确认窗）
+    glfwSetWindowUserPointer(window, &编辑器);
+    glfwSetWindowCloseCallback(window, 窗口关闭回调);
+
     // —— 主循环 ——
     while (!glfwWindowShouldClose(window))
     {
@@ -319,6 +337,10 @@ int main(void)
 
         //渲染编辑器界面
         编辑器.渲染();
+
+        //编辑器确认退出后，真正关闭窗口
+        if (编辑器.应关闭窗口())
+            glfwSetWindowShouldClose(window, GLFW_TRUE);
 
         //提交渲染
         ImGui::Render();

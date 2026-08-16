@@ -31,21 +31,10 @@ namespace engine
 			std::function<void(std::shared_ptr<config_event> evt)> event_entry)>>
 			attach_entry;
 
-		// ———— 单事件重载 ————
-
-		//事件发送入口
+		//事件发送入口 —— 单事件重载
 		std::unique_ptr<std::function<void(std::shared_ptr<config_event> events)>> event_entry;
-		//事件发送入口 —— 额外参数
-		std::unique_ptr<std::function<void(std::shared_ptr<config_event>
-			events, std::any others)>> ex_event_entry;
-
-		// ———— 多事件重载 ————
-		
-		//事件发送入口
+		//事件发送入口 —— 多事件重载
 		std::unique_ptr<std::function<void(std::vector<std::shared_ptr<config_event>> events)>> events_entry;
-		//事件发送入口 —— 额外参数
-		std::unique_ptr<std::function<void(std::vector<std::shared_ptr<config_event>>
-			events,std::any others)>> ex_events_entry;
 
 	public:
 		//构造函数
@@ -64,23 +53,13 @@ namespace engine
 			const std::vector<config_event>& needed_events,
 			std::function<void(std::shared_ptr<config_event> evt)> receive_entry)> attach_entry);
 
-		// ———— 单事件重载 ————
-		
-		//事件发送入口注册
+		//事件发送入口注册 —— 单事件重载
 		bool event_entry_register
 		(std::function<void(std::shared_ptr<config_event> events)>event_entry);
-		//事件发送入口注册 —— 额外参数重载
-		bool event_entry_register
-		(std::function<void(std::shared_ptr<config_event> events, std::any others)>event_entry);
 
-		// ———— 多事件重载 ————
-		
-		//事件发送入口注册
+		//事件发送入口注册 —— 多事件重载
 		bool event_entry_register
 		(std::function<void(std::vector<std::shared_ptr<config_event>> events)>event_entry);
-		//事件发送入口注册 —— 额外参数重载
-		bool event_entry_register
-		(std::function<void(std::vector<std::shared_ptr<config_event>> events, std::any others)>event_entry);
 
 		//权限密钥生成
 		int64_t acl_key_gen(void);
@@ -98,21 +77,11 @@ namespace engine
 
 		// ———— 事件交互 ————
 
-		// ———— 单事件重载 ————
-
-		//事件发送
+		//事件发送 —— 单事件重载
 		bool event_send(std::shared_ptr<config_event> event, const int64_t& acl_key);
-
-		//事件发送 —— 额外参数重载
-		bool event_send(std::shared_ptr<config_event> event, std::any others, const int64_t& acl_key);
 		
-		// ———— 多事件重载 ————
-		
-		//事件发送
+		//事件发送 —— 多事件重载
 		bool event_send(std::vector<std::shared_ptr<config_event>> events,const int64_t& acl_key);
-
-		//事件发送 —— 额外参数重载
-		bool event_send(std::vector<std::shared_ptr<config_event>> events, std::any others, const int64_t& acl_key);
 
 		//事件接收 —— 单事件重载
 		void event_receive(std::shared_ptr<config_event> event);

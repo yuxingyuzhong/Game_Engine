@@ -20,9 +20,7 @@ namespace engine
     class Entity_Manager
     {
     private:
-        //定义从属
-        using minion = std::weak_ptr<Dynamic_Entity>;
-        //实体记录结构体
+        //实体记录
         struct entity_record
         {
            //实体ID记录
@@ -30,21 +28,21 @@ namespace engine
            //实体
            std::shared_ptr<Dynamic_Entity> entity{};
         };
-        //从属权限结构体
+        //从属权限
         struct ownership_acl
         {
             //权限拥有实体
             std::string master{};
-            //合法从属权限实体类型标签
+            //合法从属类型
             std::vector<std::string> minion_set{};
         };
-        //从属转移信息结构体
-        struct ownership_transfer
+        //从属记录
+        struct minion_record
         {
-            //转移事件记录
-            std::shared_ptr<tracked_event> event;
-            //转移从属实体记录
-            std::vector<minion>* minions;
+            //上级实体ID
+            uint64_t master;
+            //从属实体ID
+            std::vector<uint64_t> minion_set{};
         };
     private:
         //订阅事件集合
@@ -66,10 +64,12 @@ namespace engine
 
         //决策树加载路径集合
         std::unordered_map<std::string,std::string> decision_load_paths;
+
         //从属权限集合
         std::vector<ownership_acl> acl_set{};
-        //从属转移信息集合
-        std::vector<ownership_transfer> transfer_records{};
+        //从属记录集合
+        std::vector<minion_record> minion_records;
+
         //属性槽绑定通道
         std::function<std::unordered_map<std::string, double>* (const uint64_t& ID)> bind_entry;
         //活跃实体集合
@@ -106,7 +106,7 @@ namespace engine
         //实体创建 —— ID集合重载
         void entity_build(const std::string& type,const std::vector<int64_t>& IDs);
         //实体卸载
-        void entity_unload(std::vector<int64_t>& ID);
+        void entity_unload(std::vector<uint64_t>& ID);
         //实体行动
         void entity_act(void);
 
@@ -116,7 +116,7 @@ namespace engine
         void outer_event_process(std::shared_ptr<config_event> evt);
     private:
         //内部事件仲裁
-        void inner_event_govern(std::shared_ptr<config_event> event, std::vector<minion>& minions);
+        void inner_event_govern(std::shared_ptr<config_event> event);
     };
 
 }

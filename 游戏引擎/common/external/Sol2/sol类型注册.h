@@ -176,16 +176,4 @@ namespace engine
                 )
             );
     }
-
-    //注册实体事件
-    inline void register_tracked_event(sol::state& lua)
-    {
-        lua.new_usertype<tracked_event>("tracked_event",
-            sol::base_classes, sol::bases<config_event, event>(), // 多继承链
-            sol::call_constructor, sol::constructors<>(), // 允许无参构造
-            "sender", &tracked_event::sender,
-            "ID", &tracked_event::ID
-        );
-    }
-
 }

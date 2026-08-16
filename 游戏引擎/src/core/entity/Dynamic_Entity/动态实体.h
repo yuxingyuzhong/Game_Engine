@@ -20,25 +20,29 @@ namespace engine
 	class Dynamic_Entity : public Entity
 	{
 	private:
-		//定义从属标签
-		using minion_tag = std::pair<int64_t, std::string>;
-		//定义从属
-		using minion = std::weak_ptr<Dynamic_Entity>;
+		//从属记录
+		struct minion_record 
+		{
+			//从属类型
+			std::string type;
+			//从属ID
+			uint64_t ID;
+
+			//默认构造
+			minion_record() = default;
+
+			//含参构造
+			minion_record(const std::string& type, uint64_t ID)
+			{
+				this->type = type;
+				this->ID = ID;
+			}
+		};
 	private:
 		//通用属性槽
 		std::unordered_map<std::string, double>* property_slot;
-
-	    // ———— 从属相关 ————
-		
-		//从属标签槽--脚本端
-		std::unique_ptr<std::vector<minion_tag>> minion_tag_slot;
-		//从属集合--引擎端
-		std::unique_ptr<std::vector<minion>> minion_set;
-
-		//从属转移缓冲--脚本端
-		std::unique_ptr<std::vector<uint64_t>> transfer_buffer;
-		//从属转移缓冲--引擎端
-		std::unique_ptr<std::vector<minion>> entity_buffer;
+		//从属记录集合
+		std::unique_ptr<std::vector<minion_record>> minion_set{};
 
 		// ———— 事件相关 ———— 
 	public:

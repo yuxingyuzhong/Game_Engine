@@ -26,6 +26,8 @@ namespace engine
         //效应记录
         struct effect_record
         {
+            //记录合法标记
+            bool is_vaild = false;
             //效应归属
             uint64_t inclusion;
             //效应编号
@@ -55,9 +57,15 @@ namespace engine
         // ———— 效应管理 ————
 
         //效应构建
-        bool effect_build(const nlohmann::json& config);
+        bool effect_build(std::shared_ptr<config_event> event);
         //效应卸载
-        bool effect_unload(const uint64_t& effect_ID);
+        bool effect_unload(std::shared_ptr<config_event> event);
+    private:
+        //效应查找
+        int64_t effect_seek(const uint64_t& ID);
+        //效应重排序
+        void effect_reranking(const effect_record& new_record);
+    public:
         //效应执行
         void run_effects(EffectPhase phase); 
 
@@ -76,13 +84,17 @@ namespace engine
         //回收ID集合
         std::vector<uint64_t> recycle_ID_set;
 
+        //空闲索引集合
+        std::vector<uint64_t> free_index_set{};
+        //效应索引映射
+        std::unordered_map<uint64_t, uint64_t> effect_index_map{};
+
+        //绝对优先执行效应边界标记
+        int64_t abso_prior_index_end = -1;
         //分组效应集合
         std::vector<effect_group> group_effect_set;
         //效应总集合
         std::vector<effect_record> effect_set;
-
-        //预发送事件集合
-        std::vector<std::shared_ptr<config_event>> pre_event_set;
 
         //效应配置检查器
         Config_Checker config_checker;

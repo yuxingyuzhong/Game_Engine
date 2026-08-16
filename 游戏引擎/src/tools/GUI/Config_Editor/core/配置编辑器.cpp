@@ -16,6 +16,12 @@ namespace engine
     //========================================================================
     namespace
     {
+        //本帧是否有任意输入框「编辑后失焦」。
+        //ImGui 新版已移除 IsAnyItemDeactivatedAfterEdit（帧级汇总），只剩
+        //IsItemDeactivatedAfterEdit（只查最后一个 item）。替代方案：各输入框
+        //渲染后立即检查 IsItemDeactivatedAfterEdit 置位本标志，渲染() 帧末统一消费。
+        static bool 本帧有编辑失焦 = false;
+
         //解析资源文件的绝对路径：
         //  1. 优先尝试当前工作目录（CWD = exe 所在目录时的常见情况）
         //  2. 失败则用 exe 所在目录拼接（防止 CWD 被外部改变）
@@ -59,11 +65,17 @@ namespace engine
             bool changed = ImGui::InputText(label, buffer, value.capacity(), 0);
             if (changed)
                 value.resize(std::strlen(buffer));
+            //输入框刚渲染完，立即检查「编辑后失焦」并置位帧级脏标记
+            //（等帧末再查就查不到这个 item 了，所以必须在渲染点就近检查）
+            if (ImGui::IsItemDeactivatedAfterEdit())
+                本帧有编辑失焦 = true;
             return changed;
         }
 
         //带提示文本的输入框（空值时显示灰色提示）
-        bool 输入文本提示(const char* label, std::string& value, const char* hint)
+        //计入未保存=false 时该输入框不触发「未保存修改」（如搜索过滤框）
+        bool 输入文本提示(const char* label, std::string& value, const char* hint,
+            bool 计入未保存 = true)
         {
             if (value.capacity() < value.size() + 1)
                 value.reserve(value.size() + 16);
@@ -73,6 +85,8 @@ namespace engine
             bool changed = ImGui::InputTextWithHint(label, hint, buffer, value.capacity(), 0);
             if (changed)
                 value.resize(std::strlen(buffer));
+            if (计入未保存 && ImGui::IsItemDeactivatedAfterEdit())
+                本帧有编辑失焦 = true;
             return changed;
         }
 
@@ -175,7 +189,12 @@ namespace engine
         if (仓库.加载())
         {
             加载消息 = "已加载 " + std::to_string(仓库.获取全部().size()) +
-                " 个实体配置、" + std::to_string(仓库.获取属性槽全部().size()) + " 个属性槽配置";
+                " 个实体配置、" + std::to_string(仓库.获取属性槽全部().size()) +
+                " 个属性槽配置";
+            //统计并提示跳过的损坏/缺失配置文件（路由条目损坏 / 文件缺失 / JSON 解析失败等）
+            int 跳过数 = 仓库.获取上次跳过数();
+            if (跳过数 > 0)
+                加载消息 += "，跳过 " + std::to_string(跳过数) + " 个损坏/缺失配置";
             状态消息.clear();
         }
         else
@@ -204,7 +223,7 @@ namespace engine
         //主窗口（占满视口）
         ImGui::SetNextWindowPos(ImVec2(0, 0));
         ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
-        ImGui::Begin("实体配置编辑器", nullptr,
+        ImGui::Begin("配置编辑器", nullptr,
             ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
             ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_MenuBar);
 
@@ -240,11 +259,44 @@ namespace engine
         if (ImGui::IsKeyPressed(ImGuiKey_F1))
             显示帮助窗口 = !显示帮助窗口;
 
+        //Ctrl+S：保存当前选中配置（各面板输入框激活时也生效）
+        ImGuiIO& io = ImGui::GetIO();
+        if (io.KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_S, false))
+            保存当前选中();
+
+        //F5：重新加载全部配置（与菜单一致）
+        if (ImGui::IsKeyPressed(ImGuiKey_F5))
+            加载();
+
+        //脏标记：任何输入控件被编辑并失焦（或点击类控件值变更）后视为有未保存修改
+        //本帧内任意输入框编辑后失焦，由 输入文本/输入文本提示 就近置位帧级标志；
+        //这里统一消费（新版 ImGui 无 IsAnyItemDeactivatedAfterEdit，只能逐 item 就近检查）
+        if (本帧有编辑失焦)
+        {
+            有未保存修改 = true;
+            本帧有编辑失焦 = false;
+        }
+
+        //关闭请求处理：无未保存修改则直接放行，有则弹确认窗
+        if (关闭请求)
+        {
+            关闭请求 = false;
+            if (有未保存修改)
+                显示关闭确认 = true;
+            else
+                关闭已确认 = true;
+        }
+        if (显示关闭确认)
+            渲染关闭确认窗口();
+
         //帮助窗口（独立小窗：可拖动/缩放，内容可滚动，右侧有笑脸）
         渲染帮助窗口();
 
         //配置格式管理窗口（工具菜单打开）
         渲染格式管理窗口();
+
+        //孤儿配置文件清理窗口（工具菜单打开）
+        渲染孤儿清理窗口();
     }
 
     //渲染菜单栏
@@ -259,31 +311,13 @@ namespace engine
                     加载();
                 }
                 ImGui::Separator();
-                if (ImGui::MenuItem("保存当前实体"))
+                if (ImGui::MenuItem("保存当前配置", "Ctrl+S"))
                 {
-                    if (选中索引 >= 0 && 选中索引 < (int)仓库.获取全部().size())
-                    {
-                        std::string error;
-                        实体配置& cfg = 仓库.获取全部()[选中索引];
-                        if (仓库.保存实体(cfg, error))
-                            状态消息 = "已保存：" + cfg.config_path;
-                        else
-                            状态消息 = "保存失败：" + error;
-                    }
-                    else
-                        状态消息 = "请先选择一个实体";
+                    保存当前选中();
                 }
                 if (ImGui::MenuItem("保存全部"))
                 {
-                    int 成功数 = 0;
-                    for (auto& cfg : 仓库.获取全部())
-                    {
-                        std::string error;
-                        if (仓库.保存实体(cfg, error))
-                            成功数++;
-                    }
-                    状态消息 = "保存全部完成：" + std::to_string(成功数) +
-                        "/" + std::to_string(仓库.获取全部().size()) + " 个实体";
+                    保存全部();
                 }
                 ImGui::EndMenu();
             }
@@ -310,6 +344,14 @@ namespace engine
                         else
                             格式编辑有效 = false;
                     }
+                }
+                ImGui::Separator();
+                //孤儿配置文件清理入口（扫描并删除未被任何路由表引用的配置文件）
+                if (ImGui::MenuItem("清理孤儿配置文件"))
+                {
+                    孤儿清理列表.clear();
+                    孤儿清理消息.clear();
+                    显示孤儿清理 = true;
                 }
                 ImGui::EndMenu();
             }
@@ -383,6 +425,37 @@ namespace engine
                 ImGui::TextColored(ImVec4(1.0f, 0.80f, 0.94f, 1.0f), "《校验规则》");
                 ImGui::TextWrapped("• 引擎 Entity_Manager::config_field_parse 要求 acls 与 needed_events 均不能为空，否则引擎拒绝加载");
                 ImGui::TextWrapped("• 右侧「校验结果」面板可实时查看错误与警告，全部通过后保存更稳妥");
+
+                ImGui::Spacing();
+                ImGui::Separator();
+                ImGui::Spacing();
+
+                //自定义模块字段说明（动态读取格式定义，格式有更新时说明自动跟随）
+                ImGui::TextColored(ImVec4(1.0f, 0.80f, 0.94f, 1.0f), "《自定义模块字段说明》（config/custom/）");
+                {
+                    const auto& 格式集合 = 仓库.获取格式全部();
+                    bool 有自定义 = false;
+                    for (const auto& fmt : 格式集合)
+                    {
+                        if (fmt.内置)
+                            continue;
+                        有自定义 = true;
+                        ImGui::TextColored(ImVec4(1.0f, 0.85f, 0.92f, 1.0f),
+                            "◆ %s（config/%s/）", fmt.模块名.c_str(), fmt.配置目录.c_str());
+                        for (const auto& f : fmt.字段)
+                        {
+                            std::string 行 = "• " + f.字段名;
+                            if (!f.显示名.empty() && f.显示名 != f.字段名)
+                                行 += "（" + f.显示名 + "）";
+                            行 += f.必填 ? "（必填）" : "（可选）";
+                            if (!f.说明.empty())
+                                行 += "：" + f.说明;
+                            ImGui::TextWrapped("%s", 行.c_str());
+                        }
+                    }
+                    if (!有自定义)
+                        ImGui::TextWrapped("• （暂无自定义模块，可在「工具→配置格式管理」中创建）");
+                }
 
                 ImGui::Spacing();
                 ImGui::Separator();
@@ -474,19 +547,10 @@ namespace engine
         ImGui::Text("新建配置");
         //模块下拉：内置两种 + 自定义模块
         {
-            //构造模块候选列表
+            //构造模块候选列表（与浏览下拉共用同一实现）
             std::vector<std::string> 候选;
             std::vector<std::string> 标签;
-            for (const auto& fmt : 仓库.获取格式全部())
-            {
-                候选.push_back(fmt.模块名);
-                标签.push_back(fmt.模块名 + (fmt.内置 ? "（内置）" : ""));
-            }
-            if (候选.empty())
-            {
-                候选.push_back("Entity_Manager");
-                标签.push_back("Entity_Manager（内置）");
-            }
+            构建模块候选(候选, 标签);
 
             //确保 新建模块 是有效候选
             if (std::find(候选.begin(), 候选.end(), 新建模块) == 候选.end())
@@ -615,16 +679,7 @@ namespace engine
         {
             std::vector<std::string> 候选;
             std::vector<std::string> 标签;
-            for (const auto& fmt : 仓库.获取格式全部())
-            {
-                候选.push_back(fmt.模块名);
-                标签.push_back(fmt.模块名 + (fmt.内置 ? "（内置）" : ""));
-            }
-            if (候选.empty())
-            {
-                候选.push_back("Entity_Manager");
-                标签.push_back("Entity_Manager（内置）");
-            }
+            构建模块候选(候选, 标签);
             if (std::find(候选.begin(), 候选.end(), 当前模块) == 候选.end())
                 当前模块 = 候选.front();
 
@@ -657,8 +712,8 @@ namespace engine
         }
         ImGui::Separator();
 
-        //搜索过滤
-        输入文本提示("##搜索", 搜索文本, "搜索…");
+        //搜索过滤（不计入未保存修改：搜索只是过滤列表，不改配置）
+        输入文本提示("##搜索", 搜索文本, "搜索…", false);
         ImGui::Separator();
 
         if (当前模块 == "Entity_Manager")
@@ -946,7 +1001,10 @@ namespace engine
             {
                 bool selected = (script == path);
                 if (ImGui::Selectable(script.c_str(), selected))
+                {
                     path = script;
+                    有未保存修改 = true;
+                }
             }
             ImGui::EndCombo();
         }
@@ -1251,7 +1309,10 @@ namespace engine
                     ? cfg.字段值[f.字段名].get<int>() : 0;
                 ImGui::SetNextItemWidth(200.0f);
                 if (ImGui::InputInt((std::string("##field_") + f.字段名).c_str(), &value))
+                {
                     cfg.字段值[f.字段名] = value;
+                    有未保存修改 = true;
+                }
                 break;
             }
             case 配置字段类型::浮点数:
@@ -1260,7 +1321,10 @@ namespace engine
                     ? cfg.字段值[f.字段名].get<float>() : 0.0f;
                 ImGui::SetNextItemWidth(200.0f);
                 if (ImGui::InputFloat((std::string("##field_") + f.字段名).c_str(), &value))
+                {
                     cfg.字段值[f.字段名] = value;
+                    有未保存修改 = true;
+                }
                 break;
             }
             case 配置字段类型::布尔:
@@ -1268,7 +1332,10 @@ namespace engine
                 bool value = cfg.字段值[f.字段名].is_boolean()
                     ? cfg.字段值[f.字段名].get<bool>() : false;
                 if (ImGui::Checkbox((std::string("##field_") + f.字段名).c_str(), &value))
+                {
                     cfg.字段值[f.字段名] = value;
+                    有未保存修改 = true;
+                }
                 break;
             }
             }
@@ -1642,6 +1709,241 @@ namespace engine
         }
         ImGui::End();
         ImGui::PopStyleColor(3);
+    }
+
+    //构建模块候选列表（新建下拉与浏览下拉共用，消除重复代码）
+    void 配置编辑器::构建模块候选(std::vector<std::string>& 候选, std::vector<std::string>& 标签) const
+    {
+        候选.clear();
+        标签.clear();
+        for (const auto& fmt : 仓库.获取格式全部())
+        {
+            候选.push_back(fmt.模块名);
+            标签.push_back(fmt.模块名 + (fmt.内置 ? "（内置）" : ""));
+        }
+        //格式集合为空（首次运行异常）时兜底内置模块，保证下拉框可用
+        if (候选.empty())
+        {
+            候选.push_back("Entity_Manager");
+            标签.push_back("Entity_Manager（内置）");
+        }
+    }
+
+    //保存当前选中配置（Ctrl+S / 菜单共用；按 当前模块 分发，成功后清除脏标记）
+    void 配置编辑器::保存当前选中()
+    {
+        if (当前模块 == "Entity_Manager")
+        {
+            if (选中索引 >= 0 && 选中索引 < (int)仓库.获取全部().size())
+            {
+                实体配置& cfg = 仓库.获取全部()[选中索引];
+                std::string error;
+                if (仓库.保存实体(cfg, error))
+                {
+                    状态消息 = "已保存：" + cfg.config_path;
+                    有未保存修改 = false;
+                }
+                else
+                    状态消息 = "保存失败：" + error;
+            }
+            else
+                状态消息 = "请先选择一个实体配置";
+        }
+        else if (当前模块 == "Property_Manager")
+        {
+            if (选中索引 >= 0 && 选中索引 < (int)仓库.获取属性槽全部().size())
+            {
+                属性槽配置& prop = 仓库.获取属性槽全部()[选中索引];
+                std::string error;
+                if (仓库.保存属性槽(prop, error))
+                {
+                    状态消息 = "已保存属性槽配置：" + prop.config_path;
+                    有未保存修改 = false;
+                }
+                else
+                    状态消息 = "保存失败：" + error;
+            }
+            else
+                状态消息 = "请先选择一个属性槽配置";
+        }
+        else
+        {
+            if (选中通用配置索引 >= 0 &&
+                选中通用配置索引 < (int)仓库.获取通用配置全部().size())
+            {
+                通用配置& cfg = 仓库.获取通用配置全部()[选中通用配置索引];
+                std::string error;
+                if (仓库.保存通用配置(cfg, error))
+                {
+                    状态消息 = "已保存：" + cfg.config_path;
+                    有未保存修改 = false;
+                }
+                else
+                    状态消息 = "保存失败：" + error;
+            }
+            else
+                状态消息 = "请先选择一个配置";
+        }
+    }
+
+    //保存全部配置（实体 + 属性槽 + 通用配置；菜单「保存全部」与关闭确认共用）
+    void 配置编辑器::保存全部()
+    {
+        int 成功数 = 0;
+        int 失败数 = 0;
+        std::string 首个失败信息;
+
+        //实体配置
+        for (auto& cfg : 仓库.获取全部())
+        {
+            std::string error;
+            if (仓库.保存实体(cfg, error))
+                ++成功数;
+            else
+            {
+                ++失败数;
+                if (首个失败信息.empty())
+                    首个失败信息 = error;
+            }
+        }
+        //属性槽配置
+        for (auto& prop : 仓库.获取属性槽全部())
+        {
+            std::string error;
+            if (仓库.保存属性槽(prop, error))
+                ++成功数;
+            else
+            {
+                ++失败数;
+                if (首个失败信息.empty())
+                    首个失败信息 = error;
+            }
+        }
+        //通用配置
+        for (auto& cfg : 仓库.获取通用配置全部())
+        {
+            std::string error;
+            if (仓库.保存通用配置(cfg, error))
+                ++成功数;
+            else
+            {
+                ++失败数;
+                if (首个失败信息.empty())
+                    首个失败信息 = error;
+            }
+        }
+
+        if (失败数 == 0)
+        {
+            状态消息 = "已保存全部 " + std::to_string(成功数) + " 个配置";
+            有未保存修改 = false;
+        }
+        else
+            状态消息 = "已保存 " + std::to_string(成功数) + " 个，失败 " +
+                std::to_string(失败数) + " 个（" + 首个失败信息 + "）";
+    }
+
+    //渲染关闭确认窗口（有未保存修改时弹出：保存并退出 / 直接退出 / 取消）
+    void 配置编辑器::渲染关闭确认窗口()
+    {
+        const ImVec2 屏幕 = ImGui::GetIO().DisplaySize;
+        ImGui::SetNextWindowPos(ImVec2(屏幕.x * 0.5f, 屏幕.y * 0.5f),
+            ImGuiCond_Always, ImVec2(0.5f, 0.5f));
+        ImGui::SetNextWindowSize(ImVec2(480, 0), ImGuiCond_Always);
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.55f, 0.32f, 0.58f, 1.00f));
+        if (ImGui::Begin("未保存的修改", &显示关闭确认,
+            ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove))
+        {
+            ImGui::TextWrapped("还有未保存的修改，退出前要先保存吗？");
+            ImGui::Spacing();
+            if (ImGui::Button("保存并退出", ImVec2(140, 0)))
+            {
+                保存全部();
+                显示关闭确认 = false;
+                关闭已确认 = true;
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("直接退出", ImVec2(140, 0)))
+            {
+                显示关闭确认 = false;
+                关闭已确认 = true;
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("取消", ImVec2(140, 0)))
+                显示关闭确认 = false;
+        }
+        ImGui::End();
+        ImGui::PopStyleColor();
+    }
+
+    //渲染孤儿配置文件清理窗口（列出扫描结果，确认后删除）
+    void 配置编辑器::渲染孤儿清理窗口()
+    {
+        if (!显示孤儿清理)
+            return;
+
+        const ImVec2 屏幕 = ImGui::GetIO().DisplaySize;
+        ImGui::SetNextWindowPos(ImVec2(屏幕.x * 0.5f, 屏幕.y * 0.5f),
+            ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+        ImGui::SetNextWindowSize(ImVec2(580, 440), ImGuiCond_Appearing);
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.55f, 0.32f, 0.58f, 1.00f));
+        if (ImGui::Begin("清理孤儿配置文件", &显示孤儿清理, ImGuiWindowFlags_NoCollapse))
+        {
+            //首次打开时扫描（列表为空且消息为空 = 还没扫过）
+            if (孤儿清理列表.empty() && 孤儿清理消息.empty())
+            {
+                std::string error;
+                int 扫描数 = 仓库.清理孤儿配置(孤儿清理列表, error);
+                if (扫描数 < 0)
+                {
+                    孤儿清理消息 = "扫描失败：" + error;
+                    孤儿清理列表.clear();
+                }
+                else
+                    孤儿清理消息 = "发现 " + std::to_string((int)孤儿清理列表.size()) +
+                        " 个未被任何路由引用的配置文件";
+            }
+
+            if (!孤儿清理消息.empty())
+                ImGui::TextWrapped("%s", 孤儿清理消息.c_str());
+            ImGui::Separator();
+
+            if (!孤儿清理列表.empty())
+            {
+                //孤儿文件列表（限高滚动）
+                ImGui::BeginChild("##孤儿列表", ImVec2(0, ImGui::GetContentRegionAvail().y - 70.0f), true);
+                for (const auto& path : 孤儿清理列表)
+                    ImGui::BulletText("%s", path.c_str());
+                ImGui::EndChild();
+
+                ImGui::TextColored(ImVec4(1.0f, 0.6f, 0.5f, 1.0f),
+                    "删除后不可恢复，请确认这些文件确实不再需要。");
+                if (ImGui::Button("确认删除", ImVec2(140, 0)))
+                {
+                    std::string error;
+                    std::vector<std::string> 已删;
+                    int 删除数 = 仓库.清理孤儿配置(已删, error);
+                    if (删除数 < 0)
+                        孤儿清理消息 = "删除失败：" + error;
+                    else
+                    {
+                        孤儿清理消息 = "已删除 " + std::to_string(删除数) + " 个孤儿配置文件";
+                        孤儿清理列表.clear();
+                    }
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("关闭", ImVec2(140, 0)))
+                    显示孤儿清理 = false;
+            }
+            else
+            {
+                ImGui::TextWrapped("没有发现孤儿配置文件。");
+                if (ImGui::Button("关闭", ImVec2(140, 0)))
+                    显示孤儿清理 = false;
+            }
+        }
+        ImGui::End();
+        ImGui::PopStyleColor();
     }
 
     //把当前格式编辑副本写回仓库（保存到磁盘 + 更新内存）

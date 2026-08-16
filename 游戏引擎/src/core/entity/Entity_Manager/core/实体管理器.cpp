@@ -79,7 +79,7 @@ namespace engine
     int64_t Entity_Manager::entity_find(const int64_t& ID)
     {
         //返回查找结果
-        return engine::binary_search(entity_set, ID, less(), &entity_record::ID);
+        return binary_search(entity_set, ID, less(), &entity_record::ID);
     }
 
     //实体创建
@@ -113,15 +113,10 @@ namespace engine
                 if (new_entity != nullptr)
                 {
                     //构造待注入依赖
-                    auto event_entry = [this](shared_ptr<config_event> event, any others)->void
+                    auto event_entry = [this](shared_ptr<config_event> event)->void
                         {
-                            //简化表示路径
-                            using RefType = reference_wrapper<vector<minion>>;
-                            auto& ref_wrapper = std::any_cast<RefType&>(others);
-                            //取出从属实体容器
-                            vector<minion>& entities = ref_wrapper.get();
                             //处理事件
-                            this->inner_event_govern(event, entities);
+                            this->inner_event_govern(event);
                         };
                     //设置事件发送入口
                     new_entity->event_terminal.event_entry_register(event_entry);
@@ -147,7 +142,7 @@ namespace engine
     }
 
     //实体卸载
-    void Entity_Manager::entity_unload(vector<int64_t>& IDs)
+    void Entity_Manager::entity_unload(vector<uint64_t>& IDs)
     {
         //降序排序防止迭代器失效
         sort(IDs, greater());
@@ -166,7 +161,7 @@ namespace engine
     void Entity_Manager::entity_act(void)
     {
         //待卸载实体ID集合
-        vector<int64_t> IDs{};
+        vector<uint64_t> IDs{};
         //遍历所有实体
         for (int act_index = 0; act_index < entity_set.size(); act_index++)
         {
@@ -187,13 +182,13 @@ namespace engine
     // ———— 事件相关 ————
 
     //外部事件处理
-    void Entity_Manager::outer_event_process(shared_ptr<config_event> evt)
+    void Entity_Manager::outer_event_process(shared_ptr<config_event> event)
     {
         //若当前为配置事件
-        if (evt->category == "Config")
+        if (event->category == "Config")
         {
             //简化表示路径
-            auto& config = evt->config;
+            auto& config = event->config;
 
             //若配置字段检查通过
             if (config_field_parse(config))
@@ -224,14 +219,11 @@ namespace engine
         //若当前非配置事件
         else
         {
-            //转换为真实事件类型
-            shared_ptr<tracked_event> actual_event = dynamic_pointer_cast<tracked_event>(evt);
-
             //简化表示路径
-            auto& tag = actual_event->tag;
-            auto& sender = actual_event->sender;
-            auto& ID = actual_event->ID;
-            auto& config = actual_event->config;
+            auto& tag = event->tag;
+            auto& config = event->config;
+            auto& sender = config["sender"];
+            auto& ID = config["ID"];
 
             //若为创建分支事件
             if (tag == "Build")
@@ -301,23 +293,20 @@ namespace engine
                     return;
 
                 //向目标实体发送事件
-                target_entity->event_terminal.event_receive(evt);
+                target_entity->event_terminal.event_receive(event);
             }
         }
     }
 
     //内部事件仲裁
-    void Entity_Manager::inner_event_govern(shared_ptr<config_event> evt,
-        vector<weak_ptr<Dynamic_Entity>>& minions)
+    void Entity_Manager::inner_event_govern(shared_ptr<config_event> event)
     {
-        //转换为真实事件
-        shared_ptr<tracked_event> actual_event = static_pointer_cast<tracked_event>(evt);
-
         //简化表示路径
-        auto& category = actual_event->category;
-        auto& tag = actual_event->tag;
-        auto& sender = actual_event->sender;
-        auto& config = actual_event->config;
+        auto& category = event->category;
+        auto& tag = event->tag;
+        auto& config = event->config;
+        string sender_type = config["sender_type"];
+        uint64_t sender_ID = config["sender_ID"];
 
         //若目标实体类型字段无效
         if (!config_checker.field_check<string>(config, "type"))
@@ -330,7 +319,7 @@ namespace engine
             if (tag == "Build")
             {
                 //获取权限集合查找索引
-                int acl_index = binary_search(acl_set, sender, less(), &ownership_acl::master);
+                int acl_index = binary_search(acl_set, sender_type, less(), &ownership_acl::master);
                 //若查找索引有效
                 if (acl_index >= 0)
                 {
@@ -345,16 +334,31 @@ namespace engine
                         if (target_type == acl.minion_set[match_time])
                         {
                             //提前发布事件保证属性槽已创建
-                            event_terminal.event_send({ evt }, acl_key);
+                            event_terminal.event_send({ event }, acl_key);
+
                             //记录实体原始数量
                             int original_counts = entity_set.size();
                             //创建指定数量实体
                             entity_build(target_type, config.value<int>("counts", 0));
                             //记录实体当前数量
                             int now_counts = entity_set.size();
-                            //发放从属实体指针
+                            
+                            //从属记录读取索引
+                            int index = binary_search(minion_records,sender_ID, 
+                                less(), &minion_record::master);
+                            //若返回索引无效
+                            if (index < 0)
+                            {
+                                minion_records.push_back({ sender_ID,{} });
+                                //记录读取索引
+                                index = minion_records.size() - 1;
+                            }
+                         
+                            //简化表示路径
+                            auto& minion_set = minion_records[index].minion_set;
+                            //记录从属实体
                             for (int grant_index = original_counts; grant_index < now_counts; grant_index++)
-                                minions.push_back(entity_set[grant_index].entity);
+                                minion_set.push_back(entity_set[grant_index].ID);
                             //提前返回避免二次发布事件
                             return;
                         }
@@ -369,141 +373,117 @@ namespace engine
                     return;
 
                 //获取待卸载实体类型
-                string type = config["type"];
+                string type = config["target_type"];
                 //获取待卸载实体ID
-                vector<int64_t> IDs = config["ID_set"];
+                vector<int64_t> ID_set = config["ID_set"];
 
-                //若ID集合与从属实体集合大小不一致
-                if (IDs.size() != minions.size())
-                    return;
-
-                //可卸载实体ID存储
-                vector<int64_t> actual_IDs{};
-                //检查卸载操作是否合法
-                for (int read_index = 0; read_index < IDs.size(); read_index++)
+                //从属记录读取索引
+                int index = binary_search(minion_records, sender_ID,
+                    less(), &minion_record::master);
+                //若返回索引无效
+                if (index < 0)
                 {
-                    //获取实体索引
-                    int entity_index = entity_find(IDs[read_index]);
-                    //若实体索引有效
-                    if (entity_index >= 0)
+                    Log::warn("Entity_Manager::从属记录不存在\n从属实体卸载事件非法");
+                    return;
+                }
+
+                //简化表示路径
+                auto& minion_set = minion_records[index].minion_set;
+                //可卸载实体ID记录
+                vector<uint64_t> actual_IDs{};
+                //从属集合索引记录
+                vector<uint64_t> minion_indexs{};
+                //检查卸载操作是否合法
+                for (int exam_index = 0; exam_index < ID_set.size(); exam_index++)
+                {
+                    for (int match_index = 0; match_index < ID_set.size(); match_index++)
                     {
                         //简化表示路径
-                        auto& now_entity = entity_set[entity_index].entity;
-                        //若实体类型不匹配
-                        if (now_entity->type_get() != type)
-                            continue;
-
-                        for (int match_time = 0; match_time < minions.size(); match_time++)
+                        auto& minion = minion_set[match_index];
+                        //若ID匹配成功
+                        if (ID_set[exam_index] == minion)
                         {
-                            //若指针指向相同位置则合法
-                            if (now_entity == minions[match_time].lock())
-                                actual_IDs.push_back(IDs[match_time]);
+                            actual_IDs.push_back(minion);
+                            minion_indexs.push_back(match_index);
                         }
                     }
                 }
 
-                //清空原容器
-                minions.clear();
                 //卸载合法操作实体
                 entity_unload(actual_IDs);
+
+                //降序排序防止迭代器失效
+                sort(minion_indexs, greater());
+                //卸载从属实体记录
+                for (auto index : minion_indexs)
+                    minion_records.erase(minion_records.begin() + index);
             }
             //若为转移分支事件
             else if (tag == "Transfer" || tag == "Receiver")
             {
-                //若目标实体ID字段无效
-                if (actual_event->config.value<int64_t>("ID", -1) == -1)
-                    return;
 
-                //记录创建需求标记位
-                bool is_record_needed = true;
-                //检查是否已经存在转移信息记录
-                for (int match_time = 0; match_time < transfer_records.size(); match_time++)
-                {
-                    //简化表示路径
-                    auto& original_event = transfer_records[match_time].event;
-                    auto& minions_buffer = transfer_records[match_time].minions;
-
-                    //若信息记录一致则进行下一步操作
-                    if (original_event->sender == actual_event->config["type"].get<string>() &&
-                        original_event->config["type"].get<string>() == actual_event->sender &&
-                        original_event->ID == actual_event->config["ID"] &&
-                        original_event->config["ID"] == actual_event->ID)
-                    {
-                        //标记无需创建记录
-                        is_record_needed = false;
-
-                        //若当前为转移事件
-                        if (tag == "Transfer")
-                        {
-                            //拷贝从属实体至缓冲区
-                            *minions_buffer = minions;
-                            //清空原容器
-                            minions.clear();
-                        }
-                        //若当前为接收事件
-                        else if (tag == "Receiver")
-                            //接收从属实体
-                            minions.insert(minions.end(), minions_buffer->begin(), minions_buffer->end());
-
-                        //清理记录
-                        transfer_records.erase(transfer_records.begin() + match_time);
-                        break;
-                    }
-                }
-
-                //若记录创建标记为真
-                if (!is_record_needed)
-                    transfer_records.push_back({ actual_event, &minions });
             }
             //若为请求/命令分支事件
             else if (tag == "Request" || tag == "Command")
             {
-                //获取目标实体类型
-                string type = config["type"];
-
-                //获取目标实体ID
-                uint64_t ID = config.value<int64_t>("ID", -1);
-                //若未定义目标ID
-                if (ID == -1)
+                //若目标实体类型字段字段无效
+                if (!config_checker.field_check<vector<int64_t>>(config, "target_type"))
+                    return;
+                //若目标实体ID字段字段无效
+                if (!config_checker.field_check<vector<int64_t>>(config, "target_ID"))
                     return;
 
+                //获取目标实体类型
+                string target_type = config["target_type"].get<string>();  
+                //获取目标实体ID
+                uint64_t target_ID = config["target_ID"].get<uint64_t>();
+
                 //获取目标实体索引
-                int64_t entity_index = entity_find(ID);
+                int64_t read_index = entity_find(target_ID);
                 //若索引无效
-                if (entity_index < 0)
+                if (read_index < 0)
                     return;
 
                 //简化表示路径
-                auto& target_entity = entity_set[entity_index].entity;
+                auto& target_entity = entity_set[read_index].entity;
                 //若目标实体类型错误
-                if (target_entity->type_get() != type)
+                if (target_entity->type_get() != target_type)
                     return;
 
                 //若为命令分支则进一步检测
                 if (tag == "Command")
                 {
-                    //若未提交实体指针则直接返回
-                    if (minions.empty())
-                        return;
-                    //匹配目标实体指针
-                    for (int match_time = 0; match_time < minions.size(); match_time++)
+                    //从属记录读取索引
+                    int index = binary_search(minion_records, sender_ID,
+                        less(), &minion_record::master);
+                    //若返回索引无效
+                    if (index < 0)
                     {
-                        //若匹配到相同地址
-                        if (target_entity == minions[match_time].lock())
-                            break;
-                        //若实体集合内无目标实体
-                        else if (match_time == minions.size() - 1)
-                            //驳回本次命令
-                            return;
+                        Log::warn("Entity_Manager::从属记录不存在\n从属实体命令事件非法");
+                        return;
+                    }
+                    else
+                    {
+                        //简化表示路径
+                        auto& minion_set = minion_records[index].minion_set;
+                        //将目标实体与从属实体进行匹配
+                        for (auto& minion:minion_set)
+                        {
+                            //若目标实体为从属实体
+                            if (target_ID == minion)
+                                //发送事件
+                                target_entity->event_terminal.event_receive(event);
+                        }
                     }
                 }
-                //发送事件
-                target_entity->event_terminal.event_receive(evt);
+                else
+                    //发送事件
+                    target_entity->event_terminal.event_receive(event);
             }
         }
 
         //管理器内部处理完毕后发送事件
-        event_terminal.event_send({ evt }, acl_key);
+        event_terminal.event_send({ event }, acl_key);
     }
 
 }

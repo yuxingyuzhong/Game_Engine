@@ -97,9 +97,9 @@ namespace engine
         int64_t now_stacks_amend(const int64_t& amend_counts);
 
         //执行阶段获取
-        std::optional<uint64_t> priority_get(void);
+        std::optional<uint64_t> priority_get(void) const;
         //执行优先级获取
-        uint32_t phase_mask_get(void);
+        uint32_t phase_mask_get(void) const;
 
         //抗消除级别获取
         std::optional<uint64_t> undispel_levels_get(void);

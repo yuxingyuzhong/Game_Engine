@@ -29,8 +29,16 @@ namespace engine
             //若读取路径无效
             if (!config_checker.path_check(config_path))
                 return false;
+            //若读取路径有效
             else
+            {
+                //重置状态机
+                script = LuaState{};
+                //加载新状态机
                 script.load_file(config["path"]);
+                //打开所有标准库
+                script.open_libraries();
+            }
         }
 
         //若归属字段无效
@@ -38,7 +46,6 @@ namespace engine
             return false;
         else
             inclusion = config["inclusion"].get<uint64_t>();
-
 
         //若名称字段无效
         if (!config_checker.field_check<string>(config, "name"))
@@ -170,13 +177,13 @@ namespace engine
     }
 
     //执行阶段获取
-    std::optional<uint64_t> Prop_Effect::priority_get(void)
+    std::optional<uint64_t> Prop_Effect::priority_get(void) const
     {
         return priority;
     }
 
     //执行优先级获取
-    uint32_t Prop_Effect::phase_mask_get(void)
+    uint32_t Prop_Effect::phase_mask_get(void) const
     {
         return phase_mask;
     }

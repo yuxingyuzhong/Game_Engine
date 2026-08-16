@@ -75,50 +75,6 @@ namespace engine
         }
     };
 
-    //追踪事件
-    struct tracked_event : public config_event
-    {
-        //默认构造函数
-        tracked_event()
-        {
-
-        }
-        //含参构造函数
-        tracked_event(const std::string& target_module, const std::string& category, const std::string& tag,
-            const nlohmann::json& config, const std::string& sender, const int64_t ID)
-        {
-            this->target_module = target_module;
-            this->category = category;
-            this->tag = tag;
-            this->config = config;
-            this->sender = sender;
-            this->ID = ID;
-        }
-        //默认析构函数
-        ~tracked_event()
-        {
-
-        }
-        //发起者类型标签
-        std::string sender;
-        //发起者实体ID
-        int64_t ID = 0;
-
-        //使用默认等于运算符
-        bool operator==(const tracked_event& other) const
-        {
-            if (this->category == other.category &&
-                this->tag == other.tag &&
-                this->target_module == other.target_module &&
-                this->config == other.config &&
-                this->sender == other.sender &&
-                this->ID == other.ID)
-                return true;
-            else
-                return false;
-        }
-    };
-
 }
 
 // 哈希组合工具
@@ -165,20 +121,6 @@ namespace std
             std::string config_str = evt.config.dump();
             detail::hash_combine(seed, str_hasher(config_str));
 
-            return seed;
-        }
-    };
-
-    template<>
-    struct hash<engine::tracked_event> {
-        size_t operator()(const engine::tracked_event& e) const noexcept {
-            std::hash<std::string> hasher;
-            size_t seed = hasher(e.category);
-            detail::hash_combine(seed, hasher(e.tag));
-            detail::hash_combine(seed, hasher(e.target_module));
-            detail::hash_combine(seed, hasher(e.config.dump()));
-            detail::hash_combine(seed, hasher(e.sender));
-            detail::hash_combine(seed, std::hash<uint64_t>()(e.ID));
             return seed;
         }
     };

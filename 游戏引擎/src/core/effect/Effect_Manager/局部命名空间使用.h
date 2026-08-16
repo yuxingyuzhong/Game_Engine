@@ -17,10 +17,12 @@ using std::nullopt;
 using std::optional;
 
 // ---------- 算法与比较 ----------
-using std::find;
 using std::move;
+using std::swap;
+using std::ranges::greater;
 using std::ranges::less;
 using std::ranges::sort;
+using std::ranges::find;
 
 // ---------- 内存分配 ------------
 using std::nothrow;

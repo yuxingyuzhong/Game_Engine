@@ -2,6 +2,8 @@
 //获取引擎环境（定位 exe 目录，与 Config_Loader::base_dir_get 保持一致）
 #include "src/tools/Non_GUI/Engine_Env/引擎环境.h"
 
+#include <set>
+
 //引擎命名空间
 namespace engine
 {
@@ -30,6 +32,73 @@ namespace engine
                 out.push_back(static_cast<char>(c));
             return out;
         }
+
+        //原子写入文件：写临时文件 → 校验流状态 → 备份原文件为 .bak → rename 替换
+        //成功返回 true；失败返回 false 并把原因写入 error（目标文件始终保持完整，不产生半截 JSON）
+        bool 原子写入文件(const std::filesystem::path& path, const std::string& content, std::string& error)
+        {
+            try
+            {
+                std::filesystem::create_directories(path.parent_path());
+
+                //1. 写临时文件（同一目录，保证 rename 原子性）
+                std::filesystem::path tmp = path;
+                tmp += ".tmp";
+                {
+                    std::ofstream file(tmp, std::ios::out | std::ios::trunc | std::ios::binary);
+                    if (!file.is_open())
+                    {
+                        error = "临时文件打开失败：" + path_utf8(tmp);
+                        return false;
+                    }
+                    file << content;
+                    file.flush();
+                    //关键：检查流状态（磁盘满/写入失败时 ofstream 不抛异常，必须显式检查）
+                    if (!file)
+                    {
+                        error = "写入临时文件失败：" + path_utf8(tmp);
+                        file.close();
+                        std::error_code ec;
+                        std::filesystem::remove(tmp, ec);
+                        return false;
+                    }
+                }
+
+                //2. 备份原文件（存在时复制为 .bak）
+                if (std::filesystem::exists(path))
+                {
+                    std::filesystem::path bak = path;
+                    bak += ".bak";
+                    std::error_code ec;
+                    std::filesystem::copy_file(path, bak,
+                        std::filesystem::copy_options::overwrite_existing, ec);
+                    if (ec)
+                    {
+                        error = "备份原文件失败：" + path_utf8(bak) + "（" + ec.message() + "）";
+                        std::error_code ec2;
+                        std::filesystem::remove(tmp, ec2);
+                        return false;
+                    }
+                }
+
+                //3. rename 替换（MSVC 实现使用 MoveFileEx(REPLACE_EXISTING)，可覆盖已存在文件）
+                std::error_code ec;
+                std::filesystem::rename(tmp, path, ec);
+                if (ec)
+                {
+                    error = "替换文件失败：" + path_utf8(path) + "（" + ec.message() + "）";
+                    std::error_code ec2;
+                    std::filesystem::remove(tmp, ec2);
+                    return false;
+                }
+                return true;
+            }
+            catch (const std::exception& e)
+            {
+                error = std::string("写入异常：") + e.what();
+                return false;
+            }
+        }
     }
 
     //========================================================================
@@ -43,12 +112,8 @@ namespace engine
         assets_dir = Engine_Env::exe_dir_get() / "assets";
         //路由文件路径
         route_path = assets_dir / "config" / "route" / "entity.json";
-        //实体配置文件目录
-        entities_dir = assets_dir / "config" / "entities";
         //属性槽路由文件路径
         property_route_path = assets_dir / "config" / "route" / "property.json";
-        //属性槽配置文件目录
-        property_dir = assets_dir / "config" / "property";
         //配置格式定义目录
         format_dir = assets_dir / "config" / "format";
     }
@@ -59,10 +124,10 @@ namespace engine
         //清空旧数据
         实体集合.clear();
         route_json = nlohmann::json();
-        route_loaded = false;
         属性槽集合.clear();
         property_route_json = nlohmann::json();
-        property_route_loaded = false;
+        //重置损坏统计
+        上次加载跳过数 = 0;
 
         //读取路由表
         if (!读取路由())
@@ -73,21 +138,36 @@ namespace engine
         {
             //字段存在性与类型检查
             if (!route_data.is_object())
+            {
+                ++上次加载跳过数;
                 continue;
+            }
             if (!route_data.contains("config_path") || !route_data["config_path"].is_string())
+            {
+                ++上次加载跳过数;
                 continue;
+            }
 
             //获取配置相对路径
             std::string config_path = route_data["config_path"];
             //构建绝对路径（安全校验：必须以 config/ 开头，禁止 .. 跳转）
             if (config_path.rfind("config/", 0) != 0)
+            {
+                ++上次加载跳过数;
                 continue;
+            }
             if (config_path.find("..") != std::string::npos)
+            {
+                ++上次加载跳过数;
                 continue;
+            }
 
             std::filesystem::path absolute_path = assets_dir / utf8_path(config_path);
             if (!std::filesystem::is_regular_file(absolute_path))
+            {
+                ++上次加载跳过数;
                 continue;
+            }
 
             //读取实体 JSON
             nlohmann::json data;
@@ -95,11 +175,15 @@ namespace engine
             {
                 std::ifstream file(absolute_path);
                 if (!file.is_open())
+                {
+                    ++上次加载跳过数;
                     continue;
+                }
                 file >> data;
             }
             catch (const std::exception&)
             {
+                ++上次加载跳过数;
                 continue;
             }
 
@@ -107,7 +191,10 @@ namespace engine
             实体配置 cfg;
             std::string parse_error;
             if (!解析实体配置(data, cfg, parse_error))
+            {
+                ++上次加载跳过数;
                 continue;
+            }
 
             //记录来源路径（用于保存时写回原文件）
             cfg.config_path = config_path;
@@ -121,37 +208,59 @@ namespace engine
             for (const auto& route_data : property_route_json)
             {
                 if (!route_data.is_object())
+                {
+                    ++上次加载跳过数;
                     continue;
+                }
                 if (!route_data.contains("config_path") || !route_data["config_path"].is_string())
+                {
+                    ++上次加载跳过数;
                     continue;
+                }
 
                 std::string config_path = route_data["config_path"];
                 if (config_path.rfind("config/", 0) != 0)
+                {
+                    ++上次加载跳过数;
                     continue;
+                }
                 if (config_path.find("..") != std::string::npos)
+                {
+                    ++上次加载跳过数;
                     continue;
+                }
 
                 std::filesystem::path absolute_path = assets_dir / utf8_path(config_path);
                 if (!std::filesystem::is_regular_file(absolute_path))
+                {
+                    ++上次加载跳过数;
                     continue;
+                }
 
                 nlohmann::json data;
                 try
                 {
                     std::ifstream file(absolute_path);
                     if (!file.is_open())
+                    {
+                        ++上次加载跳过数;
                         continue;
+                    }
                     file >> data;
                 }
                 catch (const std::exception&)
                 {
+                    ++上次加载跳过数;
                     continue;
                 }
 
                 属性槽配置 prop;
                 std::string parse_error;
                 if (!解析属性槽配置(data, prop, parse_error))
+                {
+                    ++上次加载跳过数;
                     continue;
+                }
 
                 prop.config_path = config_path;
                 属性槽集合.push_back(std::move(prop));
@@ -170,7 +279,7 @@ namespace engine
         {
             if (fmt.内置)
                 continue;
-            加载模块通用配置(fmt);
+            上次加载跳过数 += 加载模块通用配置(fmt);
         }
 
         return true;
@@ -333,6 +442,13 @@ namespace engine
             error = "实体类型（type）不能为空";
             return false;
         }
+        //重名检查：type 不得与「其他」实体重复（防止覆盖其他实体的配置文件）
+        实体配置* other = 查找类型(cfg.type);
+        if (other != nullptr && other != &cfg)
+        {
+            error = "实体类型已存在，无法保存（会覆盖已有配置）：" + cfg.type;
+            return false;
+        }
 
         //确定目标路径：type 变更时迁移文件
         std::string target_path = 生成配置路径(cfg.type);
@@ -356,22 +472,12 @@ namespace engine
         //若为全新实体（无原路径），直接使用目标路径
         cfg.config_path = target_path;
 
-        //序列化并写入实体 JSON
+        //序列化并原子写入实体 JSON（临时文件 + 流状态校验 + .bak 备份 + rename）
         nlohmann::json data = 序列化实体配置(cfg);
-        try
+        std::string write_error;
+        if (!原子写入文件(absolute_target, data.dump(2), write_error))
         {
-            std::filesystem::create_directories(absolute_target.parent_path());
-            std::ofstream file(absolute_target, std::ios::out | std::ios::trunc);
-            if (!file.is_open())
-            {
-                error = "实体文件打开失败：" + cfg.config_path;
-                return false;
-            }
-            file << data.dump(2);
-        }
-        catch (const std::exception& e)
-        {
-            error = std::string("实体文件写入异常：") + e.what();
+            error = "实体文件写入失败：" + cfg.config_path + "（" + write_error + "）";
             return false;
         }
 
@@ -390,7 +496,7 @@ namespace engine
                 }
             }
             if (!found)
-                route_json.push_back({ {"module", "Entity_Mangaer"}, {"config_path", cfg.config_path} });
+                route_json.push_back({ {"module", "Entity_Manager"}, {"config_path", cfg.config_path} });
         }
         if (!写入路由())
         {
@@ -417,30 +523,20 @@ namespace engine
             return false;
         }
 
-        //生成配置路径并写入文件
+        //生成配置路径并写入文件（原子写入：临时文件 + 流状态校验 + .bak 备份 + rename）
         cfg.config_path = 生成配置路径(cfg.type);
         nlohmann::json data = 序列化实体配置(cfg);
         std::filesystem::path absolute_path = assets_dir / utf8_path(cfg.config_path);
-        try
+        std::string write_error;
+        if (!原子写入文件(absolute_path, data.dump(2), write_error))
         {
-            std::filesystem::create_directories(absolute_path.parent_path());
-            std::ofstream file(absolute_path, std::ios::out | std::ios::trunc);
-            if (!file.is_open())
-            {
-                error = "实体文件打开失败：" + cfg.config_path;
-                return false;
-            }
-            file << data.dump(2);
-        }
-        catch (const std::exception& e)
-        {
-            error = std::string("实体文件写入异常：") + e.what();
+            error = "实体文件写入失败：" + cfg.config_path + "（" + write_error + "）";
             return false;
         }
 
         //追加路由条目
         if (route_json.is_array())
-            route_json.push_back({ {"module", "Entity_Mangaer"}, {"config_path", cfg.config_path} });
+            route_json.push_back({ {"module", "Entity_Manager"}, {"config_path", cfg.config_path} });
         if (!写入路由())
         {
             error = "路由表写入失败：" + path_utf8(route_path);
@@ -550,6 +646,13 @@ namespace engine
             error = "属性槽配置：实体类型（type）不能为空";
             return false;
         }
+        //重名检查：type 不得与「其他」属性槽重复（防止覆盖其他配置文件）
+        属性槽配置* other = 查找属性槽(cfg.type);
+        if (other != nullptr && other != &cfg)
+        {
+            error = "属性槽配置已存在，无法保存（会覆盖已有配置）：" + cfg.type;
+            return false;
+        }
 
         //确定目标路径（type 变更时迁移文件）
         std::string target_path = 生成属性槽配置路径(cfg.type);
@@ -571,22 +674,12 @@ namespace engine
         }
         cfg.config_path = target_path;
 
-        //序列化并写入属性槽 JSON
+        //序列化并原子写入属性槽 JSON（临时文件 + 流状态校验 + .bak 备份 + rename）
         nlohmann::json data = 序列化属性槽配置(cfg);
-        try
+        std::string write_error;
+        if (!原子写入文件(absolute_target, data.dump(2), write_error))
         {
-            std::filesystem::create_directories(absolute_target.parent_path());
-            std::ofstream file(absolute_target, std::ios::out | std::ios::trunc);
-            if (!file.is_open())
-            {
-                error = "属性槽文件打开失败：" + cfg.config_path;
-                return false;
-            }
-            file << data.dump(2);
-        }
-        catch (const std::exception& e)
-        {
-            error = std::string("属性槽文件写入异常：") + e.what();
+            error = "属性槽文件写入失败：" + cfg.config_path + "（" + write_error + "）";
             return false;
         }
 
@@ -633,20 +726,10 @@ namespace engine
         cfg.config_path = 生成属性槽配置路径(cfg.type);
         nlohmann::json data = 序列化属性槽配置(cfg);
         std::filesystem::path absolute_path = assets_dir / utf8_path(cfg.config_path);
-        try
+        std::string write_error;
+        if (!原子写入文件(absolute_path, data.dump(2), write_error))
         {
-            std::filesystem::create_directories(absolute_path.parent_path());
-            std::ofstream file(absolute_path, std::ios::out | std::ios::trunc);
-            if (!file.is_open())
-            {
-                error = "属性槽文件打开失败：" + cfg.config_path;
-                return false;
-            }
-            file << data.dump(2);
-        }
-        catch (const std::exception& e)
-        {
-            error = std::string("属性槽文件写入异常：") + e.what();
+            error = "属性槽文件写入失败：" + cfg.config_path + "（" + write_error + "）";
             return false;
         }
 
@@ -728,26 +811,14 @@ namespace engine
             return false;
         }
 
-        route_loaded = true;
         return true;
     }
 
-    //写入路由表
+    //写入路由表（原子写入：临时文件 + 流状态校验 + .bak 备份 + rename）
     bool 实体配置仓库::写入路由()
     {
-        try
-        {
-            std::filesystem::create_directories(route_path.parent_path());
-            std::ofstream file(route_path, std::ios::out | std::ios::trunc);
-            if (!file.is_open())
-                return false;
-            file << route_json.dump(2);
-        }
-        catch (const std::exception&)
-        {
-            return false;
-        }
-        return true;
+        std::string write_error;
+        return 原子写入文件(route_path, route_json.dump(2), write_error);
     }
 
     //解析单个实体 JSON（兼容旧格式）
@@ -903,26 +974,14 @@ namespace engine
             return false;
         }
 
-        property_route_loaded = true;
         return true;
     }
 
-    //写入属性槽路由表
+    //写入属性槽路由表（原子写入）
     bool 实体配置仓库::写入属性槽路由()
     {
-        try
-        {
-            std::filesystem::create_directories(property_route_path.parent_path());
-            std::ofstream file(property_route_path, std::ios::out | std::ios::trunc);
-            if (!file.is_open())
-                return false;
-            file << property_route_json.dump(2);
-        }
-        catch (const std::exception&)
-        {
-            return false;
-        }
-        return true;
+        std::string write_error;
+        return 原子写入文件(property_route_path, property_route_json.dump(2), write_error);
     }
 
     //解析单个属性槽 JSON
@@ -1114,40 +1173,29 @@ namespace engine
         }
     }
 
-    //写入单个格式定义文件
+    //写入单个格式定义文件（原子写入）
     bool 实体配置仓库::写入格式文件(const 配置格式& fmt)
     {
-        try
+        nlohmann::json data;
+        data["module"] = fmt.模块名;
+        data["dir"] = fmt.配置目录;
+        data["route"] = fmt.路由文件名;
+        data["builtin"] = fmt.内置;
+        data["fields"] = nlohmann::json::array();
+        for (const auto& f : fmt.字段)
         {
-            nlohmann::json data;
-            data["module"] = fmt.模块名;
-            data["dir"] = fmt.配置目录;
-            data["route"] = fmt.路由文件名;
-            data["builtin"] = fmt.内置;
-            data["fields"] = nlohmann::json::array();
-            for (const auto& f : fmt.字段)
-            {
-                nlohmann::json field;
-                field["name"] = f.字段名;
-                field["display"] = f.显示名;
-                field["type"] = 字段类型键(f.类型);
-                field["required"] = f.必填;
-                field["desc"] = f.说明;
-                data["fields"].push_back(std::move(field));
-            }
+            nlohmann::json field;
+            field["name"] = f.字段名;
+            field["display"] = f.显示名;
+            field["type"] = 字段类型键(f.类型);
+            field["required"] = f.必填;
+            field["desc"] = f.说明;
+            data["fields"].push_back(std::move(field));
+        }
 
-            std::filesystem::create_directories(format_dir);
-            std::ofstream file(format_dir / (文件名清理(fmt.模块名) + ".json"),
-                std::ios::out | std::ios::trunc);
-            if (!file.is_open())
-                return false;
-            file << data.dump(2);
-            return true;
-        }
-        catch (const std::exception&)
-        {
-            return false;
-        }
+        std::filesystem::path file_path = format_dir / (文件名清理(fmt.模块名) + ".json");
+        std::string write_error;
+        return 原子写入文件(file_path, data.dump(2), write_error);
     }
 
     //加载全部格式定义
@@ -1222,7 +1270,7 @@ namespace engine
         return true;
     }
 
-    //删除格式定义
+    //删除格式定义（同时清理该模块的孤儿路由文件与配置目录）
     bool 实体配置仓库::删除格式(const std::string& module, std::string& error)
     {
         配置格式* target = 查找格式(module);
@@ -1237,9 +1285,20 @@ namespace engine
             return false;
         }
 
-        //删除格式文件
         std::error_code ec;
+
+        //删除格式文件
         std::filesystem::remove(format_dir / (文件名清理(module) + ".json"), ec);
+
+        //清理孤儿路由文件（route/custom_<模块>.json，格式都没了路由就是死的）
+        std::filesystem::path route_file = assets_dir / "config" / "route" /
+            ("custom_" + 文件名清理(module) + ".json");
+        std::filesystem::remove(route_file, ec);
+
+        //清理该模块的配置目录（config/custom/<模块>/，避免遗留无法编辑的孤儿配置）
+        std::filesystem::path config_dir = assets_dir / "config" / "custom" / 文件名清理(module);
+        if (std::filesystem::is_directory(config_dir))
+            std::filesystem::remove_all(config_dir, ec);
 
         //从内存集合移除
         格式集合.erase(
@@ -1255,6 +1314,86 @@ namespace engine
         自定义路由表.erase(module);
 
         return true;
+    }
+
+    //扫描并删除未被任何路由表引用的孤儿配置文件
+    int 实体配置仓库::清理孤儿配置(std::vector<std::string>& 删除列表, std::string& error)
+    {
+        删除列表.clear();
+        try
+        {
+            //1. 收集所有路由表引用的 config_path（实体 / 属性槽 / 自定义模块）
+            std::set<std::string> 被引用;
+            if (route_json.is_array())
+            {
+                for (const auto& item : route_json)
+                    if (item.is_object() && item.contains("config_path") && item["config_path"].is_string())
+                        被引用.insert(item["config_path"].get<std::string>());
+            }
+            if (property_route_json.is_array())
+            {
+                for (const auto& item : property_route_json)
+                    if (item.is_object() && item.contains("config_path") && item["config_path"].is_string())
+                        被引用.insert(item["config_path"].get<std::string>());
+            }
+            for (const auto& kv : 自定义路由表)
+            {
+                if (!kv.second.is_array())
+                    continue;
+                for (const auto& item : kv.second)
+                    if (item.is_object() && item.contains("config_path") && item["config_path"].is_string())
+                        被引用.insert(item["config_path"].get<std::string>());
+            }
+
+            //2. 扫描配置目录下所有 .json（entities / property / custom），未被引用的删除
+            const std::filesystem::path 候选目录[] =
+            {
+                assets_dir / "config" / "entities",
+                assets_dir / "config" / "property",
+                assets_dir / "config" / "custom",
+            };
+            std::error_code ec;
+            int 删除数 = 0;
+            for (const auto& dir : 候选目录)
+            {
+                if (!std::filesystem::is_directory(dir, ec))
+                    continue;
+                for (auto it = std::filesystem::recursive_directory_iterator(dir, ec);
+                    it != std::filesystem::recursive_directory_iterator(); it.increment(ec))
+                {
+                    if (ec)
+                    {
+                        ec.clear();
+                        continue;
+                    }
+                    if (!it->is_regular_file(ec))
+                        continue;
+                    if (it->path().extension() != ".json")
+                        continue;
+
+                    std::string relative = path_utf8(it->path().lexically_relative(assets_dir));
+                    std::replace(relative.begin(), relative.end(), '\\', '/');
+                    if (被引用.count(relative) > 0)
+                        continue;
+
+                    //未被任何路由引用：视为孤儿配置，删除
+                    std::filesystem::remove(it->path(), ec);
+                    if (ec)
+                    {
+                        error = "删除失败：" + relative + "（" + ec.message() + "）";
+                        continue;
+                    }
+                    删除列表.push_back(relative);
+                    ++删除数;
+                }
+            }
+            return 删除数;
+        }
+        catch (const std::exception& e)
+        {
+            error = std::string("清理异常：") + e.what();
+            return -1;
+        }
     }
 
     //========================================================================
@@ -1359,23 +1498,13 @@ namespace engine
             return false;
         }
 
-        //生成配置路径并写入文件
+        //生成配置路径并写入文件（原子写入）
         cfg.config_path = 生成通用配置路径(cfg.模块名, cfg.条目名);
         std::filesystem::path absolute_path = assets_dir / utf8_path(cfg.config_path);
-        try
+        std::string write_error;
+        if (!原子写入文件(absolute_path, cfg.字段值.dump(2), write_error))
         {
-            std::filesystem::create_directories(absolute_path.parent_path());
-            std::ofstream file(absolute_path, std::ios::out | std::ios::trunc);
-            if (!file.is_open())
-            {
-                error = "配置文件打开失败：" + cfg.config_path;
-                return false;
-            }
-            file << cfg.字段值.dump(2);
-        }
-        catch (const std::exception& e)
-        {
-            error = std::string("配置文件写入异常：") + e.what();
+            error = "配置文件写入失败：" + cfg.config_path + "（" + write_error + "）";
             return false;
         }
 
@@ -1412,6 +1541,13 @@ namespace engine
             error = "条目名不能为空";
             return false;
         }
+        //重名检查：条目名不得与「其他」同模块配置重复（防止覆盖其他配置文件）
+        通用配置* other = 查找通用配置(cfg.模块名, cfg.条目名);
+        if (other != nullptr && other != &cfg)
+        {
+            error = "配置已存在，无法保存（会覆盖已有配置）：" + cfg.模块名 + "/" + cfg.条目名;
+            return false;
+        }
 
         //确定目标路径（条目名变更时迁移文件）
         std::string target_path = 生成通用配置路径(cfg.模块名, cfg.条目名);
@@ -1433,22 +1569,12 @@ namespace engine
         }
         cfg.config_path = target_path;
 
-        //写入 JSON
+        //写入 JSON（原子写入）
         std::filesystem::path absolute_path = assets_dir / utf8_path(cfg.config_path);
-        try
+        std::string write_error;
+        if (!原子写入文件(absolute_path, cfg.字段值.dump(2), write_error))
         {
-            std::filesystem::create_directories(absolute_path.parent_path());
-            std::ofstream file(absolute_path, std::ios::out | std::ios::trunc);
-            if (!file.is_open())
-            {
-                error = "配置文件打开失败：" + cfg.config_path;
-                return false;
-            }
-            file << cfg.字段值.dump(2);
-        }
-        catch (const std::exception& e)
-        {
-            error = std::string("配置文件写入异常：") + e.what();
+            error = "配置文件写入失败：" + cfg.config_path + "（" + write_error + "）";
             return false;
         }
 
@@ -1641,70 +1767,82 @@ namespace engine
         return out.is_array();
     }
 
-    //写入自定义模块路由表
+    //写入自定义模块路由表（原子写入）
     bool 实体配置仓库::写入自定义路由(const std::string& module, const nlohmann::json& data)
     {
-        try
-        {
-            std::filesystem::path route_path = assets_dir / "config" / "route" /
-                ("custom_" + 文件名清理(module) + ".json");
-            std::filesystem::create_directories(route_path.parent_path());
-            std::ofstream file(route_path, std::ios::out | std::ios::trunc);
-            if (!file.is_open())
-                return false;
-            file << data.dump(2);
-        }
-        catch (const std::exception&)
-        {
-            return false;
-        }
-        return true;
+        std::filesystem::path route_path = assets_dir / "config" / "route" /
+            ("custom_" + 文件名清理(module) + ".json");
+        std::string write_error;
+        return 原子写入文件(route_path, data.dump(2), write_error);
     }
 
-    //加载单个自定义模块的全部通用配置
-    bool 实体配置仓库::加载模块通用配置(const 配置格式& fmt)
+    //加载单个自定义模块的全部通用配置（返回跳过的损坏/缺失配置数量）
+    int 实体配置仓库::加载模块通用配置(const 配置格式& fmt)
     {
+        int 跳过数 = 0;
         nlohmann::json route_data;
         if (!读取自定义路由(fmt.模块名, route_data))
         {
             //路由缺失不算致命错误：可后续在编辑器内新建
             自定义路由表[fmt.模块名] = nlohmann::json::array();
-            return false;
+            return 0;
         }
         自定义路由表[fmt.模块名] = route_data;
 
         for (const auto& route_item : route_data)
         {
             if (!route_item.is_object())
+            {
+                ++跳过数;
                 continue;
+            }
             if (!route_item.contains("config_path") || !route_item["config_path"].is_string())
+            {
+                ++跳过数;
                 continue;
+            }
 
             std::string config_path = route_item["config_path"];
             //安全校验：必须以 config/ 开头，禁止 .. 跳转
             if (config_path.rfind("config/", 0) != 0)
+            {
+                ++跳过数;
                 continue;
+            }
             if (config_path.find("..") != std::string::npos)
+            {
+                ++跳过数;
                 continue;
+            }
 
             std::filesystem::path absolute_path = assets_dir / utf8_path(config_path);
             if (!std::filesystem::is_regular_file(absolute_path))
+            {
+                ++跳过数;
                 continue;
+            }
 
             nlohmann::json data;
             try
             {
                 std::ifstream file(absolute_path);
                 if (!file.is_open())
+                {
+                    ++跳过数;
                     continue;
+                }
                 file >> data;
             }
             catch (const std::exception&)
             {
+                ++跳过数;
                 continue;
             }
             if (!data.is_object())
+            {
+                ++跳过数;
                 continue;
+            }
 
             通用配置 cfg;
             cfg.模块名 = fmt.模块名;
@@ -1719,7 +1857,7 @@ namespace engine
             通用配置集合.push_back(std::move(cfg));
         }
 
-        return true;
+        return 跳过数;
     }
 
     //按模块名生成通用配置路径
