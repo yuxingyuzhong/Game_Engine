@@ -30,16 +30,36 @@ namespace engine
 		needed_events.emplace_back("", "Entity", "Unload",json::object());
 
 		//构造事件接收入口
-		auto receive_entry = [this](shared_ptr<config_event> event)-> void
+		auto event_receive_entry = [this](shared_ptr<config_event> event)-> void
 			{
 				this->event_process(event);
 			};
+		//注册事件接收入口
+		event_terminal.receive_entry_register(event_receive_entry);
 		//更新接入信息
-		event_terminal.attach("Property_Manager", needed_events, receive_entry, acl_key);
+		event_terminal.attach("Property_Manager", needed_events, acl_key);
+	}
+
+	//读写指针获取
+	Property_Manager* Property_Manager::ptr(void)
+	{
+		return this;
+	}
+
+	//只读指针获取 
+	const Property_Manager* Property_Manager::const_ptr(void) const
+	{
+		return this;
 	}
 
 	//属性槽获取
 	unordered_map<string, double>* Property_Manager::prop_slot_get(const uint64_t& ID)
+	{
+		return const_cast<unordered_map<string, double>*>(const_prop_slot_get(ID));
+	}
+
+	//只读属性槽获取
+	const unordered_map<string, double>* Property_Manager::const_prop_slot_get(const uint64_t& ID) const
 	{
 		//查找目标属性槽索引
 		uint64_t index = prop_slot_seek(ID);
@@ -106,7 +126,7 @@ namespace engine
 	}
 
 	//属性槽查找
-	uint64_t Property_Manager::prop_slot_seek(const uint64_t& ID)
+	uint64_t Property_Manager::prop_slot_seek(const uint64_t& ID) const 
 	{
 		//返回查找结果
 		return binary_search(record_set, ID, less(), &prop_record::ID);
@@ -146,35 +166,6 @@ namespace engine
 
 			//创建配置记录并初始化脚本
 			initialize_scripts[config["type"]].load_file(config["initialize_path"]);
-		}
-		//若为实体事件
-		if (category == "Entity")
-		{
-			//若为实体构建/卸载事件
-			if (tag == "Build" || tag == "Unload")
-			{
-				//若实体类型字段无效
-				if (!config_checker.field_check<string>(config, "type"))
-				{
-					Log::warn("Prop_Manager::配置出错");
-					Log::warn("Prop_Manager::未定义目标实体类型!!!");
-					return;
-				}
-				//若实体ID字段无效
-				if (!config_checker.field_check<string>(config, "initialize_path"))
-				{
-					Log::warn("Prop_Manager::配置出错");
-					Log::warn("Prop_Manager::未定义目标实体ID!!!");
-					return;
-				}
-
-				//若为属性槽构建事件
-				if(tag == "Build")
-                    prop_slot_build(config["type"], config["ID"]);
-				//若为属性槽卸载事件
-				else
-					prop_slot_unload(config["type"], config["ID"]);
-			}
 		}
 	}
 }

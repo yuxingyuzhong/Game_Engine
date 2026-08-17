@@ -5,12 +5,17 @@
 namespace engine
 {
 	//构造函数
-	Dynamic_Entity::Dynamic_Entity(const int64_t& ID)
+	Dynamic_Entity::Dynamic_Entity(void)
+	{
+		//获取权限密钥
+		this->acl_key = event_terminal.acl_key_gen();
+	}
+
+	//构造函数
+	Dynamic_Entity::Dynamic_Entity(const int64_t& ID) : Dynamic_Entity()
 	{
 		//设置实体ID编号
 		this->ID = ID;
-		//获取权限密钥
-		this->acl_key = event_terminal.acl_key_gen();
 	}
 
 	//构造函数
@@ -24,6 +29,12 @@ namespace engine
 	Dynamic_Entity::~Dynamic_Entity()
 	{
 
+	}
+
+	//ID绑定
+	void Dynamic_Entity::ID_bind(const uint64_t& ID)
+	{
+		this->ID = ID;
 	}
 
 	//属性槽绑定
@@ -130,6 +141,5 @@ namespace engine
 
 		//发送事件
 		event_terminal.event_send({ event }, acl_key);
-
 	}
 }

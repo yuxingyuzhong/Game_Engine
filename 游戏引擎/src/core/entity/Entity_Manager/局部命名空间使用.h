@@ -8,6 +8,8 @@ using std::string;
 using std::unordered_map;
 using std::unordered_set;
 using std::vector;
+using std::optional;
+using std::nullopt;
 
 // ---------- 智能指针 ----------
 using std::shared_ptr;

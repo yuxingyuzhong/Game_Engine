@@ -30,8 +30,13 @@ int main(void)
 		{
 			event_broker.info_register(name, events, event_entry);
 		};
-	//事件入口封装
-	auto event_entry = [&event_broker](std::vector<std::shared_ptr<config_event>> event_set)
+	//单事件入口封装
+	auto event_entry = [&event_broker](std::shared_ptr<config_event> event)
+		{
+			event_broker.receive(event);
+		};
+	//多事件入口封装
+	auto event_set_entry = [&event_broker](std::vector<std::shared_ptr<config_event>> event_set)
 		{
 		event_broker.receive(event_set);
 		};
@@ -52,8 +57,10 @@ int main(void)
 
 	//接入入口注入
 	effect_manager.event_terminal.attach_entry_register(attach_entry);
-	//事件入口注入
-	effect_manager.event_terminal.event_entry_register(event_entry);
+	//单事件入口注入
+	effect_manager.event_terminal.send_entry_register(event_entry);
+	//多事件入口注入
+	effect_manager.event_terminal.send_entry_register(event_set_entry);
 	//接入事件中转站
 	effect_manager.attach();
 	//属性槽获取通道注入
@@ -63,17 +70,21 @@ int main(void)
 
 	//接入入口注入
 	entity_manager.event_terminal.attach_entry_register(attach_entry);
-	//事件入口注入
-	entity_manager.event_terminal.event_entry_register(event_entry);
+	//单事件入口注入
+	entity_manager.event_terminal.send_entry_register(event_entry);
+	//多事件入口注入
+	entity_manager.event_terminal.send_entry_register(event_set_entry);
 	//接入事件中转站
 	entity_manager.attach();
 	//属性槽获取通道注入
-	entity_manager.bind_entry_register(prop_bind_entry);
+	entity_manager.bind_property_manager(prop_manager.ptr());
 
 	// ———— 配置加载器初始化 ————
 	
-	//事件入口注入
-	config_loader.event_terminal.event_entry_register(event_entry);
+	//单事件入口注入
+	config_loader.event_terminal.send_entry_register(event_entry);
+	//多事件入口注入
+	config_loader.event_terminal.send_entry_register(event_set_entry);
 	//加载配置
 	config_loader.act();
 

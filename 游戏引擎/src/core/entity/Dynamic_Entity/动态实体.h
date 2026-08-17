@@ -30,7 +30,6 @@ namespace engine
 
 			//默认构造
 			minion_record() = default;
-
 			//含参构造
 			minion_record(const std::string& type, uint64_t ID)
 			{
@@ -56,12 +55,26 @@ namespace engine
 
 	public:
 		//构造函数
+		Dynamic_Entity(void);
+		//构造函数
 		Dynamic_Entity(const int64_t& ID);
 		//构造函数
 		Dynamic_Entity(const int64_t& ID, const std::string& load_path);
+
+		//禁用拷贝
+		Dynamic_Entity(const Dynamic_Entity&) = delete;
+		Dynamic_Entity& operator=(const Dynamic_Entity&) = delete;
+
+		//移动构造函数
+		Dynamic_Entity(Dynamic_Entity&&) = default;
+		//移动赋值函数
+		Dynamic_Entity& operator=(Dynamic_Entity&&) = default;
+
 		//析构函数
 		~Dynamic_Entity();
 
+		//ID绑定
+		void ID_bind(const uint64_t& ID);
 		//属性槽绑定
 		void prop_slot_bind(std::unordered_map<std::string, double>* ptr);
 		//从属功能启用

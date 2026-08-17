@@ -31,7 +31,9 @@ namespace engine
         void info_register(const std::string& module_name, 
             const std::vector<config_event>& needed_events,
             std::function<void(std::shared_ptr<config_event>)> event_entry);
-        //事件接收
+        //事件接收 —— 单事件重载
+        void receive(std::shared_ptr<config_event> event);
+        //事件接收 —— 多事件重载
         void receive(std::vector<std::shared_ptr<config_event>> event_set);
     };
 }

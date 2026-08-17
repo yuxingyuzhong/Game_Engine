@@ -35,9 +35,11 @@ namespace engine
 			{
 				this->outer_event_process(event);
 			};
+		//注册事件接收入口
+		event_terminal.receive_entry_register(receive_entry);
 
 		//更新接入信息
-		event_terminal.attach("Effect_Manager", needed_events, receive_entry, acl_key);
+		event_terminal.attach("Effect_Manager", needed_events, acl_key);
 	}
 
 	//效应添加
@@ -106,12 +108,12 @@ namespace engine
 			//获取事件终端
 			auto& terminal = new_effect.event_terminal;
 			//构造事件入口
-			auto event_entry = [this](std::vector<std::shared_ptr<config_event>> events)->void
+			auto event_send_entry = [this](std::vector<std::shared_ptr<config_event>> events)->void
 				{
 					this->event_terminal.event_receive(events);
 				};
 			//配置事件终端
-			terminal.event_entry_register(event_entry);
+			terminal.send_entry_register(event_send_entry);
 
 			//匹配效应分组
 			for (auto& group : group_effect_set)

@@ -51,15 +51,26 @@ namespace engine
 		~Property_Manager();
 		//事件中转站接入
 		void attach(void);
+
+		//读写指针获取
+		Property_Manager* ptr(void);
+		//只读指针获取 
+		const Property_Manager* const_ptr(void) const;
+
 		//属性槽获取
 		std::unordered_map<std::string, double>* prop_slot_get(const uint64_t& ID);
-	private:
+		//只读属性槽获取
+		const std::unordered_map<std::string, double>* const_prop_slot_get(const uint64_t& ID) const;
+
 		//属性槽构建
 		bool prop_slot_build(const std::string& type, const uint64_t& ID);
+	private:
 		//属性槽查找
-		uint64_t prop_slot_seek(const uint64_t& ID);
+		uint64_t prop_slot_seek(const uint64_t& ID) const;
+	public:
 		//属性槽卸载
 		bool prop_slot_unload(const std::string& type, const uint64_t& ID);
+	private:
 		//事件处理
 		void event_process(std::shared_ptr<config_event> event);
 	};

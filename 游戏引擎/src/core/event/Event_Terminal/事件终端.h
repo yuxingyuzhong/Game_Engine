@@ -28,13 +28,18 @@ namespace engine
 		//中转站接入入口
 		std::unique_ptr<std::function<void(const std::string& module_name,
 			const std::vector<config_event>& needed_events,
-			std::function<void(std::shared_ptr<config_event> evt)> event_entry)>>
+			std::function<void(std::shared_ptr<config_event> evt)> event_send_entry)>>
 			attach_entry;
 
 		//事件发送入口 —— 单事件重载
-		std::unique_ptr<std::function<void(std::shared_ptr<config_event> events)>> event_entry;
+		std::unique_ptr<std::function<void(std::shared_ptr<config_event> event)>> event_send_entry;
 		//事件发送入口 —— 多事件重载
-		std::unique_ptr<std::function<void(std::vector<std::shared_ptr<config_event>> events)>> events_entry;
+		std::unique_ptr<std::function<void(std::vector<std::shared_ptr<config_event>> events)>> events_send_entry;
+
+		//事件接收入口 —— 单事件重载
+		std::unique_ptr<std::function<void(std::shared_ptr<config_event> event)>> event_receive_entry;
+		//事件接收入口 —— 多事件重载
+		std::unique_ptr<std::function<void(std::vector<std::shared_ptr<config_event>> events)>> events_receive_entry;
 
 	public:
 		//构造函数
@@ -48,31 +53,33 @@ namespace engine
 
         // ———— 功能激活 ————
 
+		//权限密钥生成
+		int64_t acl_key_gen(void);
+
 		//接入入口注册
 		bool attach_entry_register(std::function<void(const std::string& module_name,
 			const std::vector<config_event>& needed_events,
 			std::function<void(std::shared_ptr<config_event> evt)> receive_entry)> attach_entry);
 
 		//事件发送入口注册 —— 单事件重载
-		bool event_entry_register
-		(std::function<void(std::shared_ptr<config_event> events)>event_entry);
+		bool send_entry_register
+		(std::function<void(std::shared_ptr<config_event> events)>event_send_entry);
 
 		//事件发送入口注册 —— 多事件重载
-		bool event_entry_register
-		(std::function<void(std::vector<std::shared_ptr<config_event>> events)>event_entry);
+		bool send_entry_register
+		(std::function<void(std::vector<std::shared_ptr<config_event>> events)>event_send_entry);
 
-		//权限密钥生成
-		int64_t acl_key_gen(void);
+		//事件接收入口注册 —— 单事件重载
+		bool receive_entry_register
+		(std::function<void(std::shared_ptr<config_event> events)>event_receive_entry);
+		//事件接收入口注册 —— 多事件重载
+		bool receive_entry_register
+		(std::function<void(std::vector<std::shared_ptr<config_event>> events)>event_receive_entry);
 
 		// ———— 中转站交互 ————
 
 		//中转站接入
 		bool attach(const std::string& module_name,const std::vector<config_event>& needed_events,
-			const int64_t& acl_key);
-
-		//中转站接入 —— 事件接收入口设置重载
-		bool attach(const std::string& module_name, const std::vector<config_event>& needed_events,
-			std::function<void(std::shared_ptr<config_event> evt)> receive_entry,
 			const int64_t& acl_key);
 
 		// ———— 事件交互 ————
@@ -94,5 +101,13 @@ namespace engine
 
 		//事件清空
 		bool clear(const int64_t& acl_key);
+	private:
+		//函数包装器内存分配
+	    template <typename T>
+		bool memory_malloc(std::unique_ptr<std::function<void(T parameter)>>& target);
+		//函数接口注册
+		template <typename T>
+		bool function_register(std::unique_ptr<std::function<void(T parameter)>>& target,
+			std::function<void(T parameter)> function);
 	};
 }
