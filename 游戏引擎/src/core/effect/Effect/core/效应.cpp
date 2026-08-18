@@ -25,7 +25,7 @@ namespace engine
         else
         {
             //获取读取路径
-            path config_path = absolute_path_get(config["path"].get<string>());
+            path config_path = Engine_Env::absolute_path_get(config["path"].get<string>());
             //若读取路径无效
             if (!config_checker.path_check(config_path))
                 return false;

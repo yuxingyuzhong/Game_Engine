@@ -11,7 +11,11 @@
 #include "common/external/Sol2/sol类型注册.h"
 //获取预定义sol2库类型别名
 #include "common/external/Sol2/sol类型别名.h"
-//获取辅助算法
+//获取引擎环境
+#include "src/tools/Non_GUI/Engine_Env/引擎环境.h"
+//获取路径字符串转化方法
+#include "src/tools/Non_Gui/Auxi_Algorithm/路径字符串转换.h"
+//获取二分查找算法
 #include "src/tools/Non_GUI/Auxi_Algorithm/二分查找.h"
 
 namespace engine

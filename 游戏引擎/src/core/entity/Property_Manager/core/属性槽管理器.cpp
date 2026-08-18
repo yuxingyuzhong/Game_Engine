@@ -164,8 +164,10 @@ namespace engine
 				return;
 			}
 
+			//获取初始化脚本读取路径
+			path initialize_path = Engine_Env::absolute_path_get(config["initialize_path"].get<string>());
 			//创建配置记录并初始化脚本
-			initialize_scripts[config["type"]].load_file(config["initialize_path"]);
+			initialize_scripts[config["type"]].load_file(path_to_string(initialize_path));
 		}
 	}
 }

@@ -11,8 +11,10 @@
 #include "common/external/Sol2/sol类型别名.h"
 //获取配置检查器
 #include "src/tools/Non_GUI/Config_Checker/配置检查器.h"
-//获取辅助算法
-#include "src/tools/Non_Gui/Auxi_Algorithm/二分查找.h"
+//获取引擎环境
+#include "src/tools/Non_GUI/Engine_Env/引擎环境.h"
+//获取路径字符串转化方法
+#include "src/tools/Non_Gui/Auxi_Algorithm/路径字符串转换.h"
 
 //脚本系统模块
 namespace engine

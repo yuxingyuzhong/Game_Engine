@@ -17,6 +17,9 @@ using std::ranges::sort;
 using std::reference_wrapper;
 using std::ref;
 
+// ---------- 文件系统 ---------------
+using std::filesystem::path;
+
 // ---------- I/O 与内存分配 ----------
 using std::nothrow;
 

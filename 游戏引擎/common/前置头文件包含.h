@@ -28,6 +28,7 @@
 #include <memory>       // std::unique_ptr, std::shared_ptr, std::weak_ptr
 #include <type_traits>  // 类型特性（is_same, enable_if, etc.）
 #include <functional>   // std::function, std::bind, std::greater, std::less
+#include <stdexcept>
 
 // ----- 容器 -----
 #include <vector>       // std::vector

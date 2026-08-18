@@ -15,7 +15,7 @@ namespace engine
     const path Config_Loader::base_dir_get(void)
     {
         //返回配置基目录
-        return Engine_Env::exe_dir_get() / u8"assets";
+        return Engine_Env::exe_dir_get();
     }
 
     //目录递归扫描
@@ -63,10 +63,20 @@ namespace engine
             return false;
         }
 
-        //若路径开头非"config/"路径
-        if (suspect_path.begin()->string() != "config")
+        //获取首迭代器
+        auto it = suspect_path.begin();
+        //若路径开头非"assets/"路径
+        if (it->string() != "assets")
         {
-            Log::info("路径跳出指定目录: \"config\"");
+            Log::info("路径跳出指定目录: \"assets\"");
+            return false;
+        }
+        //获取第二节迭代器
+        it++;
+        //若路径第二节非"config/"路径
+        if (it->string() != "config")
+        {
+            Log::info("路径跳出指定目录: \"assets/config\"");
             return false;
         }
 

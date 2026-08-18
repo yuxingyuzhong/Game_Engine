@@ -46,8 +46,10 @@ namespace engine
             //若配置字段检查通过
             if (config_field_parse(config))
             {
+                //获取实体决策树加载路径
+                path decision_load_path = Engine_Env::absolute_path_get(config["decision_load_path"].get<string>());
                 //记录实体决策树加载路径
-                decision_tree_register(config["type"], config["decision_load_path"]);
+                decision_tree_register(config["type"], path_to_string(decision_load_path));
                 //记录实体类型从属权限
                 owner_acl_register(config["type"], config["acls"]);
 
