@@ -100,7 +100,7 @@ namespace engine
 		//注册事件发送函数
 		decision_tree.set_function("event_send", [this](shared_ptr<config_event> event)->void
 			{
-				this->event_govern(event);
+				this->event_terminal.event_send({ event }, acl_key);
 			});
 	}
 
@@ -114,32 +114,4 @@ namespace engine
 		event_terminal.clear(acl_key);
 	}
 
-	//事件仲裁
-	void Dynamic_Entity::event_govern(shared_ptr<config_event> event)
-	{
-		//简化表示路径
-		auto* evt = event.get();
-
-		//若为从属级实体构建事件
-		if (event->tag == "Build")
-		{
-		}
-		//若为从属实体卸载事件
-		else if (event->tag == "Unload")
-		{
-		}
-		//若为实体转移事件事件
-		else if (event->tag == "Transfer")
-		{
-
-		}
-		//若为从属实体接收事件
-		else if (event->tag == "Receive")
-		{
-
-		}
-
-		//发送事件
-		event_terminal.event_send({ event }, acl_key);
-	}
 }

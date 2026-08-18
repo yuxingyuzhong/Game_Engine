@@ -55,6 +55,7 @@
 #include <cmath>        // std::sin, std::cos, std::sqrt, std::pow, std::abs
 #include <numbers>      // std::numbers::pi, etc. (C++20)
 #include <bit>          // std::popcount, std::rotl, std::bit_width (C++20)
+#include <limits>
 
 // ----- 时间与随机数 -----
 #include <chrono>       // std::chrono::high_resolution_clock, durations

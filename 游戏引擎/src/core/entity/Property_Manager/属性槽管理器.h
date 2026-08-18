@@ -12,7 +12,7 @@
 //获取预定义sol2库类型别名
 #include "common/external/Sol2/sol类型别名.h"
 //获取辅助算法
-#include "src/tools/Non_GUI/Auxi_Algorithm/算法辅助工具.h"
+#include "src/tools/Non_GUI/Auxi_Algorithm/二分查找.h"
 
 namespace engine
 {

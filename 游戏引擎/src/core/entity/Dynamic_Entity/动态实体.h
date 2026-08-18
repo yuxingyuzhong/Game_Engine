@@ -84,9 +84,6 @@ namespace engine
 		//行为决策
 		virtual void act(void);
 
-	private:
-		//事件仲裁
-		void event_govern(std::shared_ptr<config_event> event);
 	};
 
 }

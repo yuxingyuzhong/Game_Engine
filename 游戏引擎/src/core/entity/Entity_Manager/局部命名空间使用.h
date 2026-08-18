@@ -13,17 +13,9 @@ using std::nullopt;
 
 // ---------- 智能指针 ----------
 using std::shared_ptr;
-using std::weak_ptr;
-using std::make_unique;
 
 // ---------- 函数对象与算法 ----------
 
-//智能指针类型转换
-using std::dynamic_pointer_cast;   
-//std::any类型转换
-using std::any_cast;               
-using std::reference_wrapper;
-using std::any;
 using std::function;
 using std::ranges::greater;
 using std::ranges::less;

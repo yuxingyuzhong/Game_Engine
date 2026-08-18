@@ -3,6 +3,7 @@
 
 // ---------- 基础类型 ----------
 using std::string;
+using std::hash;
 
 // ---------- 容器 ----------
 using std::unordered_map;
@@ -23,6 +24,9 @@ using std::ranges::greater;
 using std::ranges::less;
 using std::ranges::sort;
 using std::ranges::find;
+
+// ----------- 数学 --------------
+using std::numeric_limits;
 
 // ---------- 内存分配 ------------
 using std::nothrow;

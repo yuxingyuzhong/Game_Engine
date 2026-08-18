@@ -14,7 +14,7 @@
 //获取配置检查器
 #include "src/tools/Non_GUI/Config_Checker/配置检查器.h"
 //获取辅助算法(如binary_search)
-#include "src/tools/Non_GUI/Auxi_Algorithm/算法辅助工具.h"
+#include "src/tools/Non_GUI/Auxi_Algorithm/二分查找.h"
 
 namespace engine
 {
@@ -63,10 +63,8 @@ namespace engine
         //属性槽管理器指针
         Property_Manager* prop_manager = nullptr;
 
-        //起始实体ID
-        int64_t start_ID = 10000;
-        //当前实体ID
-        int64_t now_ID = 10000;
+        //新实体预分配ID
+        uint64_t now_entity_ID = 0;
 
         //决策树加载路径集合
         std::unordered_map<std::string,std::string> decision_load_paths;
@@ -101,14 +99,16 @@ namespace engine
         // ———— 实体相关 ———— 
 
     private:
-        //自定义ID分布检测
-        bool custom_ID_filter(const std::vector<uint64_t>& ID_set);
         //权限记录查找
         int64_t acl_record_seek(const std::string& master);
         //从属记录查找
         int64_t minion_record_seek(const uint64_t& ID); 
         //实体记录查找
         int64_t entity_record_seek(const uint64_t& ID);
+        //从属记录添加
+        void minion_record_add(const uint64_t& master_ID,const std::vector<uint64_t>& IDs);
+        //从属记录删除
+        std::vector<uint64_t> minion_record_erase(const uint64_t& master_ID, const std::vector<uint64_t>& IDs);
     public:
         //实体创建 —— 创建数目重载
         std::vector<uint64_t> entity_build(const std::string& type, const int& counts,

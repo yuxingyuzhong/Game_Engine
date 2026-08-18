@@ -134,6 +134,5 @@ namespace engine
             //调用path重载
             return path_check(suspect_path);
         }
-
 	};
 }

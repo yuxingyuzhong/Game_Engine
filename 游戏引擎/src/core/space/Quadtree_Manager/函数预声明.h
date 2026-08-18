@@ -14,7 +14,7 @@
 // ———— 工具相关 ————
 
 //获取辅助算法
-#include "src/tools/Non_GUI/Auxi_Algorithm/算法辅助工具.h"
+#include "src/tools/Non_GUI/Auxi_Algorithm/二分查找.h"
 
 //展开命名空间
 namespace engine

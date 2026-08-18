@@ -54,6 +54,20 @@ namespace engine
 			//返回可执行文件目录
 			return exe_dir;
 		}
+		//绝对路径获取 —— 路径重载
+		inline std::filesystem::path absolute_path_get(const std::filesystem::path& path)
+		{
+			return exe_path_get() / path;
+		}
+		//绝对路径获取 —— 字符串重载
+		inline std::filesystem::path absolute_path_get(const std::string& path)
+		{
+			//转化为可用字符串格式
+			//要求string编码格式为UTF-8
+			std::u8string u8_path(reinterpret_cast<const char8_t*>(path.data()), path.size());
+			//返回拼接路径
+			return exe_path_get() / u8_path;
+		}
 	private:
 		//可执行文件路径
 		inline static std::filesystem::path exe_path{};

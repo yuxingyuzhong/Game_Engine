@@ -20,7 +20,7 @@
 #include "src/core/event/Event_Broker/事件中转器.h"
 
 //工具模块
-#include "src/tools/Non_GUI/Auxi_Algorithm/算法辅助工具.h"
+#include "src/tools/Non_GUI/Auxi_Algorithm/二分查找.h"
 #include "src/tools/Non_GUI/Config_Loader/配置加载器.h"
 #include "src/tools/Non_GUI/Engine_Env/引擎环境.h"
 #include "src/tools/Non_GUI/Random/随机数生成器.h"
